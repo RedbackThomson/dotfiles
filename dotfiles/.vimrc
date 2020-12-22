@@ -1,0 +1,1 @@
+NeoBundle 'arakashic/chromatica.nvim'
