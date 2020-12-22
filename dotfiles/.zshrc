@@ -132,9 +132,9 @@ ZSH_THEME="theunraveler"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git zsh-autosuggestions)
 
-# source $ZSH/oh-my-zsh.sh
+source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -169,19 +169,6 @@ export PATH=$PATH:~/miniconda3/bin
 export DOCKER_HOST=unix:///var/run/docker.sock
 unset DOCKER_TLS_VERIFY
 
-export PATH=$PATH:/home/nithomso/anaconda3/bin
-
 export PATH=$HOME/.toolbox/bin:$PATH
 
 alias bb="noglob brazil-build"
-
-export GPG_TTY=$(tty)
-export PATH=$PATH:~/sagemaker-k8s-bin
-
-if [ -z "$ZSH_AUTO_RAN_FISH" ] && [ -x /apollo/env/envImprovement/bin/fish ]; then
-    export ZSH_AUTO_RAN_FISH=YES
-    export SHELL=/apollo/env/envImprovement/bin/fish #workaround for $SHELL inside of fish
-    LD_LIBRARY_PATH=/apollo/env/envImprovement/lib exec /apollo/env/envImprovement/bin/fish
-    # If your mwinit doesn't work, launch without the LD_LIBRARY_PATH
-    # exec /apollo/env/envImprovement/bin/fish
-fi
