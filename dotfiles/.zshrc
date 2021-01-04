@@ -168,7 +168,9 @@ export PATH=$PATH:~/.local/bin
 export PATH=$PATH:~/miniconda3/bin
 export DOCKER_HOST=unix:///var/run/docker.sock
 unset DOCKER_TLS_VERIFY
+export GOPROXY=direct
 
 export PATH=$HOME/.toolbox/bin:$PATH
 
 alias bb="noglob brazil-build"
+alias vim="nvim"
