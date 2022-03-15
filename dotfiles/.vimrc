@@ -30,3 +30,4 @@ filetype plugin indent on
 NeoBundleCheck
 set number
 
+set backspace=indent,eol,start

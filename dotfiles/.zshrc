@@ -39,6 +39,10 @@ ssh() {
     set-title $HOST;
 }
 
+creds () {
+    ada credentials update --account=$1 --provider=isengard --role=${2:-"Admin"} --once
+}
+
 alias e=emacs
 alias bb=brazil-build
 
@@ -59,7 +63,25 @@ if [ -f ~/.zshrc-dev-dsk-post ]; then
 fi
 
 export PATH=$HOME/.toolbox/bin:$PATH
-tmux ls
+
+cols=$(tput cols)
+# Ensure width is less than 80 and odd
+cols=$((cols > 79 ? 79 : (cols % 2 == 0 ? cols - 1 : cols)))
+
+echo -e '\033[0;31m'
+cat << 'EOF' | awk -v cols=$cols '{ len=(cols/2)-(length($0)/2); printf("%"len"s%s\n", "", $0) }'
+       _ _   _                               
+ _ __ (_) |_| |__   ___  _ __ ___  ___  ___  
+| '_ \| | __| '_ \ / _ \| '_ ` _ \/ __|/ _ \ 
+| | | | | |_| | | | (_) | | | | | \__ \ (_) |
+|_| |_|_|\__|_| |_|\___/|_| |_| |_|___/\___/ 
+EOF
+
+echo -e '\033[0;32m'
+awk -v cols=$cols -v title="TMUX SESSIONS" 'BEGIN{len=((cols-2)/2)-(length(title)/2); bar=sprintf("%"len"s", ""); gsub(/ /,"━",bar); printf("┍%s%s%s┑\n", bar, title, bar)}'
+tmux ls | awk -v prefix="│" -v cols=${cols} '{ split($0, a, ":"); acols=cols-1; j=sprintf("%s%s", prefix, a[1]); printf("%-"acols"s%s\n", j, prefix) }'
+awk -v cols=$cols 'BEGIN{len=(cols-2); bar=sprintf("%"len"s", ""); gsub(/ /,"━",bar); printf("┕%s┙\n", bar)}'
+echo -e '\033[0m'
 
 export DOCKER_HOST=unix:///var/run/docker.sock
 # If you come from bash you might have to change your $PATH.
@@ -135,6 +157,8 @@ ZSH_THEME="theunraveler"
 plugins=(git zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
+unsetopt share_history
+setopt no_share_history
 
 # User configuration
 
@@ -162,6 +186,7 @@ fi
 #
 export PATH=$PATH:/usr/local/kubebuilder/bin
 export PATH=$PATH:/usr/local/go/bin
+export PATH=/usr/local/bin:$PATH
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:~/.local/bin
@@ -169,8 +194,100 @@ export PATH=$PATH:~/miniconda3/bin
 export DOCKER_HOST=unix:///var/run/docker.sock
 unset DOCKER_TLS_VERIFY
 export GOPROXY=direct
+export DOCKER_BUILDKIT=1
+export AWS_PAGER="" # Disable paging for AWS CLI v2
 
 export PATH=$HOME/.toolbox/bin:$PATH
 
 alias bb="noglob brazil-build"
 alias vim="nvim"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/nithomso/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/nithomso/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/nithomso/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/nithomso/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+export NVM_DIR="$HOME/.nvm"                                             
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+debug-controller() {
+    if [ $# -ne 1 ]; then
+        echo "ERROR: $(basename "$0") only accepts a single parameter" 1>&2
+        echo "  $(basename "$0") <service>"
+        return 1
+    fi
+
+    local service=$(echo "$1" | tr '[:upper:]' '[:lower:]')
+
+    dlv debug github.com/aws-controllers-k8s/$service-controller/cmd/controller/ \
+    --api-version=2 --log=true \
+    --wd=$GOPATH/src/github.com/aws-controllers-k8s/$service-controller -- \
+    --aws-region=us-west-2 --enable-development-logging --log-level=debug
+}
+
+debug-code-generator-controller() {
+    if [ $# -ne 1 ]; then
+        echo "ERROR: $(basename "$0") only accepts a single parameter" 1>&2
+        echo "  $(basename "$0") <service>"
+        return 1
+    fi
+
+    local service=$(echo "$1" | tr '[:upper:]' '[:lower:]')
+
+    dlv debug github.com/aws-controllers-k8s/code-generator/cmd/ack-generate --api-version=2 \
+    --build-flags="-tags=codegen" --log=true --wd=$GOPATH/src/github.com/aws-controllers-k8s/code-generator -- \
+    controller $service -o $GOPATH/src/github.com/aws-controllers-k8s/$service-controller \
+    --template-dirs $GOPATH/src/github.com/aws-controllers-k8s/$service-controller/templates,$GOPATH/src/github.com/aws-controllers-k8s/code-generator/templates \
+    --cache-dir $HOME/.cache/aws-controllers-k8s \
+    --generator-config-path $GOPATH/src/github.com/aws-controllers-k8s/$service-controller/generator.yaml \
+    --service-account-name ack-$service-controller \
+    --aws-sdk-go-version v1.42.0
+}
+
+debug-code-generator() {
+    if [ $# -ne 1 ]; then
+        echo "ERROR: $(basename "$0") only accepts a single parameter" 1>&2
+        echo "  $(basename "$0") <service>"
+        return 1
+    fi
+
+    local service=$(echo "$1" | tr '[:upper:]' '[:lower:]')
+
+    dlv debug github.com/aws-controllers-k8s/code-generator/cmd/ack-generate --api-version=2 \
+    --build-flags="-tags=codegen" --log=true --wd=$GOPATH/src/github.com/aws-controllers-k8s/code-generator -- \
+    apis $service -o $GOPATH/src/github.com/aws-controllers-k8s/$service-controller \
+    --template-dirs $GOPATH/src/github.com/aws-controllers-k8s/$service-controller/templates,$GOPATH/src/github.com/aws-controllers-k8s/code-generator/templates \
+    --cache-dir $HOME/.cache/aws-controllers-k8s --version v1alpha1 \
+    --generator-config-path $GOPATH/src/github.com/aws-controllers-k8s/$service-controller/generator.yaml \
+    --aws-sdk-go-version v1.37.4
+}
+
+debug-code-generator-release() {
+    if [ $# -ne 1 ]; then
+        echo "ERROR: $(basename "$0") only accepts a single parameter" 1>&2
+        echo "  $(basename "$0") <service>"
+        return 1
+    fi
+
+    local service=$(echo "$1" | tr '[:upper:]' '[:lower:]')
+
+    dlv debug github.com/aws-controllers-k8s/code-generator/cmd/ack-generate --api-version=2 \
+    --build-flags="-tags=codegen" --log=true --wd=$GOPATH/src/github.com/aws-controllers-k8s/code-generator -- \
+    release $service v1alpha1 -o $GOPATH/src/github.com/aws-controllers-k8s/$service-controller \
+    --template-dirs $GOPATH/src/github.com/aws-controllers-k8s/$service-controller/templates,$GOPATH/src/github.com/aws-controllers-k8s/code-generator/templates \
+    --cache-dir $HOME/.cache/aws-controllers-k8s \
+    --generator-config-path $GOPATH/src/github.com/aws-controllers-k8s/$service-controller/generator.yaml \
+    --metadata-config-path $GOPATH/src/github.com/aws-controllers-k8s/$service-controller/metadata.yaml \
+    --aws-sdk-go-version v1.37.10
+}
