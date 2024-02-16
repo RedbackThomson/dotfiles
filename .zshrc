@@ -1,24 +1,26 @@
+export ZDOTDIR="$HOME/.config/zsh"
+
 autoload -Uz compinit
 compinit -C
 
-eval "$(zoxide init zsh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(zoxide init zsh)"
+source <(switcher init zsh)
 source ~/.orbstack/shell/init.zsh 2>/dev/null || :
+source $HOME/scripts/upbound-jump.sh
 
 export TERM="xterm-256color"
 export EDITOR=vim
+export XDG_CONFIG_HOME="$HOME/Library/Application Support"
 
 alias cd="z"
 alias k="kubectl"
 alias kubectx="switch"
 alias la="ls -a"
 alias ll="ls -al"
-alias s="switch"
 alias grep="grep --color=always"
-
-if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-  eval "$(oh-my-posh init zsh)"
-fi
+alias s="switch"
+source <(compdef _switcher switch)
 
 export GOPATH=$(go env GOPATH)
 export GOBIN=$GOPATH/bin
@@ -29,12 +31,18 @@ export PATH="$(brew --prefix)/share/google-cloud-sdk/bin:$PATH"
 export PATH="$(go env GOBIN):$PATH"
 export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 
+export K9S_CONFIG_DIR="$HOME/.config/k9s"
+export OMP_CONFIG="$HOME/.omp.config.json"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"
 [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && \. "/usr/local/opt/nvm/etc/bash_completion"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
+  eval "$(oh-my-posh init zsh --config $OMP_CONFIG)"
+fi
 
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
