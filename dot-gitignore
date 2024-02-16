@@ -1,0 +1,22 @@
+# Node
+npm-debug.log
+
+# Mac
+.DS_Store
+
+# Temporary files
+*~
+*.bak
+*.swp
+*.swo
+*#
+
+# IDE files
+.vscode
+.idea
+*.code-workspace
+
+# General
+log/
+*.log
+.env
