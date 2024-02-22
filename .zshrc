@@ -4,6 +4,7 @@ autoload -Uz compinit
 compinit -C
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 source <(switcher init zsh)
 source ~/.orbstack/shell/init.zsh 2>/dev/null || :
@@ -52,7 +53,6 @@ setopt auto_list              # automatically list choices on ambiguous completi
 setopt auto_menu              # automatically use menu completion
 setopt auto_pushd             # Make cd push each old directory onto the stack
 setopt completeinword         # If unset, the cursor is set to the end of the word
-setopt correct_all            # autocorrect commands
 setopt extended_history       # save each command's beginning timestamp and duration to the history file
 setopt hash_list_all          # when command completion is attempted, ensure the entire  path is hashed
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
@@ -74,6 +74,7 @@ setopt notify                 # report the status of backgrounds jobs immediatel
 setopt numeric_glob_sort      # globs sorted numerically
 setopt prompt_subst           # allow expansion in prompts
 setopt pushd_ignore_dups      # Don't push duplicates onto the stack
+unsetopt correct_all          # Don't attempt to correct supposed typos
 unsetopt share_history        # Don't share history between windows
 
 HISTFILE=${HOME}/.zsh_history
