@@ -1,6 +1,13 @@
+# k9s generated files
 .config/k9s/*
 !.config/k9s/skins
 !.config/k9s/config.yaml
 !.config/k9s/aliases.yaml
+
+# zsh generated files
 .config/zsh/.zcompdump
 .config/zsh/.zsh_history
+
+# oh-my-tmux config
+.config/tmux/tmux.conf
+.config/tmux/plugins

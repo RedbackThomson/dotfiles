@@ -30,6 +30,8 @@ alias s="switch"
 alias vim="nvim"
 source <(compdef _switcher switch)
 
+export TMUX_CONF_LOCAL="$HOME/.config/tmux/tmux.conf.local"
+
 export GOPATH=$(go env GOPATH)
 export GOBIN=$GOPATH/bin
 

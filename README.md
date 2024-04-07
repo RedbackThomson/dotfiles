@@ -10,7 +10,14 @@ Dot files for the RedbackThomson development environment
 
 ```bash
 curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-brew install zoxide danielfoehrkn/switch/switch jandedobbeleer/oh-my-posh/oh-my-posh zsh-autosuggestions zsh-syntax-highlighting direnv
+brew install zoxide danielfoehrkn/switch/switch jandedobbeleer/oh-my-posh/oh-my-posh zsh-autosuggestions zsh-syntax-highlighting direnv neovim
+```
+
+```bash
+# .tmux configuration
+mkdir -p "$HOME/.config/tmux"
+git clone https://github.com/gpakosz/.tmux.git "$HOME/.config/oh-my-tmux"
+ln -s "$HOME/.config/oh-my-tmux/.tmux.conf" "$HOME/.config/tmux/tmux.conf"
 ```
 
 ## Installation
