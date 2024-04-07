@@ -1,26 +1,33 @@
-export ZDOTDIR="$HOME/.config/zsh"
-
 autoload -Uz compinit
 compinit -C
+export WORDCHARS='*_-.[]~;!$%^(){}<>'
+autoload -Uz select-word-style
+select-word-style normal
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 source <(switcher init zsh)
 source ~/.orbstack/shell/init.zsh 2>/dev/null || :
+
 source $HOME/scripts/upbound-jump.sh
+source $HOME/scripts/upbound-kubedebug.sh
+source $HOME/scripts/kubectl-aliases.sh
 
 export TERM="xterm-256color"
-export EDITOR=vim
-export XDG_CONFIG_HOME="$HOME/Library/Application Support"
+export EDITOR="nvim"
+export VISUAL="nvim"
+export XDG_CONFIG_HOME="$HOME/.config"
 
 alias cd="z"
+alias cat="bat"
 alias k="kubectl"
 alias kubectx="switch"
 alias la="ls -a"
 alias ll="ls -al"
 alias grep="grep --color=always"
 alias s="switch"
+alias vim="nvim"
 source <(compdef _switcher switch)
 
 export GOPATH=$(go env GOPATH)
@@ -30,20 +37,24 @@ export PATH="/usr/local/bin:$PATH"
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 export PATH="$(brew --prefix)/share/google-cloud-sdk/bin:$PATH"
 export PATH="$(go env GOBIN):$PATH"
-export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+
+# coreutils cp is causing issues with Tilt - disable for now
+# export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 
 export K9S_CONFIG_DIR="$HOME/.config/k9s"
 export OMP_CONFIG="$HOME/.omp.config.json"
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"
-[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && \. "/usr/local/opt/nvm/etc/bash_completion"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
   eval "$(oh-my-posh init zsh --config $OMP_CONFIG)"
 fi
+
+export CLOUDSDK_PYTHON_SITEPACKAGES=1
 
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
@@ -74,8 +85,8 @@ setopt notify                 # report the status of backgrounds jobs immediatel
 setopt numeric_glob_sort      # globs sorted numerically
 setopt prompt_subst           # allow expansion in prompts
 setopt pushd_ignore_dups      # Don't push duplicates onto the stack
+setopt share_history          # Share history between windows
 unsetopt correct_all          # Don't attempt to correct supposed typos
-unsetopt share_history        # Don't share history between windows
 
 HISTFILE=${HOME}/.zsh_history
 HISTSIZE=100000
@@ -86,10 +97,11 @@ bindkey "\e[1;3C" forward-word      # ⌥→
 bindkey "^[[1;9D" beginning-of-line # cmd+←
 bindkey "^[[1;9C" end-of-line       # cmd+→
 
-autoload -U history-search-end
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
-bindkey "^[[A" history-beginning-search-backward-end
-bindkey "^[[B" history-beginning-search-forward-end
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search # Up
+bindkey "^[[B" down-line-or-beginning-search # Down
 
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
