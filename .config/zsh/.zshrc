@@ -39,6 +39,7 @@ export PATH="/usr/local/bin:$PATH"
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 export PATH="$(brew --prefix)/share/google-cloud-sdk/bin:$PATH"
 export PATH="$(go env GOBIN):$PATH"
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 # coreutils cp is causing issues with Tilt - disable for now
 # export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
