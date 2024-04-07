@@ -2,3 +2,5 @@
 !.config/k9s/skins
 !.config/k9s/config.yaml
 !.config/k9s/aliases.yaml
+.config/zsh/.zcompdump
+.config/zsh/.zsh_history
