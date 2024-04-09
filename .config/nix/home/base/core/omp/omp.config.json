@@ -1,0 +1,75 @@
+{
+    "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+    "palette": {
+      "os": "#ACB0BE",
+      "closer": "p:os",
+      "pink": "#F4B8E4",
+      "lavender": "#BABBF1",
+      "blue":  "#8CAAEE"
+    },
+    "blocks": [
+      {
+        "alignment": "left",
+        "segments": [
+          {
+            "foreground": "p:os",
+            "style": "plain",
+            "template": "{{.Icon}} ",
+            "type": "os"
+          },
+          {
+            "type": "kubectl",
+            "style": "plain",
+            "foreground": "p:pink",
+            "template": "\udb84\udcfe {{.Context}}{{if .Namespace}}:{{.Namespace}}{{end}} ",
+            "properties": {
+              "context_aliases": {
+              }
+            }
+          },
+          {
+            "foreground": "p:blue",
+            "properties": {
+              "home_icon": "~",
+              "style": "agnoster_short",
+              "mapped_locations": {
+                "/Users/nicholasthomson/Workspace": "\uf40d"
+              }
+            },
+            "style": "plain",
+            "template": "{{ .Path }} ",
+            "type": "path"
+          },
+          {
+            "foreground": "p:lavender",
+            "properties": {
+              "branch_icon": "\ue725 ",
+              "cherry_pick_icon": "\ue29b ",
+              "commit_icon": "\uf417 ",
+              "fetch_status": false,
+              "fetch_upstream_icon": false,
+              "merge_icon": "\ue727 ",
+              "no_commits_icon": "\uf0c3 ",
+              "rebase_icon": "\ue728 ",
+              "revert_icon": "\uf0e2 ",
+              "tag_icon": "\uf412 "
+            },
+            "template": "{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uF044 {{ .Working.String }}{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uF046 {{ .Staging.String }}{{ end }}",
+            "style": "plain",
+            "type": "git"
+          },
+          {
+            "style": "plain",
+            "foreground": "p:closer",
+            "template": "\uf105",
+            "type": "text"
+          }
+        ],
+        "type": "prompt"
+      }
+    ],
+    "final_space": true,
+    "version": 2
+  }
+  
+  
