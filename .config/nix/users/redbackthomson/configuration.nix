@@ -9,35 +9,16 @@
       TMPDIR = "/tmp";  # Prevent nix-shell from using $XDG_RUNTIME_DIR.
     };
 
-    shellAliases = {
-      cd = "z";
-      cat = "bat";
-      k = "kubectl";
-      kubectx = "switch";
-      la = "ls -a";
-      ll = "ls -al";
-      grep = "grep --color=always";
-      s = "switch";
-      vim = "nvim";
-    };
-
     packages = [
       # Development tools. Ideally we'd just use a shell.nix for these, but it's
       # tough to get VSCode to respect that.
-      pkgs.bat
       pkgs.docker
       pkgs.gcc   # For cgo
       pkgs.gnumake
       pkgs.go-outline
       pkgs.golangci-lint
       pkgs.gopls
-      pkgs.kind
-      pkgs.kubectl
-      pkgs.kubernetes-helm
-      pkgs.kubeswitch
       pkgs.perl  # For shasum - used in https://github.com/upbound/build
-      pkgs.zoxide
-      pkgs.oh-my-posh
 
       # Tools I find handy to have around.
       pkgs.file
@@ -50,7 +31,7 @@
       };
     };
 
-    sessionPath = [ "$HOME/bin" "$HOME/control/go/bin" ];
+    sessionPath = [ "$HOME/bin" ];
 
     stateVersion = "21.11";
   };

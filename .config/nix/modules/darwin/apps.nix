@@ -80,6 +80,7 @@
       # `brew install`
       "wget" # download tool
       "curl" # no not install curl via nixpkgs, it's not working well on macOS!
+      "direnv"
 
       # Usage:
       #  https://github.com/tailscale/tailscale/wiki/Tailscaled-on-macOS#run-the-tailscaled-daemon
@@ -93,6 +94,11 @@
       # commands like `gsed` `gtar` are required by some tools
       "gnu-sed"
       "gnu-tar"
+
+      "stow"
+      
+      "yarn"
+      "buf"
     ];
 
     # `brew install --cask`

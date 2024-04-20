@@ -69,7 +69,7 @@
     fzf = {
       enable = true;
       # https://github.com/catppuccin/fzf
-      # catppuccin-mocha
+      # catppuccin-frappe
       colors = {
         "bg+" = "#414559";
         "bg" = "#303446";

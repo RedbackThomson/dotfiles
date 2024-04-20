@@ -12,10 +12,9 @@
     istioctl
     kind
     kubectl
-    kubectl
-    kubernetes-helm
     kubernetes-helm
     kubeswitch
+    tilt
   ];
 
   programs = {

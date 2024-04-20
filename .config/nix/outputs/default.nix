@@ -2,6 +2,7 @@
   self,
   nixpkgs,
   pre-commit-hooks,
+  zjstatus,
   ...
 } @ inputs: let
   inherit (inputs.nixpkgs) lib;
@@ -15,6 +16,14 @@
     // {
       inherit mylib myvars;
 
+      pkgs = import inputs.nixpkgs {
+        inherit system;
+        overlays = [
+          (final: prev: {
+            zjstatus = zjstatus.packages.${prev.system}.default;
+          })
+        ];
+      };
       # use unstable branch for some packages to get the latest updates
       pkgs-unstable = import inputs.nixpkgs-unstable {
         inherit system; # refer the `system` parameter form outer scope recursively

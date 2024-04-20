@@ -10,7 +10,7 @@
   programs.btop = {
     enable = true;
     settings = {
-      color_theme = "catppuccin_mocha";
+      color_theme = "catppuccin_frappe";
       theme_background = false; # make btop transparent
     };
   };

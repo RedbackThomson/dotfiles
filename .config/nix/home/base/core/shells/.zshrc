@@ -1,51 +1,21 @@
-autoload -Uz compinit
-compinit -C
 export WORDCHARS='*_-.[]~;!$%^(){}<>'
 autoload -Uz select-word-style
 select-word-style normal
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
-eval "$(direnv hook zsh)"
 source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 
 source $HOME/scripts/upbound-jump.sh
 source $HOME/scripts/upbound-kubedebug.sh
 source $HOME/scripts/kubectl-aliases.sh
 
-export TERM="xterm-256color"
-export EDITOR="nvim"
-export VISUAL="nvim"
-export XDG_CONFIG_HOME="$HOME/.config"
-
 source <(compdef _switcher switch)
-
-export TMUX_CONF_LOCAL="$HOME/.config/tmux/tmux.conf.local"
 
 export GOPATH=$(go env GOPATH)
 export GOBIN=$GOPATH/bin
 
 export PATH="/usr/local/bin:$PATH"
-export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
-export PATH="$(brew --prefix)/share/google-cloud-sdk/bin:$PATH"
-export PATH="$(go env GOBIN):$PATH"
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-
-# coreutils cp is causing issues with Tilt - disable for now
-# export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
-
-export K9S_CONFIG_DIR="$HOME/.config/k9s"
-export OMP_CONFIG="$HOME/.omp.config.json"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-  eval "$(oh-my-posh init zsh --config $OMP_CONFIG)"
-fi
 
 if [[ -f '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]]; then
   source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
