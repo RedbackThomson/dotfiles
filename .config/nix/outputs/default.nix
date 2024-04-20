@@ -2,6 +2,7 @@
   self,
   nixpkgs,
   pre-commit-hooks,
+  darwin-custom-icons,
   zjstatus,
   ...
 } @ inputs: let
@@ -40,7 +41,7 @@
     };
 
   # This is the args for all the haumea modules in this folder.
-  args = {inherit inputs lib mylib myvars genSpecialArgs;};
+  args = {inherit inputs lib mylib myvars darwin-custom-icons genSpecialArgs;};
 
   nixosSystems = {};
   darwinSystems = {

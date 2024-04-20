@@ -3,6 +3,7 @@
   inputs,
   darwin-modules,
   home-modules ? [],
+  darwin-custom-icons,
   myvars,
   system,
   genSpecialArgs,
@@ -13,8 +14,9 @@
 in
   nix-darwin.lib.darwinSystem {
     inherit system specialArgs;
-    modules =
+    modules = 
       darwin-modules
+      ++ [darwin-custom-icons.darwinModules.default]
       ++ [
         ({lib, ...}: {
           nixpkgs.pkgs = import nixpkgs {inherit system;};

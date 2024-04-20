@@ -37,5 +37,8 @@
       url = "github:dj95/zjstatus";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    darwin-custom-icons = {
+      url = "github:ryanccn/nix-darwin-custom-icons";
+    };
   };
 }

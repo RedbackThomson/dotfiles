@@ -6,6 +6,7 @@
   lib,
   mylib,
   myvars,
+  darwin-custom-icons,
   system,
   genSpecialArgs,
   ...

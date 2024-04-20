@@ -40,6 +40,21 @@
         "type": "github"
       }
     },
+    "darwin-custom-icons": {
+      "locked": {
+        "lastModified": 1693410673,
+        "narHash": "sha256-oHw98kktSorqgd73tOskTkE7AfWfNee7QTxJeMkd640=",
+        "owner": "ryanccn",
+        "repo": "nix-darwin-custom-icons",
+        "rev": "347800c2704b4adb76aaf06fbf0be7831431785b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ryanccn",
+        "repo": "nix-darwin-custom-icons",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -318,6 +333,7 @@
     "root": {
       "inputs": {
         "_1password-shell": "_1password-shell",
+        "darwin-custom-icons": "darwin-custom-icons",
         "haumea": "haumea",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
