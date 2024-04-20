@@ -47,8 +47,6 @@
       url = {
         "git@github.com:" = { insteadOf = "https://github.com/"; };
       };
-
-      gpg.ssh.program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
     };
 
     # A syntax-highlighting pager in Rust(2019 ~ Now)
