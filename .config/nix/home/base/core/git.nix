@@ -40,10 +40,15 @@
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
       pull.rebase = true;
+      merge.conflictStyle = "zdiff3";
+      rebase.autostash = true;
+      rebase.autosquash = true;
 
       url = {
         "git@github.com:" = { insteadOf = "https://github.com/"; };
       };
+
+      gpg.ssh.program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
     };
 
     # A syntax-highlighting pager in Rust(2019 ~ Now)
@@ -53,6 +58,7 @@
         diff-so-fancy = true;
         line-numbers = true;
         true-color = "always";
+        light = false;
         # features => named groups of settings, used to keep related settings organized
         # features = "";
       };
@@ -68,6 +74,7 @@
       cm = "commit -m"; # commit via `git cm <message>`
       ca = "commit -am"; # commit all changes via `git ca <message>`
       dc = "diff --cached";
+      pf = "push --force-with-lease";
 
       amend = "commit --amend -m"; # amend commit message via `git amend <message>`
       unstage = "reset HEAD --"; # unstage file via `git unstage <file>`
