@@ -26,6 +26,9 @@
       url = "github:ryan4yin/nur-packages";
       # inputs.nixpkgs.follows = "nixpkgs";
     };
+    _1password-shell = {
+      url = "github:1Password/shell-plugins";
+    };
     haumea = {
       url = "github:nix-community/haumea/v0.2.2";
       inputs.nixpkgs.follows = "nixpkgs";

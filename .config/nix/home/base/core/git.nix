@@ -46,11 +46,6 @@
       };
     };
 
-    # signing = {
-    #   key = "xxx";
-    #   signByDefault = true;
-    # };
-
     # A syntax-highlighting pager in Rust(2019 ~ Now)
     delta = {
       enable = true;

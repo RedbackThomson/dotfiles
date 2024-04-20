@@ -18,6 +18,8 @@
 
       pkgs = import inputs.nixpkgs {
         inherit system;
+        # To use 1Password, we need to allow the installation of non-free software
+        config.allowUnfree = true;
         overlays = [
           (final: prev: {
             zjstatus = zjstatus.packages.${prev.system}.default;
