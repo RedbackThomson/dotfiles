@@ -4,28 +4,16 @@ Dot files for the RedbackThomson development environment
 
 ## Required Tools
 
-- kitty
-- zsh
-- stow
+Install nix CLI using [`The Determinate Nix Installer`][https://github.com/DeterminateSystems/nix-installer]:
 
 ```bash
-curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-brew install zoxide danielfoehrkn/switch/switch jandedobbeleer/oh-my-posh/oh-my-posh zsh-autosuggestions zsh-syntax-highlighting direnv neovim
-```
-
-```bash
-# .tmux configuration
-mkdir -p "$HOME/.config/tmux"
-git clone https://github.com/gpakosz/.tmux.git "$HOME/.config/oh-my-tmux"
-ln -s "$HOME/.config/oh-my-tmux/.tmux.conf" "$HOME/.config/tmux/tmux.conf"
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
 
 ## Installation
 
-Use `stow` to set up symlinks
+Use the nix CLI to switch to the config
 
 ```bash
-git clone git@github.com:RedbackThomson/dotfiles.git
-cd dotfiles
-stow .
+nix run --extra-experimental-features nix-command --extra-experimental-features flakes nix-darwin -- switch --flake github:redbackthomson/dotfiles?dir=.config/nix
 ```
