@@ -1,15 +1,15 @@
-{...}: {
+{myvars, ...}: {
   environment.customIcons = {
     enable = true;
     icons = [
       {
-        path = "/Applications/kitty.app";
+        path = "/Users/${myvars.username}/Applications/Home Manager Apps/kitty.app";
         icon = ./terminal.icns;
       }
-      # {
-      #   path = "~/Applications/${"Brave Browser Apps"}/YouTube.app";
-      #   icon = ./youtube.icns;
-      # }
+      {
+        path = "/Users/${myvars.username}/Applications/Brave Browser Apps/YouTube.app";
+        icon = ./youtube.icns;
+      }
       {
         path = "/Applications/Spotify.app";
         icon = ./spotify.icns;
