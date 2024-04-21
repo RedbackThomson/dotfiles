@@ -120,6 +120,10 @@
       enableBashIntegration = true;
       enableZshIntegration = true;
       enableNushellIntegration = true;
+      settings = {
+        style = "compact";
+        filter_mode_shell_up_key_binding = "directory";
+      };
     };
   };
 }
