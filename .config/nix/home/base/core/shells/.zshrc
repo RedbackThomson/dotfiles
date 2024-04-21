@@ -54,10 +54,22 @@ setopt pushd_ignore_dups      # Don't push duplicates onto the stack
 setopt share_history          # Share history between windows
 unsetopt correct_all          # Don't attempt to correct supposed typos
 
-bindkey "\e[1;3D" backward-word     # ⌥←
-bindkey "\e[1;3C" forward-word      # ⌥→
-bindkey "^[[1;9D" beginning-of-line # cmd+←
-bindkey "^[[1;9C" end-of-line       # cmd+→
+# Option-Left
+bindkey "\e[1;3D" backward-word
+# Option-Right
+bindkey "\e[1;3C" forward-word
+
+# Cmd-Left
+bindkey "^[[H" beginning-of-line
+# Cmd-Right
+bindkey "^[[F" end-of-line
+
+# Home
+bindkey '\e[H'  beginning-of-line
+bindkey '\eOH'  beginning-of-line
+# End
+bindkey '\e[F'  end-of-line
+bindkey '\eOF'  end-of-line
 
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
