@@ -24,6 +24,14 @@ if [[ -f '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]]; then
   export NIX_PATH="$HOME/.config/.nix"
 fi
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+if command -v "switcher" >/dev/null 2>&1; then
+  source <(switcher init zsh)
+  source <(switch completion zsh)
+fi
+
 export CLOUDSDK_PYTHON_SITEPACKAGES=1
 
 setopt always_to_end          # When completing a word, move the cursor to the end of the word
