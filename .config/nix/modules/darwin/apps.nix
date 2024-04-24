@@ -98,6 +98,7 @@
       
       "yarn"
       "buf"
+      "nvm"
     ];
 
     # `brew install --cask`

@@ -2,6 +2,8 @@ export WORDCHARS='*_-.[]~;!$%^(){}<>'
 autoload -Uz select-word-style
 select-word-style normal
 
+export XDG_CONFIG_HOME="$HOME/.config"
+
 source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 
 source $HOME/scripts/upbound-jump.sh
