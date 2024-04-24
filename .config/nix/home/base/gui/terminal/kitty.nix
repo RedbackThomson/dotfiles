@@ -41,7 +41,7 @@
 
     settings = {
       background_opacity = "0.94";
-      # macos_option_as_alt = true; # Option key acts as Alt on macOS
+      macos_option_as_alt = true; # Option key acts as Alt on macOS
       enable_audio_bell = false;
       resize_in_steps = true;
       mouse_map = "cmd+left release grabbed,ungrabbed mouse_handle_click link";
