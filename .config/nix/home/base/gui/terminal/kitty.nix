@@ -41,7 +41,10 @@
 
     settings = {
       background_opacity = "0.94";
+      window_margin_width = "20 2 0";
       macos_option_as_alt = true; # Option key acts as Alt on macOS
+      hide_window_decorations = "titlebar-only";
+      macos_show_window_title_in = "all";
       enable_audio_bell = false;
       resize_in_steps = true;
       mouse_map = "cmd+left release grabbed,ungrabbed mouse_handle_click link";
