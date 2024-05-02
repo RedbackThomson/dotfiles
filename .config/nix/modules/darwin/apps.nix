@@ -73,6 +73,8 @@
       "homebrew/cask-versions"
 
       "hashicorp/tap"
+
+      "danielfoehrkn/switch"
     ];
 
     brews = [
