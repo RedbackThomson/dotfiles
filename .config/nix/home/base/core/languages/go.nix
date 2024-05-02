@@ -8,6 +8,7 @@
 }: {
   home.packages = with pkgs; [
     ko
+    gotools
   ];
 
   programs.go = {
