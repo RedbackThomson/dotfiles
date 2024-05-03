@@ -9,6 +9,7 @@
   home.packages = with pkgs; [
     ko
     gotools
+    golangci-lint
   ];
 
   programs.go = {
