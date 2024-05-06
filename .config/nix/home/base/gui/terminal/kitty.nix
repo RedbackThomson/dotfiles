@@ -21,9 +21,9 @@
     # and it's installed by home-manager if `theme` is specified.
     theme = "Catppuccin-Frappe";
     font = {
-      name = "JetBrainsMono Nerd Font";
+      name = "MonaspiceNe Nerd Font Mono";
       # use different font size on macOS
-      size = 13;
+      size = 12.5;
     };
 
     keybindings = {
@@ -48,6 +48,13 @@
       enable_audio_bell = false;
       resize_in_steps = true;
       mouse_map = "cmd+left release grabbed,ungrabbed mouse_handle_click link";
+
+      font_features = "MonaspiceNeNFM-Regular +liga +calt";
+      bold_font = "MonaspiceNe Nerd Font Mono Bold";
+      italic_font = "MonaspiceNe Nerd Font Mono Italic";
+      bold_italic_font = "MonaspiceNe Nerd Font Mono Bold Italic";
+
+      modify_font = "cell_width 95% cell_height -2px baseline 2";
     };
 
     # macOS specific settings
