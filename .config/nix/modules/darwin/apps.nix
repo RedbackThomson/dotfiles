@@ -104,6 +104,8 @@
 
       # temporary until installer fix is merged into nixpkgs
       "danielfoehrkn/switch/switch"
+
+      "jwt-rs/jwt-ui/jwt-ui"
     ];
 
     # `brew install --cask`
