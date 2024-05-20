@@ -115,6 +115,8 @@
       "firefox"
       "visual-studio-code"
 
+      "maccy"
+
       # Misc
       "raycast" # (HotKey: alt/option + space)search, caculate and run scripts(with many plugins)
     ];
