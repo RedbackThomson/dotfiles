@@ -121,7 +121,7 @@
       enableNushellIntegration = true;
       settings = {
         style = "compact";
-        filter_mode_shell_up_key_binding = "directory";
+        filter_mode_shell_up_key_binding = "session";
       };
     };
   };
