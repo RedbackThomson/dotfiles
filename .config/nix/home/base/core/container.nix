@@ -1,7 +1,7 @@
 {
   pkgs,
   pkgs-unstable,
-  nur-ryan4yin,
+  config,
   ...
 }: {
   home.packages = with pkgs; [
@@ -12,6 +12,7 @@
     istioctl
     kind
     kubectl
+    kubectl-neat
     kubernetes-helm
     # Disabled until the installer fix is merged into nixpkgs
     # pkgs-unstable.kubeswitch
