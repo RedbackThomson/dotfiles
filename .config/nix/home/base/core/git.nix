@@ -26,6 +26,7 @@
     ignores = [
       ".DS_Store"
       "shell.nix"
+      ".vscode"
     ];
 
     includes = [
