@@ -8,5 +8,7 @@
     neofetch
 
     vhs
+
+    earthly
   ];
 }
