@@ -24,7 +24,10 @@ in {
     history.size = 100000;
 
     enableCompletion = true;
-    enableAutosuggestions = true;
+
+    autosuggestion = {
+      enable = true;
+    };
 
     syntaxHighlighting = {
       enable = true;
