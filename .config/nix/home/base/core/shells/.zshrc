@@ -33,6 +33,8 @@ if command -v "switcher" >/dev/null 2>&1; then
   source <(switch completion zsh)
 fi
 
+export EARTHLY_SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
 export CLOUDSDK_PYTHON_SITEPACKAGES=1
 
 setopt always_to_end          # When completing a word, move the cursor to the end of the word
