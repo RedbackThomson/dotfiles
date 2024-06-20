@@ -10,6 +10,7 @@
     ko
     gotools
     golangci-lint
+    pkgs-unstable.goreleaser
   ];
 
   programs.go = {
