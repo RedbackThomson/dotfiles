@@ -101,7 +101,6 @@
       "stow"
       
       "yarn"
-      "buf"
       "nvm"
 
       # temporary until installer fix is merged into nixpkgs
