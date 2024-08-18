@@ -16,7 +16,7 @@ export GOPATH=$(go env GOPATH)
 export GOBIN=$GOPATH/bin
 
 export PATH="/usr/local/bin:$PATH"
-export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+export PATH="$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH="/Applications/Docker.app/Contents/Resources/bin/:$PATH"
 
