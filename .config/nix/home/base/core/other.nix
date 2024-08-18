@@ -10,5 +10,9 @@
     vhs
 
     earthly
+
+    terraform
+
+    doctl
   ];
 }
