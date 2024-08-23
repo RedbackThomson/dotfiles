@@ -15,6 +15,7 @@
 
       aws.disabled = true;
       gcloud.disabled = true;
+      golang.disabled = true;
 
       git_branch = {
         style = "fg:#81c8be";
@@ -28,7 +29,6 @@
         format = "[$context \($namespace\)]($style)";
         style = "fg:#f4b8e4";
         disabled = false;
-
 
         contexts = [
           {
