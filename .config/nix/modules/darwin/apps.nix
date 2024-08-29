@@ -113,6 +113,7 @@
     casks = [
       "firefox"
       "visual-studio-code"
+      "postman"
 
       "maccy"
 
