@@ -5,19 +5,13 @@
   ...
 }: {
   home.packages = with pkgs; [
-    neofetch
-
-    # Record, replay and export command line history
-    vhs
-
-    # A better version of `watch`
-    viddy
-
-    # CLI tool for running Earthfiles
-    earthly
-
-    terraform
-
-    doctl
+    neofetch # Display system settings and information
+    vhs # Record, replay and export command line history
+    viddy # A better version of `watch`
+    earthly # CLI tool for running Earthfiles
+    cloc # Count lines of code
+    
+    terraform # Terraform CLI
+    doctl # DigitalOcean CLI
   ];
 }
