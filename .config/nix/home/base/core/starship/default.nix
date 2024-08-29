@@ -26,7 +26,7 @@
       };
 
       kubernetes = {
-        format = "[$context \($namespace\)]($style)";
+        format = "[$context \($namespace \)]($style)";
         style = "fg:#f4b8e4";
         disabled = false;
 
