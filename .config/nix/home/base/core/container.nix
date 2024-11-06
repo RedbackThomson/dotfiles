@@ -17,6 +17,7 @@
     # Disabled until the installer fix is merged into nixpkgs
     # pkgs-unstable.kubeswitch
     tilt
+    cosign
 
     trivy
   ];
