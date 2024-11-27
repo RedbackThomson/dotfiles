@@ -21,7 +21,7 @@
     # and it's installed by home-manager if `theme` is specified.
     theme = "Catppuccin-Frappe";
     font = {
-      name = "MonaspiceNe Nerd Font Mono";
+      name = "MonaspiceNeNFM-Regular";
       # use different font size on macOS
       size = 12.5;
     };
