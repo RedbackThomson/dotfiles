@@ -64,7 +64,6 @@
     # otherwise Apple Store will refuse to install them.
     # For details, see https://github.com/mas-cli/mas
     masApps = {
-      "pomodoro" = 973134470;
     };
 
     taps = [
@@ -116,6 +115,7 @@
       "postman"
 
       "maccy"
+      "tomatobar"
 
       # Misc
       "raycast" # (HotKey: alt/option + space)search, caculate and run scripts(with many plugins)
