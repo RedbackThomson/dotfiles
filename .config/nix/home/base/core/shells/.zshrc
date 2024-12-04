@@ -12,18 +12,9 @@ source $HOME/scripts/kubectl-aliases.sh
 
 source <(compdef _switcher switch)
 
-export GOPATH=$(go env GOPATH)
-export GOBIN=$GOPATH/bin
-
 export PATH="/usr/local/bin:$PATH"
-export PATH="$GOBIN:$PATH"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH="/Applications/Docker.app/Contents/Resources/bin/:$PATH"
-
-if [[ -f '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]]; then
-  source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-  export NIX_PATH="$HOME/.config/.nix"
-fi
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
@@ -32,8 +23,6 @@ if command -v "switcher" >/dev/null 2>&1; then
   source <(switcher init zsh)
   source <(switch completion zsh)
 fi
-
-export EARTHLY_SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 
 export CLOUDSDK_PYTHON_SITEPACKAGES=1
 
