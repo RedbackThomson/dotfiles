@@ -23,6 +23,8 @@
   # Add ability to used TouchID for sudo authentication
   security.pam.enableSudoTouchIdAuth = true;
 
+  system.stateVersion = 5;
+
   # system = {
   #   # activationScripts are executed every time you boot the system or run `nixos-rebuild` / `darwin-rebuild`.
   #   activationScripts.postUserActivation.text = ''
@@ -163,13 +165,7 @@
 
   # Fonts
   fonts = {
-    # will be removed after this PR is merged:
-    #   https://github.com/LnL7/nix-darwin/pull/754
-    fontDir.enable = true;
-
-    # will change to `fonts.packages` after this PR is merged:
-    #   https://github.com/LnL7/nix-darwin/pull/754
-    fonts = with pkgs; [
+    packages = with pkgs; [
       # icon fonts
       material-design-icons
       font-awesome
@@ -177,19 +173,11 @@
       source-sans
       source-serif
 
-      # nerdfonts
-      # https://github.com/NixOS/nixpkgs/blob/nixos-23.11/pkgs/data/fonts/nerdfonts/shas.nix
-      (pkgs-unstable.nerdfonts.override {
-        fonts = [
-          # symbols icon only
-          "NerdFontsSymbolsOnly"
-          # Characters
-          "FiraCode"
-          "JetBrainsMono"
-          "Iosevka"
-          "Monaspace"
-        ];
-      })
+      pkgs-unstable.nerd-fonts.symbols-only
+      pkgs-unstable.nerd-fonts.fira-code
+      pkgs-unstable.nerd-fonts.jetbrains-mono
+      pkgs-unstable.nerd-fonts.iosevka
+      pkgs-unstable.nerd-fonts.monaspace
     ];
   };
 }

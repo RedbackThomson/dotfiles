@@ -8,7 +8,7 @@
   imports = [_1password-shell.hmModules.default];
 
   home.packages = [
-    pkgs._1password
+    pkgs._1password-cli
   ];
 
   programs._1password-shell-plugins = {
