@@ -7,23 +7,6 @@ in {
     enable = true;
     enableZshIntegration = false;
   };
-  programs.zsh.initExtra = ''
-    export ZELLIJ_AUTO_ATTACH=true
-
-    # auto start zellij
-    # except when in emacs or zellij itself
-    if [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != "vscode" ]]; then
-      if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
-        zellij attach -c
-      else
-        zellij
-      fi
-
-      if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
-        exit
-      fi
-    fi
-  '';
 
   home.shellAliases = shellAliases;
 
