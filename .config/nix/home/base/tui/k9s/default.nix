@@ -25,6 +25,7 @@
   xdg = {
     configFile = {
       "k9s/config.yaml".source = ./settings.yaml;
+      "k9s/plugins.yaml".source = ./plugins.yaml;
       "k9s/skins/catppuccin-frappe.yaml" = {
         source = "${
           pkgs-unstable.catppuccin.override {
