@@ -98,7 +98,7 @@
       "gnu-tar"
 
       "stow"
-      
+
       "yarn"
       "nvm"
 
@@ -115,7 +115,7 @@
       "postman"
 
       "maccy"
-      "tomatobar"
+      "lookaway" # Eye strain reminders
 
       # Misc
       "raycast" # (HotKey: alt/option + space)search, caculate and run scripts(with many plugins)
