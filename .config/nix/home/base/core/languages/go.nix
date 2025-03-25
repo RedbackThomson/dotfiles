@@ -15,7 +15,7 @@
 
   programs.go = {
     enable = true;
-    package = pkgs-unstable.go_1_22;
+    package = pkgs.go_1_23;
     goPrivate = [ "github.com/upbound" ];
   };
 
