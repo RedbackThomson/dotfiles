@@ -10,6 +10,7 @@
     viddy # A better version of `watch`
     earthly # CLI tool for running Earthfiles
     cloc # Count lines of code
+    ncdu # Disk usage analyzer
     
     terraform # Terraform CLI
     doctl # DigitalOcean CLI
