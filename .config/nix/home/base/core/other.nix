@@ -14,5 +14,7 @@
     
     terraform # Terraform CLI
     doctl # DigitalOcean CLI
+
+    devbox # Development environments
   ];
 }
