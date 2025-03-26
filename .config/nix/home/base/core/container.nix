@@ -5,8 +5,6 @@
   ...
 }: {
   home.packages = with pkgs; [
-    docker-compose
-
     argocd
     fluxcd
     istioctl

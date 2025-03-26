@@ -14,7 +14,6 @@ source <(compdef _switcher switch)
 
 export PATH="/usr/local/bin:$PATH"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-export PATH="/Applications/Docker.app/Contents/Resources/bin/:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
