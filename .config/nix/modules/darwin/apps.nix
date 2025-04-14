@@ -114,8 +114,9 @@
       "visual-studio-code"
       "postman"
 
-      "maccy"
+      "maccy" # Clipboard manager
       "lookaway" # Eye strain reminders
+      "jordanbaird-ice" # Menu bar tool
 
       # Misc
       "raycast" # (HotKey: alt/option + space)search, caculate and run scripts(with many plugins)
