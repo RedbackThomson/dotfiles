@@ -25,6 +25,20 @@
 
   system.stateVersion = 5;
 
+  system = {
+    defaults = {
+      NSGlobalDomain = {
+        "NSWindowShouldDragOnGesture" = true; # allow dragging windows with ctrl + cmd
+        "NSAutomaticWindowAnimationsEnabled" = false; # disable window animations
+        "_HIHideMenuBar" = true; # Hide the top menu bar
+      };
+
+      spaces = {
+        "spans-displays" = true; # Displays have separate Spaces
+      };
+    };
+  };
+
   # system = {
   #   # activationScripts are executed every time you boot the system or run `nixos-rebuild` / `darwin-rebuild`.
   #   activationScripts.postUserActivation.text = ''

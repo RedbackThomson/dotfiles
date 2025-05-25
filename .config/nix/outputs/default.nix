@@ -24,6 +24,8 @@
         overlays = [
           (final: prev: {
             zjstatus = zjstatus.packages.${prev.system}.default;
+            sbarLua = prev.callPackage "${self}/packages/sketchybar/helpers/sbar.nix" { };
+            sketchybarConfigLua = prev.callPackage "${self}/packages/sketchybar" { };
           })
         ];
       };
