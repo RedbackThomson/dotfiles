@@ -25,17 +25,6 @@ sbar.default({
 		padding_left = settings.paddings,
 		padding_right = settings.paddings,
 	},
-	background = {
-		height = 28,
-		corner_radius = 9,
-		border_width = 2,
-		border_color = colors.bg2,
-		image = {
-			corner_radius = 9,
-			border_color = colors.grey,
-			border_width = 1,
-		},
-	},
 	popup = {
 		background = {
 			border_width = 2,

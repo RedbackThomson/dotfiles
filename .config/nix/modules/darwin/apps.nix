@@ -59,6 +59,10 @@ in
   services.sketchybar = {
     enable = true;
     package = pkgs.sketchybar;
+    extraPackages = with pkgs; [
+      sbarMenus
+      sbarEvents
+    ];
     config = # lua
       ''
         #!${lua}/bin/lua

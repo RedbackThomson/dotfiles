@@ -26,6 +26,8 @@
             zjstatus = zjstatus.packages.${prev.system}.default;
             sbarLua = prev.callPackage "${self}/packages/sketchybar/helpers/sbar.nix" { };
             sketchybarConfigLua = prev.callPackage "${self}/packages/sketchybar" { };
+            sbarMenus = prev.callPackage "${self}/packages/sketchybar/helpers/menus" { };
+            sbarEvents = prev.callPackage "${self}/packages/sketchybar/helpers/event_providers" { };
           })
         ];
       };

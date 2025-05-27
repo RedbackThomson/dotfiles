@@ -1,28 +1,28 @@
 local colors = {
-	black = 0xff181819,
-	white = 0xffe2e2e3,
-	red = 0xfffc5d7c,
-	green = 0xff9ed072,
-	blue = 0xff76cce0,
-	yellow = 0xffe7c664,
-	orange = 0xfff39660,
-	magenta = 0xffb39df3,
-	grey = 0xff7f8490,
+	black = 0xff232634,       -- mantle
+	white = 0xffc6d0f5,       -- text
+	red = 0xffe78284,         -- red
+	green = 0xffa6d189,       -- green
+	blue = 0xff8caaee,        -- blue
+	yellow = 0xffe5c890,      -- yellow
+	orange = 0xffef9f76,      -- peach
+	magenta = 0xffca9ee6,     -- mauve
+	grey = 0xff737994,        -- surface2
 	transparent = 0x00000000,
 
 	bar = {
-		bg = 0xf02c2e34,
-		border = 0xff2c2e34,
+		bg = 0xff303446,       -- base
+		border = 0xff303446,   -- base
 	},
 
 	popup = {
-		bg = 0xc02c2e34,
-		border = 0xff7f8490,
+		bg = 0xcc303446,       -- base with alpha (~80%)
+		border = 0xff737994,   -- surface2
 	},
 
-	bg1 = 0xff363944,
-	bg2 = 0xff414550,
-	bg3 = 0xff4c4f5a,
+	bg1 = 0xff414559,         -- surface0
+	bg2 = 0xff51576d,         -- surface1
+	bg3 = 0xff626880,         -- surface2
 
 	with_alpha = function(color, alpha)
 		if alpha > 1.0 or alpha < 0.0 then
