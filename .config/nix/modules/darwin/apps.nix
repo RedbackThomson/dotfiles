@@ -4,13 +4,7 @@
   pkgs,
   pkgs-unstable,
   ...
-}: let
-  lua = pkgs.lua54Packages.lua.withPackages (ps: [
-    ps.lua
-    pkgs.sbarLua
-    pkgs.sketchybarConfigLua
-  ]);
-in
+}:
   ##########################################################################
   #
   #  Install all apps and packages here.
@@ -53,23 +47,6 @@ in
     environment.shells = [
       pkgs.zsh
     ];
-
-    services.sketchybar = {
-      enable = true;
-      package = pkgs.sketchybar;
-      extraPackages = with pkgs; [
-        sbarMenus
-        sbarEvents
-      ];
-      config =
-        # lua
-        ''
-          #!${lua}/bin/lua
-          package.cpath = package.cpath .. ";${lua}/lib/?.so"
-
-          require("init")
-        '';
-    };
 
     # homebrew need to be installed manually, see https://brew.sh
     # https://github.com/LnL7/nix-darwin/blob/master/modules/homebrew.nix
