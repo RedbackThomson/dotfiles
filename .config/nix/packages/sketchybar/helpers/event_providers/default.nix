@@ -1,10 +1,14 @@
-{ lib, stdenv, ... }:
-
+{
+  lib,
+  stdenv,
+  ...
+}:
 stdenv.mkDerivation {
   name = "event_providers";
   src = lib.cleanSource ./.;
 
-  installPhase = # bash
+  installPhase =
+    # bash
     ''
       mkdir -p $out/bin
       cp cpu_load/bin/cpu_load $out/bin/sbar_cpu_load

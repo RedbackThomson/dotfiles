@@ -14,7 +14,7 @@
 in
   nix-darwin.lib.darwinSystem {
     inherit system specialArgs;
-    modules = 
+    modules =
       darwin-modules
       ++ [darwin-custom-icons.darwinModules.default]
       ++ [

@@ -29,7 +29,7 @@
       "k9s/skins/catppuccin-frappe.yaml" = {
         source = "${
           pkgs-unstable.catppuccin.override {
-            themeList = [ "k9s" ];
+            themeList = ["k9s"];
             variant = "frappe";
             accent = "sapphire";
           }

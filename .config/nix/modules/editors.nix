@@ -4,8 +4,7 @@
   pkgs-unstable,
   pkgs,
   ...
-}:
-{
+}: {
   imports = mylib.scanPaths ./.;
 
   programs.zed-editor = {
@@ -72,13 +71,13 @@
         languageserver = {
           go = {
             command = "gopls";
-            rootPatterns = [ "go.mod" ];
-            filetypes = [ "go" ];
+            rootPatterns = ["go.mod"];
+            filetypes = ["go"];
           };
         };
       };
     };
-    extraPackages = [ pkgs.nodejs pkgs.gopls ];
+    extraPackages = [pkgs.nodejs pkgs.gopls];
     extraConfig = ''
       set hidden
       set autoindent
@@ -97,66 +96,65 @@
       set tw=80
       set signcolumn=yes:2
     '';
-    plugins = with pkgs.vimPlugins;
-      [
-        vim-nix
-        {
-          plugin = nvim-treesitter.withAllGrammars;
-          config = ''
-            set foldmethod=expr
-            set foldexpr=nvim_treesitter#foldexpr()
-            set nofoldenable
+    plugins = with pkgs.vimPlugins; [
+      vim-nix
+      {
+        plugin = nvim-treesitter.withAllGrammars;
+        config = ''
+          set foldmethod=expr
+          set foldexpr=nvim_treesitter#foldexpr()
+          set nofoldenable
 
-            lua << END
-              require('nvim-treesitter.configs').setup {
-                indent = {
-                  enable = true
-                }
+          lua << END
+            require('nvim-treesitter.configs').setup {
+              indent = {
+                enable = true
               }
-            END
-          '';
-        }
-        {
-          plugin = catppuccin-nvim;
-          config = ''
-            lua << END
-              require('catppuccin').setup {
-                flavour = "frappe"
+            }
+          END
+        '';
+      }
+      {
+        plugin = catppuccin-nvim;
+        config = ''
+          lua << END
+            require('catppuccin').setup {
+              flavour = "frappe"
+            }
+            vim.cmd.colorscheme "catppuccin"
+          END
+        '';
+      }
+      {
+        plugin = gitsigns-nvim;
+        config = ''
+          lua << END
+            require('gitsigns').setup()
+          END
+        '';
+      }
+      {
+        plugin = lualine-nvim;
+        config = ''
+          lua << END
+            require('lualine').setup {
+              options = {
+                icons_enabled = false,
+                section_separators = ' ',
+                component_separators = ' ',
               }
-              vim.cmd.colorscheme "catppuccin"
-            END
-          '';
-        }
-        {
-          plugin = gitsigns-nvim;
-          config = ''
-            lua << END
-              require('gitsigns').setup()
-            END
-          '';
-        }
-        {
-          plugin = lualine-nvim;
-          config = ''
-            lua << END
-              require('lualine').setup {
-                options = {
-                  icons_enabled = false,
-                  section_separators = ' ',
-                  component_separators = ' ',
-                }
-              }
-            END
-          '';
-        }
-        {
-          plugin = barbecue-nvim;
-          config = ''
-            lua << END
-              require("barbecue").setup()
-            END
-          '';
-        }
-      ];
+            }
+          END
+        '';
+      }
+      {
+        plugin = barbecue-nvim;
+        config = ''
+          lua << END
+            require("barbecue").setup()
+          END
+        '';
+      }
+    ];
   };
-} 
+}

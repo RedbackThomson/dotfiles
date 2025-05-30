@@ -1,5 +1,4 @@
-# ... existing code from home/base/core/btop.nix ... 
-
+# ... existing code from home/base/core/btop.nix ...
 {
   pkgs,
   nur-ryan4yin,
@@ -16,4 +15,4 @@
       theme_background = false; # make btop transparent
     };
   };
-} 
+}

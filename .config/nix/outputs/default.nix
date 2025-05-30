@@ -24,10 +24,10 @@
         overlays = [
           (final: prev: {
             zjstatus = zjstatus.packages.${prev.system}.default;
-            sbarLua = prev.callPackage "${self}/packages/sketchybar/helpers/sbar.nix" { };
-            sketchybarConfigLua = prev.callPackage "${self}/packages/sketchybar" { };
-            sbarMenus = prev.callPackage "${self}/packages/sketchybar/helpers/menus" { };
-            sbarEvents = prev.callPackage "${self}/packages/sketchybar/helpers/event_providers" { };
+            sbarLua = prev.callPackage "${self}/packages/sketchybar/helpers/sbar.nix" {};
+            sketchybarConfigLua = prev.callPackage "${self}/packages/sketchybar" {};
+            sbarMenus = prev.callPackage "${self}/packages/sketchybar/helpers/menus" {};
+            sbarEvents = prev.callPackage "${self}/packages/sketchybar/helpers/event_providers" {};
           })
         ];
       };
@@ -103,49 +103,11 @@ in {
         src = mylib.relativeToRoot ".";
         hooks = {
           alejandra.enable = true; # formatter
-          typos.enable = true; # Source code spell checker
-          prettier.enable = true;
-          # deadnix.enable = true; # detect unused variable bindings in `*.nix`
-          # statix.enable = true; # lints and suggestions for Nix code(auto suggestions)
+          # typos.enable = true; # Source code spell checker
+          # prettier.enable = true;
+          deadnix.enable = true; # detect unused variable bindings in `*.nix`
+          statix.enable = true; # lints and suggestions for Nix code(auto suggestions)
         };
-        settings = {
-          typos = {
-            write = true; # Automatically fix typos
-            configPath = "./.typos.toml"; # relative to the flake root
-          };
-          prettier = {
-            write = true; # Automatically format files
-            configPath = "./.prettierrc.yaml"; # relative to the flake root
-          };
-        };
-      };
-    }
-  );
-
-  # Development Shells
-  devShells = forAllSystems (
-    system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      default = pkgs.mkShell {
-        packages = with pkgs; [
-          # fix https://discourse.nixos.org/t/non-interactive-bash-errors-from-flake-nix-mkshell/33310
-          bashInteractive
-          # fix `cc` replaced by clang, which causes nvim-treesitter compilation error
-          gcc
-          # Nix-related
-          alejandra
-          deadnix
-          statix
-          # spell checker
-          typos
-          # code formatter
-          nodePackages.prettier
-        ];
-        name = "dots";
-        shellHook = ''
-          ${self.checks.${system}.pre-commit-check.shellHook}
-        '';
       };
     }
   );

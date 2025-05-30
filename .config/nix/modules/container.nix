@@ -1,5 +1,4 @@
-# ... existing code from home/base/core/container.nix ... 
-
+# ... existing code from home/base/core/container.nix ...
 {
   pkgs,
   pkgs-unstable,
@@ -21,4 +20,4 @@
 
     trivy
   ];
-} 
+}

@@ -1,5 +1,4 @@
-# ... existing code from home/base/core/ssh.nix ... 
-
+# ... existing code from home/base/core/ssh.nix ...
 {mysecrets, ...}: {
   programs.ssh = {
     enable = true;
@@ -12,8 +11,8 @@
         hostname = "github.com";
         user = "git";
         forwardAgent = false;
-        extraOptions = { preferredAuthentications = "publickey"; };
+        extraOptions = {preferredAuthentications = "publickey";};
       };
     };
   };
-} 
+}

@@ -1,4 +1,8 @@
-{myvars, pkgs, ...}: {
+{
+  myvars,
+  pkgs,
+  ...
+}: {
   environment.customIcons = {
     enable = true;
     icons = [

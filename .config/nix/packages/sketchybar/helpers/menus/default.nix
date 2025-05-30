@@ -4,7 +4,6 @@
   darwin,
   ...
 }:
-
 stdenv.mkDerivation {
   name = "menus";
   src = lib.cleanSource ./.;

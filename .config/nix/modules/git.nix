@@ -1,5 +1,4 @@
-# ... existing code from home/base/core/git.nix ... 
-
+# ... existing code from home/base/core/git.nix ...
 {
   config,
   lib,
@@ -48,7 +47,7 @@
       rebase.autosquash = true;
 
       url = {
-        "git@github.com:" = { insteadOf = "https://github.com/"; };
+        "git@github.com:" = {insteadOf = "https://github.com/";};
       };
     };
 
@@ -84,4 +83,4 @@
       nonexist = "remote prune origin --dry-run"; # list non-exist(remote) branches via `git nonexist`
     };
   };
-} 
+}

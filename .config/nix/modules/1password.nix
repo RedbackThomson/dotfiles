@@ -1,5 +1,4 @@
-# ... existing code from home/base/core/apps/1password.nix ... 
-
+# ... existing code from home/base/core/apps/1password.nix ...
 {
   pkgs,
   _1password-shell,
@@ -15,7 +14,7 @@
 
   programs._1password-shell-plugins = {
     enable = true;
-    plugins = with pkgs; [ gh ];
+    plugins = with pkgs; [gh];
   };
 
   programs.git = {
@@ -35,4 +34,4 @@
       IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
     '';
   };
-} 
+}

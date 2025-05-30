@@ -2,8 +2,7 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   shellAliases = {
     k = "kubectl";
     kubectx = "switch";
@@ -46,9 +45,9 @@ in {
       }
     ];
     localVariables = {
-      ZSH_AUTOSUGGEST_STRATEGY = [ "history" "completion" ];
+      ZSH_AUTOSUGGEST_STRATEGY = ["history" "completion"];
     };
-    initExtra = (builtins.readFile ./.zshrc);
+    initExtra = builtins.readFile ./.zshrc;
   };
 
   programs.bash = {

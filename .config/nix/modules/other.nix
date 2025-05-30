@@ -1,5 +1,4 @@
-# ... existing code from home/base/core/other.nix ... 
-
+# ... existing code from home/base/core/other.nix ...
 {
   pkgs,
   attic,
@@ -13,8 +12,8 @@
     earthly # CLI tool for running Earthfiles
     cloc # Count lines of code
     ncdu # Disk usage analyzer
-    
+
     terraform # Terraform CLI
     doctl # DigitalOcean CLI
   ];
-} 
+}
