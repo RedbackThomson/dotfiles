@@ -16,16 +16,12 @@
   modules = {
     darwin-modules =
       (map mylib.relativeToRoot [
-        # common
         "modules/darwin"
         # host specific
-        "hosts/${name}"
+        "profiles/work-laptop.nix"
       ])
       ++ [];
-    home-modules = map mylib.relativeToRoot [
-      "hosts/${name}/home.nix"
-      "home/darwin"
-    ];
+    home-modules = [];
   };
 
   systemArgs = modules // args;

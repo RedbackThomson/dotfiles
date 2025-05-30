@@ -57,7 +57,7 @@ in
   ];
 
   services.sketchybar = {
-    enable = true;
+    enable = false;
     package = pkgs.sketchybar;
     extraPackages = with pkgs; [
       sbarMenus
