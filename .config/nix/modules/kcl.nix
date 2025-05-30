@@ -1,9 +1,5 @@
 # ... existing code from home/base/core/languages/kcl.nix ...
-{
-  pkgs,
-  pkgs-unstable,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     kcl
   ];

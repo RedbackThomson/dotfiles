@@ -28,31 +28,26 @@ in
   #
   ##########################################################################
   {
-    # Install packages from nix's official package repository.
-    #
-    # The packages installed here are available to all users, and are reproducible across machines, and are rollbackable.
-    # But on macOS, it's less stable than homebrew.
-    #
-    # Related Discussion: https://discourse.nixos.org/t/darwin-again/29331
-    environment.systemPackages = with pkgs; [
-      neovim
-      git
-      gnugrep # replacee macos's grep
-      gnutar # replacee macos's tar
-    ];
-    environment.variables = {
-      # Fix https://github.com/LnL7/nix-darwin/wiki/Terminfo-issues
-      TERMINFO_DIRS = map (path: path + "/share/terminfo") config.environment.profiles ++ ["/usr/share/terminfo"];
-
-      EDITOR = "nvim";
+    environment = {
+      systemPackages = with pkgs; [
+        neovim
+        git
+        gnugrep # replacee macos's grep
+        gnutar # replacee macos's tar
+      ];
+      variables = {
+        # Fix https://github.com/LnL7/nix-darwin/wiki/Terminfo-issues
+        TERMINFO_DIRS = map (path: path + "/share/terminfo") config.environment.profiles ++ ["/usr/share/terminfo"];
+        EDITOR = "nvim";
+      };
+      shells = [
+        pkgs.zsh
+      ];
     };
 
     # Create /etc/zshrc that loads the nix-darwin environment.
     # this is required if you want to use darwin's default shell - zsh
     programs.zsh.enable = true;
-    environment.shells = [
-      pkgs.zsh
-    ];
 
     services.sketchybar = {
       enable = false;

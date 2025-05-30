@@ -37,11 +37,15 @@
   ];
 
   # Host-specific settings
-  home.username = "nicholasthomson";
-  home.homeDirectory = "/Users/nicholasthomson";
+  home = {
+    username = "nicholasthomson";
+    homeDirectory = "/Users/nicholasthomson";
+    file = {
+      ".kube/switch-config.yaml".source = ../hosts/nicholasworkmbp/kubeswitch/switch-config.yaml;
+    };
+  };
 
   xdg.configFile."kubeconfigs/ops.yaml".source = ../hosts/nicholasworkmbp/kubeswitch/ops.yaml;
-  home.file.".kube/switch-config.yaml".source = ../hosts/nicholasworkmbp/kubeswitch/switch-config.yaml;
 
   networking.hostName = "nicholasworkmbp";
   networking.computerName = "nicholasworkmbp";

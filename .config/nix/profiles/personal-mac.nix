@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{...}: {
   imports = [
     # Editors
     ../modules/neovim.nix
@@ -37,8 +33,10 @@
   ];
 
   # Host-specific settings
-  home.username = "nicholasthomson";
-  home.homeDirectory = "/Users/nicholasthomson";
+  home = {
+    username = "nicholasthomson";
+    homeDirectory = "/Users/nicholasthomson";
+  };
 
   programs.ssh = {
     enable = true;

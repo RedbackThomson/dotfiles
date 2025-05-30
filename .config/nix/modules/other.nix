@@ -1,10 +1,4 @@
-# ... existing code from home/base/core/other.nix ...
-{
-  pkgs,
-  attic,
-  nur-ryan4yin,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     neofetch # Display system settings and information
     vhs # Record, replay and export command line history

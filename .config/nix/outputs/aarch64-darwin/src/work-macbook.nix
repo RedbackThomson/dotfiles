@@ -14,13 +14,11 @@
   name = "nicholasworkmbp";
 
   modules = {
-    darwin-modules =
-      (map mylib.relativeToRoot [
-        "modules/darwin"
-        # host specific
-        "profiles/work-laptop.nix"
-      ])
-      ++ [];
+    darwin-modules = map mylib.relativeToRoot [
+      "modules/darwin"
+      # host specific
+      "profiles/work-laptop.nix"
+    ];
     home-modules = [];
   };
 

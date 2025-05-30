@@ -22,7 +22,7 @@
         # To use 1Password, we need to allow the installation of non-free software
         config.allowUnfree = true;
         overlays = [
-          (final: prev: {
+          (prev: {
             zjstatus = zjstatus.packages.${prev.system}.default;
             sbarLua = prev.callPackage "${self}/packages/sketchybar/helpers/sbar.nix" {};
             sketchybarConfigLua = prev.callPackage "${self}/packages/sketchybar" {};
@@ -55,7 +55,6 @@
   allSystemNames = builtins.attrNames allSystems;
   nixosSystemValues = builtins.attrValues nixosSystems;
   darwinSystemValues = builtins.attrValues darwinSystems;
-  allSystemValues = nixosSystemValues ++ darwinSystemValues;
 
   # Helper function to generate a set of attributes for each system
   forAllSystems = func: (nixpkgs.lib.genAttrs allSystemNames func);
@@ -66,27 +65,6 @@ in {
   # NixOS Hosts
   nixosConfigurations =
     lib.attrsets.mergeAttrsList (map (it: it.nixosConfigurations or {}) nixosSystemValues);
-
-  # Colmena - remote deployment via SSH
-  colmena =
-    {
-      meta =
-        (
-          let
-            system = "x86_64-linux";
-          in {
-            # colmena's default nixpkgs & specialArgs
-            nixpkgs = import nixpkgs {inherit system;};
-            specialArgs = genSpecialArgs system;
-          }
-        )
-        // {
-          # per-node nixpkgs & specialArgs
-          nodeNixpkgs = lib.attrsets.mergeAttrsList (map (it: it.colmenaMeta.nodeNixpkgs or {}) nixosSystemValues);
-          nodeSpecialArgs = lib.attrsets.mergeAttrsList (map (it: it.colmenaMeta.nodeSpecialArgs or {}) nixosSystemValues);
-        };
-    }
-    // lib.attrsets.mergeAttrsList (map (it: it.colmena or {}) nixosSystemValues);
 
   # macOS Hosts
   darwinConfigurations =
@@ -107,6 +85,15 @@ in {
           # prettier.enable = true;
           deadnix.enable = true; # detect unused variable bindings in `*.nix`
           statix.enable = true; # lints and suggestions for Nix code(auto suggestions)
+          # If you want to enable settings for a hook, use hooks.<hook>.settings
+          # hooks.typos.settings = {
+          #   write = true;
+          #   configPath = "./.typos.toml";
+          # };
+          # hooks.prettier.settings = {
+          #   write = true;
+          #   configPath = "./.prettierrc.yaml";
+          # };
         };
       };
     }

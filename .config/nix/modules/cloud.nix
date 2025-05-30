@@ -1,9 +1,4 @@
-# ... existing code from home/base/tui/cloud/default.nix ...
-{
-  lib,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     # aws
     awscli2

@@ -12,26 +12,26 @@
     pkgs._1password-cli
   ];
 
-  programs._1password-shell-plugins = {
-    enable = true;
-    plugins = with pkgs; [gh];
-  };
-
-  programs.git = {
-    extraConfig = {
-      commit.gpgsign = true;
-      user.signingkey = myvars.signingkey;
-      gpg = {
-        format = "ssh";
-        ssh.program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+  programs = {
+    _1password-shell-plugins = {
+      enable = true;
+      plugins = with pkgs; [gh];
+    };
+    git = {
+      extraConfig = {
+        commit.gpgsign = true;
+        user.signingkey = myvars.signingkey;
+        gpg = {
+          format = "ssh";
+          ssh.program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+        };
       };
     };
-  };
-
-  programs.ssh = {
-    forwardAgent = true;
-    extraConfig = ''
-      IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-    '';
+    ssh = {
+      forwardAgent = true;
+      extraConfig = ''
+        IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+      '';
+    };
   };
 }
