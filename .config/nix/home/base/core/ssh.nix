@@ -10,7 +10,7 @@
         hostname = "github.com";
         user = "git";
         forwardAgent = false;
-        extraOptions = { preferredAuthentications = "publickey"; };
+        extraOptions = {preferredAuthentications = "publickey";};
       };
     };
   };

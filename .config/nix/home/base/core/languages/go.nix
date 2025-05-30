@@ -16,7 +16,7 @@
   programs.go = {
     enable = true;
     package = pkgs.go_1_23;
-    goPrivate = [ "github.com/upbound" ];
+    goPrivate = ["github.com/upbound"];
   };
 
   programs.zsh.initExtra = ''

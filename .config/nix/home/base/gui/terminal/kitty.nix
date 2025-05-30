@@ -27,17 +27,16 @@
     };
 
     keybindings = {
-      "cmd+c" =             "copy_to_clipboard";
-      "cmd+v" =             "paste_from_clipboard";
-      "shift+insert" =      "paste_from_clipboard";
-      "alt+backspace" =     "send_text all \\x17";
-      "super+backspace" =   "send_text all \\x15";
-      "cmd+right" =         "send_text all \\x1b[F";
-      "cmd+left" =          "send_text all \\x1b[H";
-      "alt+left" =          "send_text all \\x1b\\x62";
-      "alt+right" =         "send_text all \\x1b\\x66";
+      "cmd+c" = "copy_to_clipboard";
+      "cmd+v" = "paste_from_clipboard";
+      "shift+insert" = "paste_from_clipboard";
+      "alt+backspace" = "send_text all \\x17";
+      "super+backspace" = "send_text all \\x15";
+      "cmd+right" = "send_text all \\x1b[F";
+      "cmd+left" = "send_text all \\x1b[H";
+      "alt+left" = "send_text all \\x1b\\x62";
+      "alt+right" = "send_text all \\x1b\\x66";
     };
-
 
     settings = {
       background_opacity = "0.94";
