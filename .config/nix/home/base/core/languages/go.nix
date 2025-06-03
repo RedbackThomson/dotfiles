@@ -19,7 +19,7 @@
     goPrivate = ["github.com/upbound"];
   };
 
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
     export GOROOT=$(go env GOROOT)
     export GOPATH=$(go env GOPATH)
     export GOBIN=$GOPATH/bin
