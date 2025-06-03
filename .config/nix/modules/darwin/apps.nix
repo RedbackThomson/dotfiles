@@ -33,6 +33,7 @@
       git
       gnugrep # replacee macos's grep
       gnutar # replacee macos's tar
+      code-cursor
     ];
     environment.variables = {
       # Fix https://github.com/LnL7/nix-darwin/wiki/Terminfo-issues
