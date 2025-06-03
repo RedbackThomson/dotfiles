@@ -47,7 +47,7 @@ in {
     localVariables = {
       ZSH_AUTOSUGGEST_STRATEGY = ["history" "completion"];
     };
-    initExtra = builtins.readFile ./.zshrc;
+    initContent = builtins.readFile ./.zshrc;
   };
 
   programs.bash = {
