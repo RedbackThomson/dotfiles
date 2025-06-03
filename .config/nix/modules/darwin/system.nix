@@ -30,7 +30,7 @@
       NSGlobalDomain = {
         "NSWindowShouldDragOnGesture" = true; # allow dragging windows with ctrl + cmd
         "NSAutomaticWindowAnimationsEnabled" = false; # disable window animations
-        "_HIHideMenuBar" = true; # Hide the top menu bar
+        "_HIHideMenuBar" = false; # Hide the top menu bar
       };
 
       spaces = {
