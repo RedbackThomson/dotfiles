@@ -15,14 +15,7 @@
 
   programs.go = {
     enable = true;
-    package = pkgs.go_1_23;
+    package = pkgs.go_1_24;
     goPrivate = ["github.com/upbound"];
   };
-
-  programs.zsh.initContent = ''
-    export GOROOT=$(go env GOROOT)
-    export GOPATH=$(go env GOPATH)
-    export GOBIN=$GOPATH/bin
-    export PATH="$GOBIN:$PATH"
-  '';
 }
