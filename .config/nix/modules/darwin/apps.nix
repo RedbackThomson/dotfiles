@@ -115,7 +115,6 @@
         "visual-studio-code"
         "postman"
 
-        "maccy" # Clipboard manager
         "lookaway" # Eye strain reminders
         "jordanbaird-ice" # Menu bar tool
 
