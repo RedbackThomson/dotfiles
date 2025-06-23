@@ -14,6 +14,7 @@
   '';
 
   home.packages = with pkgs; [
+    act # Run GitHub Actions locally
   ];
 
   programs.git = {
