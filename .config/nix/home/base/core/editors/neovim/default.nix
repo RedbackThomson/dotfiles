@@ -344,6 +344,60 @@ in
             sha256 = "1kqb4ljlwypilq23y5d83njh08z5w8mlk323qcqp521jvmbmkcya";
           };
         })
+        plenary-nvim
+        FixCursorHold-nvim
+        nvim-nio
+        neotest-go
+        neotest-rust
+        {
+          plugin = neotest;
+          type = "lua";
+          config = ''
+            require("neotest").setup({
+              adapters = {
+                require("neotest-go"),
+                require("neotest-rust"),
+              },
+              status = { virtual_text = true },
+              output = { open_on_run = true },
+              quickfix = {
+                open = function()
+                  require("trouble").open({mode="quickfix", focus=false})
+                end
+              },
+            })
+            
+            -- Test keymaps
+            vim.keymap.set("n", "<leader>tc", function()
+              require("neotest").run.run()
+            end, { desc = "Test current method" })
+            vim.keymap.set("n", "<leader>tf", function()
+              require("neotest").run.run(vim.fn.expand("%"))
+            end, { desc = "Test current file" })
+            vim.keymap.set("n", "<leader>tp", function()
+              require("neotest").run.run({ suite = true })
+            end, { desc = "Test current package" })
+            
+            -- Debug test keymaps
+            vim.keymap.set("n", "<leader>tdc", function()
+              require("neotest").run.run({ strategy = "dap" })
+            end, { desc = "Debug test current method" })
+            vim.keymap.set("n", "<leader>tdf", function()
+              require("neotest").run.run(vim.fn.expand("%"), { strategy = "dap" })
+            end, { desc = "Debug test current file" })
+            vim.keymap.set("n", "<leader>tdp", function()
+              require("neotest").run.run({ suite = true, strategy = "dap" })
+            end, { desc = "Debug test current package" })
+            
+            -- Test summary and results keymaps
+            vim.keymap.set("n", "<leader>ts", function()
+              require("neotest").summary.open()
+            end, { desc = "Open test summary" })
+            vim.keymap.set("n", "<leader>tr", function()
+              require("neotest").output.open({ enter = true })
+            end, { desc = "Open test results under cursor" })
+          '';
+        }
       ];
     };
   };
