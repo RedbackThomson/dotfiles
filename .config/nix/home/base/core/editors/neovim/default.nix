@@ -31,6 +31,10 @@ in
         vim.opt.swapfile = false
         vim.opt.termguicolors = true
         vim.opt.diffopt = "vertical,iwhite,hiddenoff,foldcolumn:0,context:4,algorithm:histogram,indent-heuristic"
+        vim.opt.tabstop = 4
+        vim.opt.shiftwidth = 4
+        vim.opt.expandtab = true
+        vim.opt.smartindent = true
 
         vim.diagnostic.config({
           virtual_text = {
@@ -74,25 +78,6 @@ in
           end,
         })
       '';
-      extraConfig = ''
-        set hidden
-        set autoindent
-        set smartindent
-        set showmatch
-        set incsearch
-        set noerrorbells
-        set number
-        set numberwidth=4
-        set rnu
-        set nowrap
-        set showcmd
-        set scrolloff=3
-        set backspace=2
-        set completeopt=menuone,noselect
-        set mouse-=a
-        set tw=80
-        set signcolumn=yes:2
-      '';
       plugins = with pkgs.vimPlugins; [
         vim-nix
         rustaceanvim
@@ -116,7 +101,11 @@ in
               },
               indent = {
                 enable = true
-              }
+              },
+              highlight = {
+                enable = true,
+                additional_vim_regex_highlighting = false,
+              },
             }
           '';
         }
@@ -178,42 +167,55 @@ in
               })
             '';
         }
+        {
+          plugin = cmp-nvim-lsp;
+          type = "lua";
+          config = ''
+            local lspconfig = require('lspconfig')
+            local capabilities = require('cmp_nvim_lsp').default_capabilities()
+            lspconfig.gopls.setup({
+              capabilities = capabilities,
+            })
+            lspconfig.ts_ls.setup({
+              capabilities = capabilities,
+            })
+          '';
+        }
         cmp-buffer
-        cmp-nvim-lsp
         cmp-nvim-lsp-signature-help
         cmp-nvim-lua
         cmp-path
         vim-vsnip
         {
-        plugin = nvim-tree-lua;
-        type = "lua";
-        config = ''
-          require("nvim-tree").setup {
-            update_focused_file = {
-              enable = true
+          plugin = nvim-tree-lua;
+          type = "lua";
+          config = ''
+            require("nvim-tree").setup {
+              update_focused_file = {
+                enable = true
+              }
             }
-          }
 
-          vim.api.nvim_create_autocmd({"QuitPre"}, {
-            callback = function()
-              vim.cmd("NvimTreeClose")
+            vim.api.nvim_create_autocmd({"QuitPre"}, {
+              callback = function()
+                vim.cmd("NvimTreeClose")
+              end
+            })
+
+            local function open_nvim_tree(data)
+              local real_file = vim.fn.filereadable(data.file) == 1
+              local no_name = data.file == "" and vim.bo[data.buf].buftype == ""
+
+              if not real_file and not no_name then
+                return
+              end
+
+              require("nvim-tree.api").tree.toggle({ focus = false, find_file = true })
             end
-          })
 
-          local function open_nvim_tree(data)
-            local real_file = vim.fn.filereadable(data.file) == 1
-            local no_name = data.file == "" and vim.bo[data.buf].buftype == ""
-
-            if not real_file and not no_name then
-              return
-            end
-
-            require("nvim-tree.api").tree.toggle({ focus = false, find_file = true })
-          end
-
-          vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
-        '';
-      }
+            vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+          '';
+        }
         {
           plugin = catppuccin-nvim;
           type = "lua";
@@ -270,11 +272,51 @@ in
             map("n", "HL", ":HopLineStart<cr>")
           '';
         }
+        telescope-fzf-native-nvim
         {
           plugin = telescope-nvim;
           type = "lua";
           config = ''
-            require("telescope").setup()
+            local telescope = require("telescope")
+            telescope.setup({
+              defaults = {
+                file_ignore_patterns = {
+                  "node_modules",
+                  "dist",
+                  "build",
+                  "target",
+                  "vendor",
+                  ".git"
+                },
+                vimgrep_arguments = {
+                  "rg",
+                  "--color=never",
+                  "--no-heading",
+                  "--with-filename",
+                  "--line-number",
+                  "--column",
+                  "--smart-case",
+                  "--hidden",
+                },
+              },
+              pickers = {
+                find_files = {
+                  hidden = true,
+                },
+                live_grep = {
+                },
+              },
+              extensions = {
+                fzf = {
+                  fuzzy = true,                    -- false will only do exact matching
+                  override_generic_sorter = true,  -- override the generic sorter
+                  override_file_sorter = true,     -- override the file sorter
+                  case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                },
+              },
+            })
+            telescope.load_extension("fzf")
+
 
             local map = require("keys").map
             local builtin = require("telescope.builtin")
