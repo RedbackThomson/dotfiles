@@ -46,6 +46,7 @@ in {
     ];
     localVariables = {
       ZSH_AUTOSUGGEST_STRATEGY = ["history" "completion"];
+      GOBIN = "$HOME/.local/bin";
     };
     initContent = builtins.readFile ./.zshrc;
   };
@@ -55,6 +56,8 @@ in {
     enableCompletion = true;
     bashrcExtra = ''
       export PATH="$HOME/.local/bin:$HOME/go/bin:$PATH"
+      export GOBIN=$HOME/.local/bin
+      mkdir -p $GOBIN
     '';
   };
 }

@@ -12,7 +12,6 @@ source $HOME/scripts/kubectl-aliases.sh
 
 source <(compdef _switcher switch)
 
-export PATH="/usr/local/bin:$PATH"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
@@ -24,6 +23,11 @@ if command -v "switcher" >/dev/null 2>&1; then
 fi
 
 export CLOUDSDK_PYTHON_SITEPACKAGES=1
+
+# Go environment setup
+export GOBIN=$HOME/.local/bin
+export PATH=$GOBIN:$PATH
+mkdir -p $GOBIN
 
 setopt always_to_end          # When completing a word, move the cursor to the end of the word
 setopt auto_cd                # cd by typing directory name if it's not a command
