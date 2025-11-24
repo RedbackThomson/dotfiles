@@ -1,11 +1,6 @@
 // If you'd like to override the default keybindings completely, be sure to change "keybinds" to "keybinds clear-defaults=true"
 keybinds clear-defaults=true {
     normal {
-        // Unbind the original Ctrl o since it conflicts with neovim jumps
-        unbind "Ctrl o"
-
-        // Bind Ctrl Home to open the session manager
-        bind "Ctrl Home" { SwitchToMode "Session"; }
     }
     locked {
         bind "Ctrl g" { SwitchToMode "Normal"; }
