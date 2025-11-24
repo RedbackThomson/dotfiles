@@ -75,6 +75,7 @@
       ca = "commit -am"; # commit all changes via `git ca <message>`
       dc = "diff --cached";
       pf = "push --force-with-lease";
+      pum = "pull upstream main";
 
       amend = "commit --amend -m"; # amend commit message via `git amend <message>`
       unstage = "reset HEAD --"; # unstage file via `git unstage <file>`
