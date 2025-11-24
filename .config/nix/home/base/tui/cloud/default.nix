@@ -11,7 +11,10 @@
     eksctl
 
     # gcp
-    (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
+    (google-cloud-sdk.withExtraComponents [
+      google-cloud-sdk.components.gke-gcloud-auth-plugin
+      google-cloud-sdk.components.cloud-sql-proxy
+    ])
 
     # azure
     azure-cli
