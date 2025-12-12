@@ -118,6 +118,9 @@
         "lookaway" # Eye strain reminders
         "jordanbaird-ice" # Menu bar tool
 
+        # Terminals
+        "ghostty"
+
         # Misc
         "raycast" # (HotKey: alt/option + space)search, caculate and run scripts(with many plugins)
       ];
