@@ -84,4 +84,8 @@
       nonexist = "remote prune origin --dry-run"; # list non-exist(remote) branches via `git nonexist`
     };
   };
+
+  programs.jujutsu = {
+    enable = true;
+  };
 }
