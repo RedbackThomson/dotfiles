@@ -4,5 +4,9 @@
 
   home.packages = with pkgs; [
     stripe-cli
+
+    # NATS CLI tools
+    natscli
+    nsc
   ];
 }
