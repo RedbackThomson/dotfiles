@@ -3,6 +3,11 @@
 
   outputs = inputs: import ./outputs inputs;
 
+  nixConfig = {
+    extra-trusted-substituters = ["https://cache.flox.dev"];
+    extra-trusted-public-keys = ["flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="];
+  };
+
   inputs = {
     nixpkgs = {
       url = "github:nixos/nixpkgs/release-25.05";
@@ -39,6 +44,9 @@
     };
     darwin-custom-icons = {
       url = "github:ryanccn/nix-darwin-custom-icons";
+    };
+    flox = {
+      url = "github:flox/flox/latest";
     };
   };
 }
