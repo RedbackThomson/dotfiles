@@ -28,6 +28,8 @@
       ".DS_Store"
       "shell.nix"
       ".vscode"
+      ".jj"
+      ".claude"
     ];
 
     includes = [
