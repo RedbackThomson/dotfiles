@@ -15,6 +15,7 @@
 
   home.packages = with pkgs; [
     act # Run GitHub Actions locally
+    lazyjj # A simple TUI for jujutsu
   ];
 
   programs.git = {
@@ -89,5 +90,53 @@
 
   programs.jujutsu = {
     enable = true;
+
+    settings = {
+      user.name = myvars.userfullname;
+      user.email = myvars.useremail;
+
+      git = {
+        auto-local-bookmark = true;
+        sign-on-push = true;
+
+        fetch = ["origin" "upstream"];
+        push = "origin";
+
+        # Don't include changes with the description containing "private:*"
+        # in the commit history
+        private-commits = "description(glob:'private:*')";
+      };
+
+      ui = {
+        default-command = "ls";
+        conflict-marker-style = "git";
+      };
+
+      aliases = {
+        ",," = ["edit" "@+"];
+        ".." = ["edit" "@-"];
+        a = ["abandon"];
+        c = ["commit"];
+        clone = ["git" "clone" "--colocate"];
+        e = ["edit"];
+        f = ["git" "fetch"];
+        fetch = ["git" "fetch"];
+        init = ["git" "init" "--colocate"];
+        l = ["log"];
+        la  = [ "log" "--revisions" "::" ];
+        lp  = [ "log" "--patch" ];
+        lpa = [ "log" "--patch" "--revisions" "::" ];
+        ls  = [ "log" "--summary" ];
+        lsa = [ "log" "--summary" "--revisions" "::" ];
+        r = ["rebase"];
+        res = ["resolve"];
+        p = ["git" "push"];
+        push = ["git" "push"];
+        s = ["squash"];
+        si = ["squash" "interactive"];
+        tug = ["bookmark" "move" "--from" "heads(::@- & bookmarks())" "--to" "@-"];
+        u = ["undo"];
+      };
+    };
   };
 }
