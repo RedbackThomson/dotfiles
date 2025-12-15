@@ -17,7 +17,7 @@ in {
         children
         pane size=1 borderless=true {
           plugin location="file:${pkgs.zjstatus}/bin/zjstatus.wasm" {
-            hide_frame_for_single_pane "true"
+            hide_frame_for_single_pane "false"
 
             format_left  "{mode}#[fg=#8caaee] {session} {tabs}"
             format_right "{datetime}"
@@ -53,7 +53,7 @@ in {
         pane name="K9s"
         pane size=1 borderless=true {
           plugin location="file:${pkgs.zjstatus}/bin/zjstatus.wasm" {
-            hide_frame_for_single_pane "true"
+            hide_frame_for_single_pane "false"
 
             format_left  "{mode}#[fg=#8caaee] {session} {tabs}"
             format_right "{datetime}"
