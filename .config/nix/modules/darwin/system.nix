@@ -190,7 +190,6 @@
       pkgs-unstable.nerd-fonts.symbols-only
       pkgs-unstable.nerd-fonts.fira-code
       pkgs-unstable.nerd-fonts.jetbrains-mono
-      pkgs-unstable.nerd-fonts.iosevka
       pkgs-unstable.nerd-fonts.monaspace
     ];
   };
