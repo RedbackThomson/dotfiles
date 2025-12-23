@@ -24,5 +24,15 @@
     # DevOps and utility tools
     devops.enable = lib.mkEnableOption "DevOps tools (terraform, earthly)";
     utilities.enable = lib.mkEnableOption "Utility tools (neofetch, vhs, viddy, cloc, ncdu)";
+
+    ai.enable = lib.mkEnableOption "AI tools (chatgpt, claude, grok)";
+  };
+
+  options.myconfig.languages = {
+    bun.enable = lib.mkEnableOption "Bun JavaScript runtime";
+    go.enable = lib.mkEnableOption "Go programming language";
+    rust.enable = lib.mkEnableOption "Rust programming language";
+    python.enable = lib.mkEnableOption "Python programming language";
+    kcl.enable = lib.mkEnableOption "KCL configuration language";
   };
 }

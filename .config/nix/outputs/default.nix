@@ -4,6 +4,7 @@
   pre-commit-hooks,
   darwin-custom-icons,
   zjstatus,
+  claude-code,
   ...
 } @ inputs: let
   inherit (inputs.nixpkgs) lib;
@@ -25,6 +26,7 @@
           (final: prev: {
             zjstatus = zjstatus.packages.${prev.system}.default;
           })
+          claude-code.overlays.default
         ];
       };
       # use unstable branch for some packages to get the latest updates
