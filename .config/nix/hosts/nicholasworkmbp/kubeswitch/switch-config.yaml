@@ -11,7 +11,6 @@ kubeconfigStores:
         authenticationType: gcloud
       projectIDs:
         - mcp-hostcluster-dev
-        - mcp-hostcluster-staging
         - mcp-hostcluster-prod
         - orchestration-orchestrating
         - orchestration-build
