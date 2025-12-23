@@ -64,7 +64,7 @@
                   raw_escape_sequence("\x1b[1;32m") ++ if(empty, "(empty)"),
                   raw_escape_sequence("\x1b[1;32m") ++ coalesce(
                     truncate_end(29, description.first_line(), "…"),
-                    "(no description set)",
+                    "(no desc)",
                   ) ++ raw_escape_sequence("\x1b[0m"),
                 )
               '
