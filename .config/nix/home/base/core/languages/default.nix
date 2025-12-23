@@ -1,3 +1,5 @@
 {mylib, ...}: {
-  imports = mylib.scanPaths ./.;
+  imports = [
+    ./options.nix
+  ] ++ mylib.scanPaths ./.;
 }

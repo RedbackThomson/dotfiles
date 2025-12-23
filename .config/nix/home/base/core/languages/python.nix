@@ -1,10 +1,14 @@
 {
   pkgs,
   pkgs-unstable,
+  config,
+  lib,
   ...
 }: {
-  home.packages = with pkgs; [
-    python3
-    hatch
-  ];
+  config = lib.mkIf config.myconfig.languages.python.enable {
+    home.packages = with pkgs; [
+      python3
+      hatch
+    ];
+  };
 }

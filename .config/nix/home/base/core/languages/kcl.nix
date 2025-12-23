@@ -1,9 +1,13 @@
 {
   pkgs,
   pkgs-unstable,
+  config,
+  lib,
   ...
 }: {
-  home.packages = with pkgs; [
-    kcl
-  ];
+  config = lib.mkIf config.myconfig.languages.kcl.enable {
+    home.packages = with pkgs; [
+      kcl
+    ];
+  };
 }

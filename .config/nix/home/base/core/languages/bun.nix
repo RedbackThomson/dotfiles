@@ -1,9 +1,13 @@
 {
   pkgs,
   pkgs-unstable,
+  config,
+  lib,
   ...
 }: {
-  home.packages = with pkgs; [
-    pkgs-unstable.bun
-  ];
+  config = lib.mkIf config.myconfig.languages.bun.enable {
+    home.packages = with pkgs; [
+      pkgs-unstable.bun
+    ];
+  };
 }

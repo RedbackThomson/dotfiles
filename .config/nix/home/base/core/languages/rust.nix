@@ -2,18 +2,21 @@
   pkgs,
   pkgs-unstable,
   config,
+  lib,
   ...
 }: {
-  home.packages = with pkgs-unstable; [
-    rustup
-  ];
+  config = lib.mkIf config.myconfig.languages.rust.enable {
+    home.packages = with pkgs-unstable; [
+      rustup
+    ];
 
-  home.sessionVariables = {
-    RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
-    CARGO_HOME = "${config.xdg.dataHome}/cargo";
+    home.sessionVariables = {
+      RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
+      CARGO_HOME = "${config.xdg.dataHome}/cargo";
+    };
+
+    home.sessionPath = [
+      "$CARGO_HOME/bin"
+    ];
   };
-
-  home.sessionPath = [
-    "$CARGO_HOME/bin"
-  ];
 }

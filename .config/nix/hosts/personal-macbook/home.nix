@@ -1,4 +1,12 @@
 {
+  myconfig.languages = {
+    bun.enable = true;
+    go.enable = true;
+    rust.enable = true;
+    python.enable = true;
+    kcl.enable = true;
+  };
+
   programs.ssh = {
     enable = true;
     matchBlocks = {

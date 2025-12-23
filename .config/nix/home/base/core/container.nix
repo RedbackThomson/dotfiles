@@ -16,6 +16,7 @@
     # pkgs-unstable.kubeswitch
     tilt
     cosign
+    lazydocker
 
     trivy
   ];
