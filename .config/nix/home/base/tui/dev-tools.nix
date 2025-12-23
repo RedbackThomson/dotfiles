@@ -21,9 +21,6 @@
     mongosh
     sqlite
 
-    # container tools
-    lazydocker
-
     # misc
     k6 # load testing tool
     protobuf # protocol buffer compiler

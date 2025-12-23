@@ -1,10 +1,13 @@
 {
+  config,
+  lib,
   pkgs,
   attic,
   nur-ryan4yin,
   ...
 }: {
-  home.packages = with pkgs; [
+  config = lib.mkIf config.myconfig.core.essential.enable {
+    home.packages = with pkgs; [
     # Misc
     gnupg
     gnumake
@@ -24,6 +27,7 @@
 
     yq-go # yaml processer https://github.com/mikefarah/yq
     delta # A viewer for git and diff output
+    neofetch # A fast, highly customisable system info script
 
     # nix related
     #
@@ -125,5 +129,6 @@
         filter_mode_shell_up_key_binding = "session";
       };
     };
+  };
   };
 }

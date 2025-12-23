@@ -1,10 +1,23 @@
 {
-  myconfig.languages = {
-    bun.enable = true;
-    go.enable = true;
-    rust.enable = true;
-    python.enable = true;
-    kcl.enable = true;
+  myconfig = {
+    core = {
+      containers.basic.enable = true;
+      containers.advanced.enable = true;
+      cloudProviders.aws.enable = true;
+      cloudProviders.gcp.enable = true;
+      cloudProviders.azure.enable = true;
+      cloudProviders.digitalocean.enable = true;
+      devops.enable = true;
+      utilities.enable = true;
+    };
+
+    languages = {
+      bun.enable = true;
+      go.enable = true;
+      rust.enable = true;
+      python.enable = true;
+      kcl.enable = true;
+    };
   };
 
   programs.ssh = {
