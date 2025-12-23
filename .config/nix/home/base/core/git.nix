@@ -108,8 +108,13 @@
       };
 
       ui = {
-        default-command = "ls";
+        default-command = "l";
         conflict-marker-style = "git";
+      };
+
+      revset-aliases = {
+        "closest_bookmark(to)" = "heads(::to & bookmarks())";
+        "closest_pushable(to)" = "heads(::to & mutable() & ~description(exact:\"\") & (~empty() | merges()))";
       };
 
       aliases = {
@@ -134,8 +139,9 @@
         push = ["git" "push"];
         s = ["squash"];
         si = ["squash" "interactive"];
-        tug = ["bookmark" "move" "--from" "heads(::@- & bookmarks())" "--to" "@-"];
+        tug = ["bookmark" "move" "--from" "closest_bookmark(@)" "--to" "closest_pushable(@)"];
         u = ["undo"];
+        w = ["show" "closest_bookmark(@)"];
       };
     };
   };
