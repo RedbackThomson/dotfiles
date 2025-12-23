@@ -19,6 +19,13 @@
       python.enable = false;
       kcl.enable = true;
     };
+
+    databases = {
+      mongodb.enable = false;
+      postgresql.enable = true;
+      mysql.enable = true;
+      sqlite.enable = true;
+    };
   };
 
 

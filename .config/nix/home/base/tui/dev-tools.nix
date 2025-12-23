@@ -15,12 +15,6 @@
   #############################################################
 
   home.packages = with pkgs; [
-    # db related
-    mycli
-    pgcli
-    mongosh
-    sqlite
-
     # misc
     k6 # load testing tool
     protobuf # protocol buffer compiler
