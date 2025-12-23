@@ -32,4 +32,10 @@
     natscli
     nsc
   ];
+
+  programs.zsh.initContent = ''
+    source $HOME/scripts/upbound-jump.sh
+    source $HOME/scripts/upbound-kubedebug.sh
+    source $HOME/scripts/kubectl-aliases.sh
+  '';
 }

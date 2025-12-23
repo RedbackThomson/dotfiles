@@ -11,5 +11,9 @@
       kubernetes-helm
       kind
     ];
+
+    programs.zsh.initContent = ''
+      export PATH="''${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+    '';
   };
 }

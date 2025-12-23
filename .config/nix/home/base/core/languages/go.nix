@@ -18,5 +18,12 @@
       package = pkgs.go_1_24;
       goPrivate = ["github.com/upbound"];
     };
+
+    programs.zsh.initContent = ''
+      # Go environment setup
+      export GOBIN=$HOME/.local/bin
+      export PATH=$GOBIN:$PATH
+      mkdir -p $GOBIN
+    '';
   };
 }

@@ -6,29 +6,6 @@ export XDG_CONFIG_HOME="$HOME/.config"
 
 source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 
-source $HOME/scripts/upbound-jump.sh
-source $HOME/scripts/upbound-kubedebug.sh
-source $HOME/scripts/kubectl-aliases.sh
-
-source <(compdef _switcher switch)
-
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
-if command -v "switcher" >/dev/null 2>&1; then
-  source <(switcher init zsh)
-  source <(switch completion zsh)
-fi
-
-export CLOUDSDK_PYTHON_SITEPACKAGES=1
-
-# Go environment setup
-export GOBIN=$HOME/.local/bin
-export PATH=$GOBIN:$PATH
-mkdir -p $GOBIN
-
 setopt always_to_end          # When completing a word, move the cursor to the end of the word
 setopt auto_cd                # cd by typing directory name if it's not a command
 setopt auto_list              # automatically list choices on ambiguous completion

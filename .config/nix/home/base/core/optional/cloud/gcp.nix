@@ -11,5 +11,9 @@
         google-cloud-sdk.components.cloud-sql-proxy
       ])
     ];
+
+    programs.zsh.initContent = ''
+      export CLOUDSDK_PYTHON_SITEPACKAGES=1
+    '';
   };
 }
