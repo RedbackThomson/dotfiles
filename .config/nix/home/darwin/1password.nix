@@ -17,7 +17,7 @@
   };
 
   programs.git = {
-    extraConfig = {
+    settings = {
       commit.gpgsign = true;
       user.signingkey = myvars.signingkey;
       gpg = {

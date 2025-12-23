@@ -65,7 +65,7 @@
         themes = {
           # https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20Frappe.tmTheme
           catppuccin-frappe = {
-            src = nur-ryan4yin.packages.${pkgs.system}.catppuccin-bat;
+            src = nur-ryan4yin.packages.${pkgs.stdenv.hostPlatform.system}.catppuccin-bat;
             file = "Catppuccin-frappe.tmTheme";
           };
         };
@@ -134,7 +134,7 @@
       yazi = {
         enable = true;
         
-        package = yazi.packages.${pkgs.system}.default.override {
+        package = yazi.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
           _7zz = pkgs._7zz-rar;  # Support for RAR extraction
         };
       };
