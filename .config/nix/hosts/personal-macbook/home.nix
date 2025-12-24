@@ -39,6 +39,8 @@
     };
   };
 
+  home.file.".kube/switch-config.yaml".source = ./kubeswitch/switch-config.yaml;
+
   programs.zsh.initContent = ''
     export DOTNET_ROOT=$HOME/.dotnet
     export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools:/usr/local/share/dotnet
