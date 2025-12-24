@@ -12,6 +12,9 @@
   #
   ###################################################################################
 
+  # Disable nix management through nix-darwin in favour of nix-determinate
+  nix.enable = false;
+
   nix.package = pkgs.nix;
 
   # Disable auto-optimise-store because of this issue:

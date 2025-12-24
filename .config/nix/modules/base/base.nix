@@ -42,9 +42,6 @@
     description = myvars.userfullname;
   };
 
-  # Disable nix management through nix-darwin in favour of nix-determinate
-  nix.enable = false;
-
   nix.settings = {
     # enable flakes globally
     experimental-features = ["nix-command" "flakes"];

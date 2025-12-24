@@ -15,15 +15,19 @@ let
   tags = [ name ];
   ssh-user = "root";
 
+  boot.loader.grub = {
+    efiSupport = true;
+    efiInstallAsRemovable = true;
+  };
+  services.openssh.enable = true;
+
   modules = {
     nixos-modules =
       (map mylib.relativeToRoot [
-        # common
-        "secrets/nixos.nix"
-        "modules/nixos/server/server.nix"
-        "modules/nixos/server/kubevirt-hardware-configuration.nix"
         # host specific
         "hosts/linux/${name}"
+
+        "modules/base"
       ])
       ++ [
         { modules.secrets.server.kubernetes.enable = true; }
@@ -39,6 +43,4 @@ in
   nixosConfigurations.${name} = mylib.nixosSystem systemArgs;
 
   colmena.${name} = mylib.colmenaSystem (systemArgs // { inherit tags ssh-user; });
-
-  packages.${name} = inputs.self.nixosConfigurations.${name}.config.formats.kubevirt;
 }
