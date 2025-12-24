@@ -31,8 +31,7 @@ let
         { modules.secrets.server.kubernetes.enable = true; }
       ];
     home-modules = map mylib.relativeToRoot [
-      # "home/linux/gui.nix"
-      # "home/linux/tui.nix"
+      "home/linux/tui.nix"
     ];
   };
 
