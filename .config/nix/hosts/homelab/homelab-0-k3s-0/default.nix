@@ -50,11 +50,15 @@ in
     "exfat"
   ];
 
+  # Ensure necessary drivers are loaded in initrd for disk detection
+  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" ];
+
   boot.loader.grub = {
     enable = true;
-    device = "/dev/sda";
+    device = "nodev";
     useOSProber = true;
     efiSupport = true;
+    efiInstallAsRemovable = true;
   };
 
   networking = {
