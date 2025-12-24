@@ -23,10 +23,10 @@ let
         "hosts/homelab/${name}"
 
         "modules/nixos/server/server.nix"
-      ]);
-      # ++ [
-      #   { modules.secrets.server.kubernetes.enable = true; }
-      # ];
+      ])
+      ++ [
+        { modules.secrets.server.kubernetes.enable = true; }
+      ];
     home-modules = map mylib.relativeToRoot [
       "home/linux/gui.nix"
       "home/linux/tui.nix"

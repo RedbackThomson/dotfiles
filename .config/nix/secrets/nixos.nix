@@ -37,10 +37,20 @@ in
     {
       environment.systemPackages = [
         agenix.packages."${pkgs.stdenv.hostPlatform.system}".default
+        pkgs.ssh-to-age
       ];
 
+      # Use age (Go implementation) instead of rage (Rust) to support SSH keys directly
+      age.ageBin = "${pkgs.age}/bin/age";
+
+      # Convert SSH host key to age format for decryption
+      system.activationScripts.agenix-key = ''
+        mkdir -p /etc/age
+        ${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key > /etc/age/key
+      '';
+
       # if you changed this key, you need to regenerate all encrypt files from the decrypt contents!
-      age.identityPaths = [ "/etc/ssh/agenix" ];
+      age.identityPaths = [ "/etc/age/key" ];
     }
 
     (mkIf cfg.server.kubernetes.enable {
