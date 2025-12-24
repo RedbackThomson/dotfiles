@@ -25,6 +25,7 @@ let
         "modules/nixos/server/server.nix"
       ])
       ++ [
+        inputs.disko.nixosModules.disko
         { modules.secrets.server.kubernetes.enable = true; }
       ];
     home-modules = map mylib.relativeToRoot [

@@ -52,12 +52,7 @@ in
 
   boot.loader.grub = {
     enable = true;
-    device = "/dev/sda";  # Update this to your actual boot disk (e.g., /dev/vda for VirtIO)
-  };
-
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/f5be17c9-f21d-4a6a-9395-fe9142926102";
-    fsType = "ext4";
+    device = "/dev/sda";
   };
 
   networking = {
