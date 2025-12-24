@@ -15,21 +15,5 @@
   # Disable nix management through nix-darwin in favour of nix-determinate
   nix.enable = false;
 
-  nix.package = pkgs.nix;
-
-  # Disable auto-optimise-store because of this issue:
-  #   https://github.com/NixOS/nix/issues/7273
-  # "error: cannot link '/nix/store/.tmp-link-xxxxx-xxxxx' to '/nix/store/.links/xxxx': File exists"
-  nix.settings = {
-    auto-optimise-store = false;
-    experimental-features = "nix-command flakes";
-    substituters = [
-      "https://cache.flox.dev"
-    ];
-    trusted-public-keys = [
-      "flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="
-    ];
-  };
-
   nix.gc.automatic = false;
 }
