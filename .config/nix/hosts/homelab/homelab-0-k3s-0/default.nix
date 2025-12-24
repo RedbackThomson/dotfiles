@@ -19,7 +19,7 @@ let
   ipv4WithMask = "${ipv4}/24";
 
   k3sModule = mylib.genK3sServerModule {
-    inherit pkgs;
+    inherit pkgs hostName;
     kubeconfigFile = "/home/${myvars.username}/.kube/config";
     tokenFile = config.age.secrets."k3s-token".path;
     # the first node in the cluster should be the one to initialize the cluster

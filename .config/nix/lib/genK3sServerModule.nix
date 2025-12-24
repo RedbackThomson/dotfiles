@@ -9,6 +9,7 @@
   #
   # this can be a domain name or an IP address(such as kube-vip's virtual IP)
   masterHost,
+  hostName,
   clusterInit ? false,
   kubeletExtraArgs ? [ ],
   k3sExtraArgs ? [ ],
@@ -33,18 +34,26 @@ in
     dive # explore docker layers
   ];
 
-  # Kernel modules required by cilium
+  # Kernel modules required by cilium and longhorn
   boot.kernelModules = [
     "ip6_tables"
     "ip6table_mangle"
     "ip6table_raw"
     "ip6table_filter"
+    "iscsi_tcp" # required by longhorn
   ];
   networking.enableIPv6 = true;
   networking.nat = {
     enable = true;
     enableIPv6 = true;
   };
+
+  # Enable iSCSI support for Longhorn
+  services.openiscsi = {
+    enable = true;
+    name = "iqn.2025-12.homelab:${hostName}";
+  };
+
   services.k3s = {
     enable = true;
     inherit package tokenFile clusterInit;
@@ -87,5 +96,7 @@ in
     "d /var/lib/rancher/k3s/agent/etc/cni/net.d 0751 root root - -"
     # Link the CNI config directory
     "L+ /etc/cni/net.d - - - - /var/lib/rancher/k3s/agent/etc/cni/net.d"
+    # Create FHS-compatible symlink for iscsiadm (required by Longhorn)
+    "L+ /usr/bin/iscsiadm - - - - /run/current-system/sw/bin/iscsiadm"
   ];
 }
