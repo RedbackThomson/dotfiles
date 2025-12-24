@@ -9,6 +9,7 @@
       cloudProviders.digitalocean.enable = true;
       devops.enable = true;
       utilities.enable = true;
+      ai.enable = true;
     };
 
     languages = {
