@@ -46,5 +46,9 @@
     flox.url = "github:flox/flox/latest";
     yazi.url = "github:sxyazi/yazi";
     claude-code.url = "github:sadjow/claude-code-nix";
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }

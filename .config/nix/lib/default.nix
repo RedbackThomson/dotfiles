@@ -1,7 +1,12 @@
 {lib, ...}: {
-  macosSystem = import ./macos.nix;
+  macosSystem = import ./macosSystem.nix;
+  nixosSystem = import ./nixosSystem.nix;
+  colmenaSystem = import ./colmenaSystem.nix;
 
-  attrs = import ./attrs.nix {inherit lib;};
+  attrs = import ./attrs.nix { inherit lib; };
+
+  genK3sServerModule = import ./genK3sServerModule.nix;
+  genDiskoConfiguration = import ./genDiskoConfiguration.nix;
 
   # use path relative to the root of the project
   relativeToRoot = lib.path.append ../.;
