@@ -31,6 +31,7 @@ let
         { modules.secrets.server.kubernetes.enable = true; }
       ];
     home-modules = map mylib.relativeToRoot [
+      "hosts/common/home.nix"
       "home/linux/tui.nix"
     ];
   };

@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  myconfig,
   myvars,
   mylib,
   ...
