@@ -11,7 +11,7 @@
   ...
 }@args:
 let
-  name = "homelab-0";
+  name = "homelab-0-k3s-0";
   tags = [ name ];
   ssh-user = "root";
 
@@ -25,7 +25,7 @@ let
     nixos-modules =
       (map mylib.relativeToRoot [
         # host specific
-        "hosts/linux/${name}"
+        "hosts/homelab/${name}"
 
         "modules/base"
       ])

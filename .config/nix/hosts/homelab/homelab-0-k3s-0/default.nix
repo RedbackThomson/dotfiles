@@ -6,12 +6,7 @@
   ...
 }:
 let
-  hostName = "homelab-0"; # Define your hostname.
-
-  diskoModule = mylib.genDiskoConfiguration {
-    inherit pkgs;
-    device = "/dev/sda";
-  };
+  hostName = "homelab-0-k3s-0"; # Define your hostname.
 
   k3sModule = mylib.genK3sServerModule {
     inherit pkgs;
@@ -19,6 +14,7 @@ let
     tokenFile = config.age.secrets."k3s-prod-1-token".path;
     # the first node in the cluster should be the one to initialize the cluster
     clusterInit = true;
+    masterHost = "homelab-0-k3s-0.homelab.local";
     # k3sExtraArgs = [
     #   # IPv4 Private CIDR(full) - 172.16.0.0/12
     #   # IPv4 Pod     CIDR(full) - fdfd:cafe:00:0000::/64 ~ fdfd:cafe:00:7fff::/64
@@ -31,6 +27,5 @@ in
 {
   imports = (mylib.scanPaths ./.) ++ [
     k3sModule
-    diskoModule
   ];
 }
