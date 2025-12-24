@@ -5,6 +5,7 @@
   darwin-custom-icons,
   zjstatus,
   claude-code,
+  colmena,
   ...
 } @ inputs: let
   inherit (inputs.nixpkgs) lib;
@@ -32,11 +33,6 @@
       # use unstable branch for some packages to get the latest updates
       pkgs-unstable = import inputs.nixpkgs-unstable {
         inherit system; # refer the `system` parameter form outer scope recursively
-        # To use chrome, we need to allow the installation of non-free software
-        config.allowUnfree = true;
-      };
-      pkgs-stable = import inputs.nixpkgs-stable {
-        inherit system;
         # To use chrome, we need to allow the installation of non-free software
         config.allowUnfree = true;
       };
@@ -70,6 +66,42 @@ in {
   # macOS Hosts
   darwinConfigurations =
     lib.attrsets.mergeAttrsList (map (it: it.darwinConfigurations or {}) darwinSystemValues);
+
+  # Colmena - remote deployment via SSH
+  colmena = {
+    meta =
+      (
+        let
+          system = "x86_64-linux";
+        in
+        {
+          # colmena's default nixpkgs & specialArgs
+          nixpkgs = import nixpkgs { inherit system; };
+          specialArgs = genSpecialArgs system;
+        }
+      )
+      // {
+        # per-node nixpkgs & specialArgs
+        nodeNixpkgs = lib.attrsets.mergeAttrsList (
+          map (it: it.colmenaMeta.nodeNixpkgs or { }) nixosSystemValues
+        );
+        nodeSpecialArgs = lib.attrsets.mergeAttrsList (
+          map (it: it.colmenaMeta.nodeSpecialArgs or { }) nixosSystemValues
+        );
+      };
+  }
+  // lib.attrsets.mergeAttrsList (map (it: it.colmena or { }) nixosSystemValues);
+  # colmenaHive is the new way to configure colmena. This output proxies the
+  # old colmena output to the new way.
+  colmenaHive = inputs.colmena.lib.makeHive self.outputs.colmena;
+
+  # Apps
+  apps = forAllSystems (
+    system: {
+      # So we can run `nix run .#colmena` to deploy the cluster
+      colmena = inputs.colmena.apps.${system}.default;
+    }
+  );
 
   # Packages
   packages = forAllSystems (

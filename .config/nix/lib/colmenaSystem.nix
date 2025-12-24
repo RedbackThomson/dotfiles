@@ -8,6 +8,7 @@
   system,
   tags,
   ssh-user,
+  targetHost ? null,
   genSpecialArgs,
   specialArgs ? (genSpecialArgs system),
   ...
@@ -20,7 +21,10 @@ in
   deployment = {
     inherit tags;
     targetUser = ssh-user;
-    targetHost = name; # hostName or IP address
+    # Use provided targetHost (IP address) or fall back to name (hostname)
+    targetHost = if targetHost != null then targetHost else name;
+    # Build on the target host instead of locally (useful when deploying from Mac to Linux)
+    buildOnTarget = true;
   };
 
   imports =

@@ -15,6 +15,8 @@ let
   tags = [ name ];
   ssh-user = "root";
 
+  inherit (myvars.networking.hostsAddr.${name}) ipv4;
+
   modules = {
     nixos-modules =
       (map mylib.relativeToRoot [
@@ -39,5 +41,8 @@ in
 {
   nixosConfigurations.${name} = mylib.nixosSystem systemArgs;
 
-  colmena.${name} = mylib.colmenaSystem (systemArgs // { inherit tags ssh-user; });
+  colmena.${name} = mylib.colmenaSystem (systemArgs // {
+    inherit tags ssh-user;
+    targetHost = ipv4;
+  });
 }
