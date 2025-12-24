@@ -50,5 +50,14 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    agenix.url = "github:ryantm/agenix/db5637d10f797bb251b94ef9040b237f4702cde3";
+    mysecrets = {
+      url = "github:redbackthomson/dotfiles-secrets";
+      flake = false;
+    };
+    disko = {
+      url = "github:nix-community/disko/v1.11.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }

@@ -15,25 +15,21 @@ let
   tags = [ name ];
   ssh-user = "root";
 
-  boot.loader.grub = {
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-  };
-  services.openssh.enable = true;
-
   modules = {
     nixos-modules =
       (map mylib.relativeToRoot [
         # host specific
+        "secrets/nixos.nix"
         "hosts/homelab/${name}"
 
-        "modules/base"
-      ])
-      ++ [
-        { modules.secrets.server.kubernetes.enable = true; }
-      ];
+        "modules/nixos/server/server.nix"
+      ]);
+      # ++ [
+      #   { modules.secrets.server.kubernetes.enable = true; }
+      # ];
     home-modules = map mylib.relativeToRoot [
-      "home/linux/core.nix"
+      "home/linux/gui.nix"
+      "home/linux/tui.nix"
     ];
   };
 
