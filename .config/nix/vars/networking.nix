@@ -11,6 +11,11 @@
       iface = "enp0s18";
       ipv4 = "192.168.1.151";
     };
+
+    homelab-0-home-assistant = {
+      iface = "enp0s18";
+      ipv4 = "192.168.1.152";
+    };
   };
 
   hostsInterface =

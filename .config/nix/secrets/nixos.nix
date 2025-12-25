@@ -11,6 +11,10 @@ with lib;
 let
   cfg = config.modules.secrets;
 
+  enabledServerSecrets =
+    cfg.server.kubernetes.enable;
+    # || cfg.server.home-assistant.enable (etc.)
+
   noaccess = {
     mode = "0000";
     owner = "root";
@@ -33,7 +37,7 @@ in
     server.kubernetes.enable = mkEnableOption "NixOS Secrets for Kubernetes";
   };
 
-  config = (mkMerge [
+  config = mkIf enabledServerSecrets (mkMerge [
     {
       environment.systemPackages = [
         agenix.packages."${pkgs.stdenv.hostPlatform.system}".default
