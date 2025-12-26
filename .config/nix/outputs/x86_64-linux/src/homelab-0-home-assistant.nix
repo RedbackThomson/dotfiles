@@ -30,9 +30,7 @@ let
         inputs.disko.nixosModules.disko
       ];
     home-modules = map mylib.relativeToRoot [
-      "hosts/homelab/common/home.nix"
       
-      "home/linux/tui.nix"
     ];
   };
 

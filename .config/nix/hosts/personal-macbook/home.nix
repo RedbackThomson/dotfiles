@@ -10,6 +10,8 @@
       devops.enable = true;
       utilities.enable = true;
       ai.enable = true;
+      git.enable = true;
+      git.jujutsu.enable = true;
     };
 
     languages = {

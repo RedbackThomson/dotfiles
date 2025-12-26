@@ -8,6 +8,11 @@
         description = "Essential CLI tools (ripgrep, fd, fzf, bat, eza, zoxide, atuin)";
       };
 
+      git = {
+        enable = lib.mkEnableOption "Git tools (git)";
+        jujutsu.enable = lib.mkEnableOption "Jujutsu";
+      };
+
       # Container/K8s tools (split into basic and advanced)
       containers = {
         basic.enable = lib.mkEnableOption "Basic container/K8s tools (kubectl, helm, k9s)";

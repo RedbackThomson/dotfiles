@@ -20,11 +20,16 @@ let
 
   homeAssistantModule = mylib.genHomeAssistantModule {
     inherit pkgs;
+    externalUrl = "https://hass.homelab.redback.dev";
+    internalUrl = "http://${ipv4}:8123";
   };
+
+  diskoModule = import ./disko.nix;
 in
 {
-  imports = (mylib.scanPaths ./.) ++ [
+  imports = [
     homeAssistantModule
+    diskoModule
   ];
 
   # supported file systems, so we can mount any removable disks with these filesystems
