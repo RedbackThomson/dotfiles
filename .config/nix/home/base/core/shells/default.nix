@@ -16,6 +16,12 @@
 in {
   home.shellAliases = shellAliases;
 
+  programs.carapace = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+  };
+
   programs.zsh = {
     enable = true;
     dotDir = ".config/zsh";
@@ -42,10 +48,6 @@ in {
           rev = "v0.7.0";
           sha256 = "0za4aiwwrlawnia4f29msk822rj9bgcygw6a8a6iikiwzjjz0g91";
         };
-      }
-      {
-        name = "fzf-tab";
-        src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
       }
     ];
     localVariables = {
