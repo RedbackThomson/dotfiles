@@ -114,6 +114,9 @@
         enableBashIntegration = true;
         enableZshIntegration = true;
         enableNushellIntegration = true;
+        options = [
+          "--cmd cd"
+        ];
       };
 
       # Atuin replaces your existing shell history with a SQLite database,
