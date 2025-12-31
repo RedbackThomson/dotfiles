@@ -171,14 +171,21 @@ in
           plugin = cmp-nvim-lsp;
           type = "lua";
           config = ''
-            local lspconfig = require('lspconfig')
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
-            lspconfig.gopls.setup({
+
+            vim.lsp.config.gopls = {
+              cmd = { 'gopls' },
+              filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+              root_markers = { 'go.work', 'go.mod', '.git' },
               capabilities = capabilities,
-            })
-            lspconfig.ts_ls.setup({
+            }
+
+            vim.lsp.config.ts_ls = {
+              cmd = { 'typescript-language-server', '--stdio' },
+              filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
+              root_markers = { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' },
               capabilities = capabilities,
-            })
+            }
           '';
         }
         cmp-buffer

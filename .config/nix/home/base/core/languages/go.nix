@@ -23,6 +23,7 @@
     };
 
     programs.zsh.initContent = ''
+      export GOBIN=${config.home.homeDirectory}/.local/bin
       export PATH=$GOBIN:$PATH
       mkdir -p $GOBIN
     '';
