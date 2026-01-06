@@ -145,6 +145,7 @@ in {
             lpa = [ "log" "--patch" "--revisions" "::" ];
             ls  = [ "log" "--summary" ];
             lsa = [ "log" "--summary" "--revisions" "::" ];
+            mine = [ "bookmark" "list" "--revisions" "mine()" ];
             r = ["rebase"];
             res = ["resolve"];
             p = ["git" "push"];
