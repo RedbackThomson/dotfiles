@@ -32,6 +32,8 @@ in {
           ".vscode"
           ".jj"
           ".claude"
+          ".direnv"
+          ".envrc"
         ];
 
         includes = [
