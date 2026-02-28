@@ -10,6 +10,8 @@ in
 {
   networking.firewall.allowedTCPPorts = [ 8123 ];
 
+  environment.systemPackages = [ pkgs.home-assistant ];
+
   services.home-assistant = {
     enable = true;
 
@@ -18,8 +20,8 @@ in
       default_config = {};
 
       homeassistant = {
-        latitude = 37.773930;
-        longitude = -122.396241;
+        latitude = 47.68939971923828;
+        longitude = -122.30683135986328;
         elevation = 0;
         unit_system = "metric";
         time_zone = "America/Los_Angeles";
