@@ -6,6 +6,7 @@
 }:
 let
   lib = pkgs.lib;
+  configDir = "/var/lib/hass";
 in
 {
   networking.firewall.allowedTCPPorts = [ 8123 ];
@@ -53,6 +54,12 @@ in
       automation = "!include automations.yaml";
       script     = "!include scripts.yaml";
       scene      = "!include scenes.yaml";
+
+      # ZigBee Home Automation
+      zha = {
+        enable_quirks = true;
+        custom_quirks_path = "${configDir}/custom_zha_quirks";
+      };
 
       tapo.discovery = true;
 
