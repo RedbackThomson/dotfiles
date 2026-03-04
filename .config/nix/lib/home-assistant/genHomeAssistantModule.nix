@@ -56,6 +56,17 @@ in
 
       tapo.discovery = true;
 
+      notify = [
+        {
+          platform = "group";
+          name = "All Phones";
+          services = [
+            { service = "mobile_app_nicholass_iphone"; }
+            { service = "mobile_app_stephanies_iphone_pro_16"; }
+          ];
+        }
+      ];
+
       template = [
         {
           cover = [
