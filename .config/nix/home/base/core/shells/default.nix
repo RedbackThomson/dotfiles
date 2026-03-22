@@ -24,7 +24,7 @@ in {
 
   programs.zsh = {
     enable = true;
-    dotDir = ".config/zsh";
+    dotDir = "${config.home.homeDirectory}/.config/zsh";
     history.path = "${config.xdg.dataHome}/zsh/.zsh_history";
     history.size = 100000;
 
