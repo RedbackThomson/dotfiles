@@ -118,7 +118,7 @@
         "postman"
 
         "lookaway" # Eye strain reminders
-        "jordanbaird-ice" # Menu bar tool
+        "thaw" # Menu bar tool
 
         # Terminals
         "ghostty"
