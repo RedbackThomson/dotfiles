@@ -119,6 +119,7 @@
 
         "lookaway" # Eye strain reminders
         "thaw" # Menu bar tool
+        "dockdoor" # Better window switcher
 
         # Terminals
         "ghostty"
