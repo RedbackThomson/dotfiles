@@ -120,6 +120,7 @@
         "lookaway" # Eye strain reminders
         "thaw" # Menu bar tool
         "dockdoor" # Better window switcher
+        "hyperkey" # Modifier key for macOS
 
         # Terminals
         "ghostty"
