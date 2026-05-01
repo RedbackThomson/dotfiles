@@ -51,14 +51,10 @@ in
             determinate-nix.customSettings = {
               extra-substituters = [
                 "https://cache.flox.dev"
-                "https://yazi.cachix.org"
-                "https://claude-code.cachix.org"
                 "https://colmena.cachix.org"
               ];
               extra-trusted-public-keys = [
                 "flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="
-                "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k="
-                "claude-code.cachix.org-1:YeXf2aNu7UTX8Vwrze0za1WEDS+4DuI2kVeWEE4fsRk="
                 colmena.cachix.org-1:7BzpDnjjH8ki2CT3f6GdOk7QAzPOl+1t3LvTLXqYcSg=
               ];
             };

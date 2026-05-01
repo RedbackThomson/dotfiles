@@ -2,9 +2,9 @@
   config,
   lib,
   pkgs,
+  pkgs-unstable,
   attic,
   nur-ryan4yin,
-  yazi,
   ...
 }: {
   config = lib.mkIf config.myconfig.core.essential.enable {
@@ -136,8 +136,8 @@
 
       yazi = {
         enable = true;
-        
-        package = yazi.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+
+        package = pkgs-unstable.yazi.override {
           _7zz = pkgs._7zz-rar;  # Support for RAR extraction
         };
       };

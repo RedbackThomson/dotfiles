@@ -4,7 +4,6 @@
   pre-commit-hooks,
   darwin-custom-icons,
   zjstatus,
-  claude-code,
   colmena,
   ...
 } @ inputs: let
@@ -27,7 +26,6 @@
           (final: prev: {
             zjstatus = zjstatus.packages.${prev.stdenv.hostPlatform.system}.default;
           })
-          claude-code.overlays.default
         ];
       };
       # use unstable branch for some packages to get the latest updates
