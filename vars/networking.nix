@@ -16,6 +16,11 @@
       iface = "enp0s18";
       ipv4 = "192.168.1.152";
     };
+
+    homelab-0-ollama = {
+      iface = "enp0s18";
+      ipv4 = "192.168.1.153";
+    };
   };
 
   hostsInterface =
