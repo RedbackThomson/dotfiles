@@ -34,7 +34,6 @@
       git
       gnugrep # replacee macos's grep
       gnutar # replacee macos's tar
-      code-cursor
       flox.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
     environment.variables = {
