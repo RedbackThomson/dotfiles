@@ -17,6 +17,11 @@
       gcloud.disabled = true;
       golang.disabled = true;
 
+      nix_shell = {
+        format = "via [$symbol]($style)";
+        symbol = "❄️ ";
+      };
+
       git_branch = {
         style = "fg:#81c8be";
       };
@@ -47,6 +52,14 @@
       };
 
       custom = {
+        # Detect ad-hoc `nix shell` (no IN_NIX_SHELL, raw /nix/store on PATH).
+        nix_shell_adhoc = {
+          description = "Indicate an ad-hoc `nix shell` environment";
+          when = ''[ -z "$IN_NIX_SHELL" ] && printf '%s' "$PATH" | tr ":" "\n" | grep -q "^/nix/store/"'';
+          format = "via [❄️  pkgs]($style) ";
+          style = "fg:#85c1dc bold";
+        };
+
         jj = {
           command = 
             ''
@@ -197,6 +210,7 @@
         "$vagrant"
         "$zig"
         "$nix_shell"
+        "\${custom.nix_shell_adhoc}"
         "$nats" # Added
         "$conda"
         "$spack"
