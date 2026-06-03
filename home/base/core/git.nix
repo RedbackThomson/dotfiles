@@ -34,6 +34,7 @@ in {
           ".claude"
           ".direnv"
           ".envrc"
+          "CLAUDE.local.md"
         ];
 
         includes = [
