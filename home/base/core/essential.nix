@@ -28,7 +28,7 @@
 
       yq-go # yaml processer https://github.com/mikefarah/yq
       delta # A viewer for git and diff output
-      neofetch # A fast, highly customisable system info script
+      fastfetch # A fast, highly customisable system info script
 
       # nix related
       #

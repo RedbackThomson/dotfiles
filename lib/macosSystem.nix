@@ -14,6 +14,10 @@
 in
   nix-darwin.lib.darwinSystem {
     inherit system specialArgs;
+    # We track nix-darwin master (26.11) for the Homebrew 6.0 tap-trust
+    # fix while pinning Nixpkgs to 25.11 via `nixpkgs.pkgs` below, so the
+    # release-match assertion must be disabled.
+    enableNixpkgsReleaseCheck = false;
     modules =
       darwin-modules
       ++ [darwin-custom-icons.darwinModules.default]

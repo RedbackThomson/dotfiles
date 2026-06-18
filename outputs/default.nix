@@ -103,7 +103,14 @@ in {
 
   # Packages
   packages = forAllSystems (
-    system: allSystems.${system}.packages or {}
+    system:
+      (allSystems.${system}.packages or {})
+      # Re-export darwin-rebuild from our pinned nix-darwin so that
+      # `nix run .#darwin-rebuild -- switch --flake .` always uses the same
+      # nix-darwin version as the flake (instead of the flake registry's).
+      // lib.optionalAttrs (inputs.nix-darwin.packages ? ${system}) {
+        inherit (inputs.nix-darwin.packages.${system}) darwin-rebuild;
+      }
   );
 
   checks = forAllSystems (

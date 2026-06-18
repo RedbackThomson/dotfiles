@@ -73,10 +73,18 @@
         "homebrew/services"
         "homebrew/cask-versions"
 
-        "hashicorp/tap"
-
-        "danielfoehrkn/switch"
-        "jwt-rs/jwt-ui"
+        {
+          name = "hashicorp/tap";
+          trusted = true;
+        }
+        {
+          name = "danielfoehrkn/switch";
+          trusted = true;
+        }
+        {
+          name = "jwt-rs/jwt-ui";
+          trusted = true;
+        }
       ];
 
       brews = [

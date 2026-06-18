@@ -12,8 +12,8 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 
 ## Installation
 
-Use the nix CLI to switch to the config
+Use the `darwin-rebuild` exposed by this flake to switch to the config.
 
 ```bash
-nix run nix-darwin -- switch --flake .
+sudo nix run .#darwin-rebuild -- switch --flake .
 ```
