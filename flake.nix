@@ -63,5 +63,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-openclaw.url = "github:openclaw/nix-openclaw";
+    hunk = {
+      url = "github:modem-dev/hunk";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }

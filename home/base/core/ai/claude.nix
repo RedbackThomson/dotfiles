@@ -1,12 +1,22 @@
 {
-  pkgs,
   lib,
   config,
+  hunk,
   ...
 }: {
+  imports = [hunk.homeManagerModules.default];
+
   config = lib.mkIf config.myconfig.core.ai.enable {
-    home.packages = with pkgs; [
-    ];
+    # Terminal diff viewer
+    programs.hunk = {
+      enable = true;
+      settings = {
+        theme = "catppuccin-frappe";
+        mode = "auto";
+        line_numbers = true;
+        agent_notes = true;
+      };
+    };
 
     # mkAfter so this runs after 1password.nix defines the gh() plugin function.
     programs.zsh.initContent = lib.mkAfter ''
