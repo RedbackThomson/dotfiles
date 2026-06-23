@@ -6,6 +6,13 @@ export XDG_CONFIG_HOME="$HOME/.config"
 
 source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 
+# kubeswitch ships `switch` as a shell function whose underlying `switcher`
+# binary lives in homebrew's prefix, which nix-darwin omits from PATH.
+if [ -f /opt/homebrew/opt/switch/switch.sh ]; then
+  case ":$PATH:" in *":/opt/homebrew/bin:"*) ;; *) PATH="/opt/homebrew/bin:$PATH" ;; esac
+  source /opt/homebrew/opt/switch/switch.sh
+fi
+
 setopt always_to_end          # When completing a word, move the cursor to the end of the word
 setopt auto_cd                # cd by typing directory name if it's not a command
 setopt auto_list              # automatically list choices on ambiguous completion

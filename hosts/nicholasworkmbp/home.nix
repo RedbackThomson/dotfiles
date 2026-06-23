@@ -41,6 +41,8 @@
     # NATS CLI tools
     natscli
     nsc
+
+    ngrok
   ];
 
   programs.zsh.initContent = ''
