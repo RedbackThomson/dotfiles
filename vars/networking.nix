@@ -1,7 +1,7 @@
 {lib}: rec {
   mainGateway = "192.168.1.1"; # main router
   prefixLength = 24;
-  nameservers = [ "8.8.8.8" "8.8.4.4" ];
+  nameservers = ["8.8.8.8" "8.8.4.4"];
 
   hostsAddr = {
     # ============================================
@@ -20,6 +20,11 @@
     homelab-0-ollama = {
       iface = "enp0s18";
       ipv4 = "192.168.1.153";
+    };
+
+    homelab-0-devbox = {
+      iface = "enp0s18";
+      ipv4 = "192.168.1.154";
     };
   };
 
