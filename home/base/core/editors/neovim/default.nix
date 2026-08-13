@@ -85,28 +85,20 @@ in
           plugin = nvim-treesitter.withAllGrammars;
           type = "lua";
           config = ''
-            vim.opt.foldmethod = 'expr'
-            vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
             vim.opt.foldenable = false
 
-            require('nvim-treesitter.configs').setup {
-              incremental_selection = {
-                enable = true,
-                keymaps = {
-                  init_selection = "gnn", -- set to `false` to disable one of the mappings
-                  node_incremental = "grn",
-                  scope_incremental = "grc",
-                  node_decremental = "grm",
-                },
-              },
-              indent = {
-                enable = true
-              },
-              highlight = {
-                enable = true,
-                additional_vim_regex_highlighting = false,
-              },
-            }
+            vim.api.nvim_create_autocmd('FileType', {
+              group = vim.api.nvim_create_augroup('UserTreesitter', {}),
+              callback = function(ev)
+                -- Throws for any filetype without a parser; leave those buffers alone.
+                if not pcall(vim.treesitter.start) then
+                  return
+                end
+                vim.wo[0][0].foldmethod = 'expr'
+                vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+                vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+              end,
+            })
           '';
         }
         {
