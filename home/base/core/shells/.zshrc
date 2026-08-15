@@ -43,6 +43,14 @@ setopt pushd_ignore_dups      # Don't push duplicates onto the stack
 setopt share_history          # Share history between windows
 unsetopt correct_all          # Don't attempt to correct supposed typos
 
+# zsh falls back to vi mode when $EDITOR looks vi-like, and neovim's
+# defaultEditor sets EDITOR=nvim on every host. Pin the keymap so the bindings
+# below don't depend on that. Must precede them: -e reselects the main keymap.
+bindkey -e
+
+# Option-Backspace
+bindkey "^[^?" backward-kill-word
+
 # Option-Left
 bindkey "\e[1;3D" backward-word
 # Option-Right
