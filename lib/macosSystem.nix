@@ -49,19 +49,20 @@ in
       ) ++ [
         inputs.determinate.darwinModules.default
         ({...}: {
-          nix.settings = {
-            experimental-features = "nix-command flakes";
-
-            determinate-nix.customSettings = {
-              extra-substituters = [
-                "https://cache.flox.dev"
-                "https://colmena.cachix.org"
-              ];
-              extra-trusted-public-keys = [
-                "flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="
-                colmena.cachix.org-1:7BzpDnjjH8ki2CT3f6GdOk7QAzPOl+1t3LvTLXqYcSg=
-              ];
-            };
+          # nixos-anywhere and colmena build on the target but send these
+          # settings from here, so the Linux hosts' caches must be listed on the
+          # Mac too, not just in the NixOS modules.
+          determinateNix.customSettings = {
+            extra-substituters = [
+              "https://cache.flox.dev"
+              "https://colmena.cachix.org"
+              "https://nix-community.cachix.org"
+            ];
+            extra-trusted-public-keys = [
+              "flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="
+              "colmena.cachix.org-1:7BzpDnjjH8ki2CT3f6GdOk7QAzPOl+1t3LvTLXqYcSg="
+              "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+            ];
           };
         })
       ];
