@@ -21,6 +21,12 @@
         inherit system;
         # To use 1Password, we need to allow the installation of non-free software
         config.allowUnfree = true;
+
+        # plugp100 needs ecdsa for the Tapo handshake. CVE-2024-23342 is a
+        # timing side-channel in ECDSA signing, which that handshake never
+        # performs - it only uses the curve parameters and point arithmetic.
+        # Pinned to the exact version so a nixpkgs bump forces a fresh look.
+        config.permittedInsecurePackages = [ "python3.14-ecdsa-0.19.2" ];
         overlays = [
           # The upstream flake compiles a Rust/wasm toolchain for what is a 4MB
           # plugin, and publishes no binary cache. The release artifact is
@@ -58,6 +64,52 @@
                 aiobotocore = pyprev.aiobotocore.overridePythonAttrs (_: {
                   doCheck = false;
                 });
+
+                # nixpkgs ships 5.1.5, whose module layout the HACS tapo
+                # component dropped in 3.4.0. Keep this in step with that
+                # component's manifest requirement.
+                plugp100 = pyfinal.buildPythonPackage rec {
+                  pname = "plugp100";
+                  version = "6.0.1";
+                  pyproject = true;
+
+                  src = prev.fetchFromGitHub {
+                    owner = "petretiandrea";
+                    repo = "plugp100";
+                    tag = version;
+                    hash = "sha256-LO0ATplDvkOmBU5PgoPjxYm6E4F1nZ1Sf0jdy1D+lzs=";
+                  };
+
+                  build-system = [ pyfinal.setuptools ];
+
+                  dependencies = with pyfinal; [
+                    aiohttp
+                    certifi
+                    cryptography
+                    ecdsa
+                    jsons
+                    passlib
+                    requests
+                    scapy
+                    semantic-version
+                    urllib3
+                  ];
+
+                  nativeCheckInputs = with pyfinal; [
+                    pytestCheckHook
+                    pytest-asyncio
+                    pyyaml
+                  ];
+
+                  # Needs credentials for real hardware in ../../.local.devices
+                  disabledTestPaths = [ "tests/integration/" ];
+
+                  pythonImportsCheck = [
+                    "plugp100"
+                    "plugp100.devices"
+                    "plugp100.components"
+                  ];
+                };
               })
             ];
           })
