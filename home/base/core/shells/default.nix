@@ -16,6 +16,20 @@
 in {
   home.shellAliases = shellAliases;
 
+  # Environment belongs here rather than in .zshrc so that a bash session —
+  # recovery, root, or a host whose login shell isn't zsh — still lands in a
+  # configured environment. home-manager exports these to both shells.
+  home.sessionVariables = {
+    XDG_CONFIG_HOME = config.xdg.configHome;
+
+    # clean up ~
+    LESSHISTFILE = "${config.xdg.cacheHome}/less/history";
+    LESSKEY = "${config.xdg.configHome}/less/lesskey";
+
+    # enable scrolling in git diff
+    DELTA_PAGER = "less -R";
+  };
+
   programs.carapace = {
     enable = true;
     enableZshIntegration = true;
