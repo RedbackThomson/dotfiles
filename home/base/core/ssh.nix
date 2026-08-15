@@ -5,26 +5,26 @@
     # so future removal of enableDefaultConfig does not change behavior.
     enableDefaultConfig = false;
 
-    matchBlocks = {
+    settings = {
       "*" = {
-        forwardAgent = true;
-        serverAliveInterval = 60;
+        ForwardAgent = true;
+        ServerAliveInterval = 60;
         # Disable control master since it was causing bad responses with
         # multiple deployments
-        controlMaster = "no";
-        controlPersist = "30m";
-        addKeysToAgent = "no";
-        compression = false;
-        serverAliveCountMax = 3;
-        hashKnownHosts = false;
-        userKnownHostsFile = "~/.ssh/known_hosts";
-        controlPath = "~/.ssh/master-%r@%n:%p";
+        ControlMaster = "no";
+        ControlPersist = "30m";
+        AddKeysToAgent = "no";
+        Compression = false;
+        ServerAliveCountMax = 3;
+        HashKnownHosts = false;
+        UserKnownHostsFile = "~/.ssh/known_hosts";
+        ControlPath = "~/.ssh/master-%r@%n:%p";
       };
       "github.com" = {
-        hostname = "github.com";
-        user = "git";
-        forwardAgent = false;
-        extraOptions = {preferredAuthentications = "publickey";};
+        HostName = "github.com";
+        User = "git";
+        ForwardAgent = false;
+        PreferredAuthentications = "publickey";
       };
     };
   };

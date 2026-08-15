@@ -21,9 +21,9 @@
   # Push over SSH with the host's own key instead of a forwarded agent, which
   # dies when the laptop sleeps and would break long agent runs. The public
   # half must be added to GitHub; the private half is the agenix secret.
-  programs.ssh.matchBlocks."github.com" = {
-    identityFile = "/run/agenix/devbox-git-key";
-    identitiesOnly = true;
+  programs.ssh.settings."github.com" = {
+    IdentityFile = "/run/agenix/devbox-git-key";
+    IdentitiesOnly = true;
   };
 
   # mkOrder 2000 runs after the shared ai module's `claude` wrapper (mkAfter =

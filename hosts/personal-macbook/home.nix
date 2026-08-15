@@ -32,11 +32,11 @@
 
   programs.ssh = {
     enable = true;
-    matchBlocks = {
+    settings = {
       "pibox.local" = {
-        hostname = "pibox.local";
-        user = "pibox";
-        forwardAgent = false;
+        HostName = "pibox.local";
+        User = "pibox";
+        ForwardAgent = false;
       };
     };
   };
