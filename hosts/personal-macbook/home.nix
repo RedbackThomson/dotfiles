@@ -40,6 +40,10 @@
         User = "pibox";
         ForwardAgent = false;
       };
+      "devbox" = {
+        HostName = "homelab-0-devbox";
+        ForwardAgent = false;
+      };
     };
   };
 
