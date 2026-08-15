@@ -28,7 +28,6 @@ in {
 
         ignores = [
           ".DS_Store"
-          "shell.nix"
           ".vscode"
           ".jj"
           ".claude"
