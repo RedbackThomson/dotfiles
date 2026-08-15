@@ -196,9 +196,9 @@ in
       # Tapo (your custom component "tapo")
       plugp100
 
-      # Amazon S3
+      # Amazon S3. aioboto3 is omitted: its chalice extra drags in
+      # aws-sam-translator, which does not work on Python 3.14.
       aiobotocore
-      aioboto3
 
       # Optional perf: aiohttp_fast_zlib warning
       zlib-ng

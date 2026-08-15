@@ -34,6 +34,33 @@
               }} $out/bin/zjstatus.wasm
             '';
           })
+
+          # nixpkgs marks typish unsupported on Python 3.14 over a single failing
+          # test, which takes jsons and plugp100 down with it and breaks Home
+          # Assistant's Tapo support. The rest of both suites passes on 3.14, so
+          # re-enable the package and skip only the tests 3.14 broke.
+          (final: prev: {
+            pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+              (pyfinal: pyprev: {
+                typish = pyprev.typish.overridePythonAttrs (old: {
+                  disabled = false;
+                  disabledTests = (old.disabledTests or [ ]) ++ [ "test_complex_cls_function" ];
+                });
+                jsons = pyprev.jsons.overridePythonAttrs (old: {
+                  disabledTests = (old.disabledTests or [ ]) ++ [
+                    "test_dumped_decorator_async"
+                    "test_loaded_decorator_async"
+                  ];
+                });
+
+                # moto, used only to test aiobotocore, cannot even be evaluated
+                # on Python 3.14: it reaches aws-sam-translator through cfn-lint.
+                aiobotocore = pyprev.aiobotocore.overridePythonAttrs (_: {
+                  doCheck = false;
+                });
+              })
+            ];
+          })
         ];
       };
       # use unstable branch for some packages to get the latest updates
