@@ -3,7 +3,6 @@
   nixpkgs,
   pre-commit-hooks,
   darwin-custom-icons,
-  zjstatus,
   colmena,
   ...
 } @ inputs: let
@@ -23,8 +22,17 @@
         # To use 1Password, we need to allow the installation of non-free software
         config.allowUnfree = true;
         overlays = [
+          # The upstream flake compiles a Rust/wasm toolchain for what is a 4MB
+          # plugin, and publishes no binary cache. The release artifact is
+          # architecture-independent, so it serves every host. Bump url + hash
+          # together on upgrade.
           (final: prev: {
-            zjstatus = zjstatus.packages.${prev.stdenv.hostPlatform.system}.default;
+            zjstatus = prev.runCommandLocal "zjstatus-0.24.0" {} ''
+              install -Dm444 ${prev.fetchurl {
+                url = "https://github.com/dj95/zjstatus/releases/download/v0.24.0/zjstatus.wasm";
+                hash = "sha256-HM7ezh3tYs8+IJvmkM3TnKb7noIo7XGpUfZQf5lWZps=";
+              }} $out/bin/zjstatus.wasm
+            '';
           })
         ];
       };

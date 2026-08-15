@@ -39,10 +39,6 @@
       url = "github:nix-community/haumea/v0.2.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    zjstatus = {
-      url = "github:dj95/zjstatus";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     darwin-custom-icons.url = "github:ryanccn/nix-darwin-custom-icons";
     flox.url = "github:flox/flox/latest";
     nixos-generators = {
