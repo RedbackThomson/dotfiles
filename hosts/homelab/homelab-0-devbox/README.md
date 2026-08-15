@@ -7,7 +7,8 @@ sessions survive client disconnects via a persistent zellij session.
 - Arch: `x86_64-linux`
 - Tailnet tag: `tag:devbox`
 - LAN address: `192.168.1.154` (from `vars/networking.nix`)
-- Disks: `/dev/sda` = OS + Nix store; `/dev/sdb` = `/work` (user work trees, service state)
+- Disk: a single 128G disk at `/dev/sda` (ESP + root). Work trees live in the
+  user's home directory.
 
 ## One-time setup before the first deploy
 
@@ -39,12 +40,18 @@ nix build .#nixosConfigurations.homelab-0-devbox.config.formats.proxmox
 ```
 
 Import the resulting VMA into Proxmox, or provision a blank VM and install with
-your usual disko-based flow. Give the VM **two virtio disks**. The second one
-becomes `/work` and must not be the boot disk. Enable the QEMU guest agent in
-the VM options. Nothing else is manual.
+your usual disko-based flow. Give the VM **one 128G disk**; disko expects it at
+`/dev/sda`, so attach it to the SCSI (virtio-scsi) controller rather than as a
+`virtio` block device, which would appear as `/dev/vda`. Enable the QEMU guest
+agent in the VM options. Nothing else is manual.
 
-VM sizing (CPU/RAM/disk) is not encoded in this repo; set it in Proxmox to suit
-the workload.
+The disk holds the Nix store, `/var/lib/docker` and `/home`, so it fills faster
+than the OS alone would suggest. `root` is the last partition, so
+growing it later is a Proxmox disk expand plus `growpart` and `resize2fs`, with
+no downtime.
+
+CPU and RAM sizing is not encoded in this repo; set it in Proxmox to suit the
+workload.
 
 ## Deploy
 

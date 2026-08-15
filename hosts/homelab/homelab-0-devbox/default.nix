@@ -107,12 +107,7 @@ in {
   # module but widen retention so in-progress work survives a collection.
   nix.gc.options = lib.mkForce "--delete-older-than 30d";
 
-  # Work disk owned by the user; created by disko, chowned here.
-  systemd.tmpfiles.rules = [
-    "d /work 0755 ${myvars.username} ${myvars.username} - -"
-  ];
-
-  # Cap journald so verbose long-running sessions cannot fill the OS disk.
+  # Cap journald so verbose long-running sessions cannot fill the disk.
   services.journald.extraConfig = ''
     SystemMaxUse=2G
     MaxRetentionSec=1month
