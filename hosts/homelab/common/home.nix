@@ -6,5 +6,7 @@
       cloudProviders.aws.enable = true;
       utilities.enable = true;
     };
+
+    editors.helix.enable = true;
   };
 }

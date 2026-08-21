@@ -1,12 +1,17 @@
-{pkgs, ...}: 
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.myconfig.editors.neovim;
+
   codelldb = pkgs.vscode-extensions.vadimcn.vscode-lldb.overrideAttrs (oldAttrs: {
     buildInputs = [ pkgs.python312Packages.six ];
   });
-in
-{
+in {
   programs = {
-    neovim = {
+    neovim = lib.mkIf cfg.enable {
       enable = true;
 
       defaultEditor = true;
@@ -401,5 +406,5 @@ in
     };
   };
 
-    xdg.configFile."nvim/lua".source = ./lua;
+  xdg.configFile."nvim/lua" = lib.mkIf cfg.enable {source = ./lua;};
 }

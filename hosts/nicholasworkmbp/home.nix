@@ -14,6 +14,8 @@
       git.jujutsu.enable = true;
     };
 
+    editors.helix.enable = true;
+
     languages = {
       bun.enable = false;
       go.enable = true;

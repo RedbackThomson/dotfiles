@@ -41,6 +41,15 @@
       sqlite.enable = lib.mkEnableOption "SQLite CLI";
     };
 
+    editors = {
+      neovim.enable = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = "Neovim editor";
+      };
+      helix.enable = lib.mkEnableOption "Helix editor";
+    };
+
     languages = {
       bun.enable = lib.mkEnableOption "Bun JavaScript runtime";
       go.enable = lib.mkEnableOption "Go programming language";

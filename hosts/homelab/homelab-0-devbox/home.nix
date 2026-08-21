@@ -11,6 +11,8 @@
       utilities.enable = true;
       containers.basic.enable = true;
     };
+
+    editors.helix.enable = true;
   };
 
   home.packages = with pkgs; [
