@@ -4,7 +4,9 @@
   lib,
   myvars,
   ...
-}: {
+}: let
+  opSshSign = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+in {
   imports = [_1password-shell.hmModules.default];
 
   home.packages = [
@@ -22,9 +24,15 @@
       user.signingkey = myvars.signingkey;
       gpg = {
         format = "ssh";
-        ssh.program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+        ssh.program = opSshSign;
       };
     };
+  };
+
+  programs.jujutsu.settings.signing = {
+    backend = "ssh";
+    key = myvars.signingkey;
+    backends.ssh.program = opSshSign;
   };
 
   programs.ssh.extraConfig = ''
