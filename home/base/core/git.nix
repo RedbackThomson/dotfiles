@@ -34,6 +34,7 @@ in {
           ".direnv"
           ".envrc"
           "CLAUDE.local.md"
+          ".workspaces" # jj workspaces
         ];
 
         includes = [
@@ -157,6 +158,36 @@ in {
             tug = ["bookmark" "move" "--from" "closest_bookmark(@)" "--to" "closest_pushable(@)"];
             u = ["undo"];
             w = ["show" "closest_bookmark(@)"];
+
+            # Workspace commands
+            wa = ["util" "exec" "--" "bash" "-c" "root=$(jj workspace root --name default) && mkdir -p \"$root/.workspaces\" && jj workspace add --name $1 \"$root/.workspaces/$1\"" "jj-wa"];
+            wo = ["util" "exec" "--" "bash" "-c" "name=$(jj workspace list | fzf | cut -d':' -f1); [ -z \"$name\" ] && exit 0; jj workspace root --name \"$name\"" "jj-wo"];
+            wff = [
+              "util"
+              "exec"
+              "--"
+              "bash"
+              "-c"
+              ''
+                f() {
+                  root=$(jj workspace root --name "$1") &&
+                    jj workspace forget "$1" &&
+                    rm -rf "$root" &&
+                    echo "Deleted workspace: $1"
+                }
+                if [ "$#" -gt 0 ]; then
+                  for n in "$@"; do f "$n"; done
+                else
+                  jj workspace list |
+                    fzf --multi |
+                    cut -d':' -f1 |
+                    while IFS= read -r n; do
+                      [ -n "$n" ] && f "$n"
+                    done
+                fi
+              ''
+              "jj-wff"
+            ];
           };
         };
       };
