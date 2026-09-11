@@ -53,6 +53,8 @@ in
           # settings from here, so the Linux hosts' caches must be listed on the
           # Mac too, not just in the NixOS modules.
           determinateNix.customSettings = {
+            auto-optimise-store = true;
+
             extra-substituters = [
               "https://cache.flox.dev"
               "https://colmena.cachix.org"
