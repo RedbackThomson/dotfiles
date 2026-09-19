@@ -25,10 +25,19 @@ let
         "hosts/homelab/${name}"
 
         "modules/nixos/server/server.nix"
+        "modules/nixos/server/tailscale.nix"
       ])
       ++ [
         inputs.disko.nixosModules.disko
         inputs.nix-openclaw.nixosModules.openclaw-gateway
+        {
+          modules.secrets.ollama.enable = true;
+          modules.tailscale = {
+            enable = true;
+            tags = [ "tag:openclaw" ];
+            servePort = 18789;
+          };
+        }
       ];
     home-modules = map mylib.relativeToRoot [
 

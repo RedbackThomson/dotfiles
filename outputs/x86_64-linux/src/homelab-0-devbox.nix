@@ -28,7 +28,14 @@
       ])
       ++ [
         inputs.disko.nixosModules.disko
-        {modules.secrets.devbox.enable = true;}
+        {
+          modules.secrets.devbox.enable = true;
+          modules.tailscale = {
+            enable = true;
+            tags = ["tag:devbox"];
+            ssh = true;
+          };
+        }
       ];
     home-modules = map mylib.relativeToRoot [
       "home/linux/tui.nix"

@@ -591,11 +591,11 @@
     "mysecrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1786818050,
-        "narHash": "sha256-ZC4R0BGzpAY8+MFlAGWjVnHPbF0rychBFzdkK3gEK6Y=",
+        "lastModified": 1789854749,
+        "narHash": "sha256-NQdiEAJ6e363OkJ7JFdB9BKcMPVB2ZZOf2wqvKJ4GxM=",
         "owner": "redbackthomson",
         "repo": "dotfiles-secrets",
-        "rev": "9375ce91a8e037ed43ddc6fee0557c748929a1ac",
+        "rev": "a5055b6f1eb034a2724b6995b00e051a912e86e5",
         "type": "github"
       },
       "original": {

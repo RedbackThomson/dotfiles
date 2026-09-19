@@ -3,6 +3,9 @@
   prefixLength = 24;
   nameservers = ["8.8.8.8" "8.8.4.4"];
 
+  tailnetDomain = "tailb0b05.ts.net";
+  tailnetFqdn = name: "${name}.${tailnetDomain}";
+
   hostsAddr = {
     # ============================================
     # Homelab-0 VMs

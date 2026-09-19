@@ -25,9 +25,18 @@ let
         "hosts/homelab/${name}"
 
         "modules/nixos/server/server.nix"
+        "modules/nixos/server/tailscale.nix"
       ])
       ++ [
         inputs.disko.nixosModules.disko
+        {
+          modules.secrets.homeAssistant.enable = true;
+          modules.tailscale = {
+            enable = true;
+            tags = [ "tag:home-assistant" ];
+            servePort = 8123;
+          };
+        }
       ];
     home-modules = map mylib.relativeToRoot [
       

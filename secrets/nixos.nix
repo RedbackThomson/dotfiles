@@ -12,7 +12,9 @@ with lib; let
 
   enabledServerSecrets =
     cfg.server.kubernetes.enable
-    || cfg.devbox.enable;
+    || cfg.devbox.enable
+    || cfg.homeAssistant.enable
+    || cfg.ollama.enable;
 
   noaccess = {
     mode = "0000";
@@ -44,6 +46,8 @@ in {
   options.modules.secrets = {
     server.kubernetes.enable = mkEnableOption "NixOS Secrets for Kubernetes";
     devbox.enable = mkEnableOption "NixOS Secrets for the devbox dev host (Tailscale, git, forge)";
+    homeAssistant.enable = mkEnableOption "NixOS Secrets for the Home Assistant host (Tailscale)";
+    ollama.enable = mkEnableOption "NixOS Secrets for the Ollama host (Tailscale)";
   };
 
   config = mkIf enabledServerSecrets (mkMerge [
@@ -104,6 +108,26 @@ in {
             file = "${mysecrets}/secrets/devbox/gh-token.age";
           }
           // user_secret;
+      };
+    })
+
+    (mkIf cfg.homeAssistant.enable {
+      age.secrets = {
+        "tailscale-authkey" =
+          {
+            file = "${mysecrets}/secrets/home-assistant/tailscale-authkey.age";
+          }
+          // root_secret;
+      };
+    })
+
+    (mkIf cfg.ollama.enable {
+      age.secrets = {
+        "tailscale-authkey" =
+          {
+            file = "${mysecrets}/secrets/ollama/tailscale-authkey.age";
+          }
+          // root_secret;
       };
     })
   ]);

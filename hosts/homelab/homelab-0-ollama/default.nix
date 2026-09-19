@@ -159,7 +159,7 @@ in
         };
         controlUi = {
           enabled = true;
-          allowedOrigins = [ "https://openclaw.homelab.redback.dev" ];
+          allowedOrigins = [ "https://${myvars.networking.tailnetFqdn hostName}" ];
           dangerouslyDisableDeviceAuth = true;
         };
       };
