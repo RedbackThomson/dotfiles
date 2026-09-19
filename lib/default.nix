@@ -5,7 +5,7 @@
 
   attrs = import ./attrs.nix { inherit lib; };
 
-  genK3sServerModule = import ./genK3sServerModule.nix;
+  genK3sNodeModule = import ./genK3sNodeModule.nix;
   genHomeAssistantModule = import ./home-assistant/genHomeAssistantModule.nix;
 
   # use path relative to the root of the project

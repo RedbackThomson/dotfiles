@@ -8,11 +8,11 @@
 }:
 #############################################################
 #
-#  homelab-0-k3s-0 - K3s Server VM running on Homelab 0
+#  homelab-0-k3s-1 - K3s Agent VM running on Homelab 0
 #
 #############################################################
 let
-  hostName = "homelab-0-k3s-0"; # Define your hostname.
+  hostName = "homelab-0-k3s-1"; # Define your hostname.
 
   inherit (myvars.networking) nameservers mainGateway;
   inherit (myvars.networking.hostsAddr.${hostName}) iface ipv4;
@@ -20,18 +20,12 @@ let
 
   k3sModule = mylib.genK3sNodeModule {
     inherit pkgs hostName;
-    kubeconfigFile = "/home/${myvars.username}/.kube/config";
     tokenFile = config.age.secrets."k3s-token".path;
-    # the first node in the cluster should be the one to initialize the cluster
-    clusterInit = true;
-    masterHost = "homelab-0-k3s-0.homelab.local";
-    # k3sExtraArgs = [
-    #   # IPv4 Private CIDR(full) - 172.16.0.0/12
-    #   # IPv4 Pod     CIDR(full) - fdfd:cafe:00:0000::/64 ~ fdfd:cafe:00:7fff::/64
-    #   # IPv4 Service CIDR(full) - fdfd:cafe:00:8000::/64 ~ fdfd:cafe:00:ffff::/64
-    #   "--cluster-cidr=172.20.0.0/16,fdfd:cafe:00:0003::/64"
-    #   "--service-cidr=172.21.0.0/16,fdfd:cafe:00:8003::/112"
-    # ];
+    # An agent carries workloads so a server restart does not take every pod
+    # with it; etcd stays a single member.
+    role = "agent";
+    # The server's own name does not resolve, but its address is a cert SAN.
+    masterHost = myvars.networking.hostsAddr.homelab-0-k3s-0.ipv4;
   };
 in
 {

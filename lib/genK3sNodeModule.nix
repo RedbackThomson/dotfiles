@@ -1,6 +1,5 @@
 {
   pkgs,
-  kubeconfigFile,
   tokenFile,
   # Initialize HA cluster using an embedded etcd datastore.
   # If you are configuring an HA cluster with an embedded etcd,
@@ -10,6 +9,8 @@
   # this can be a domain name or an IP address(such as kube-vip's virtual IP)
   masterHost,
   hostName,
+  role ? "server",
+  kubeconfigFile ? null,
   clusterInit ? false,
   kubeletExtraArgs ? [ ],
   k3sExtraArgs ? [ ],
@@ -21,6 +22,7 @@
 let
   lib = pkgs.lib;
   package = pkgs.k3s;
+  isServer = role == "server";
 in
 {
   environment.systemPackages = with pkgs; [
@@ -56,32 +58,37 @@ in
 
   services.k3s = {
     enable = true;
-    inherit package tokenFile clusterInit;
-    serverAddr = if clusterInit then "" else "https://${masterHost}:6443";
+    inherit package tokenFile role;
+    clusterInit = isServer && clusterInit;
+    serverAddr = if (isServer && clusterInit) then "" else "https://${masterHost}:6443";
 
-    role = "server";
     # https://docs.k3s.io/cli/server
+    # An agent rejects the server-only flags; it takes those settings from the
+    # server it joins.
     extraFlags =
       let
-        flagList = [
-          "--write-kubeconfig=${kubeconfigFile}"
-          "--write-kubeconfig-mode=644"
-          "--service-node-port-range=80-32767"
-          "--kube-apiserver-arg='--allow-privileged=true'" # required by kubevirt
-          "--data-dir /var/lib/rancher/k3s"
-          "--etcd-expose-metrics=true"
-          "--etcd-snapshot-schedule-cron='0 */12 * * *'"
-          # disable some features we don't need
-          "--disable-helm-controller" # we use fluxcd instead
-          "--disable=servicelb" # we use kube-vip instead
-          "--disable-network-policy"
-          "--tls-san=${masterHost}"
-        ]
-        ++ (map (label: "--node-label=${label}") nodeLabels)
-        ++ (map (taint: "--node-taint=${taint}") nodeTaints)
-        ++ (map (arg: "--kubelet-arg=${arg}") kubeletExtraArgs)
-        ++ (lib.optionals disableFlannel [ "--flannel-backend=none" ])
-        ++ k3sExtraArgs;
+        flagList =
+          (lib.optionals isServer [
+            "--write-kubeconfig=${kubeconfigFile}"
+            "--write-kubeconfig-mode=644"
+            "--service-node-port-range=80-32767"
+            "--kube-apiserver-arg='--allow-privileged=true'" # required by kubevirt
+          ])
+          ++ [ "--data-dir /var/lib/rancher/k3s" ]
+          ++ (lib.optionals isServer [
+            "--etcd-expose-metrics=true"
+            "--etcd-snapshot-schedule-cron='0 */12 * * *'"
+            # disable some features we don't need
+            "--disable-helm-controller" # we use fluxcd instead
+            "--disable=servicelb" # we use kube-vip instead
+            "--disable-network-policy"
+            "--tls-san=${masterHost}"
+          ])
+          ++ (map (label: "--node-label=${label}") nodeLabels)
+          ++ (map (taint: "--node-taint=${taint}") nodeTaints)
+          ++ (map (arg: "--kubelet-arg=${arg}") kubeletExtraArgs)
+          ++ (lib.optionals (isServer && disableFlannel) [ "--flannel-backend=none" ])
+          ++ k3sExtraArgs;
       in
       lib.concatStringsSep " " flagList;
   };

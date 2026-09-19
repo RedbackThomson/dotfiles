@@ -15,6 +15,11 @@
       ipv4 = "192.168.1.151";
     };
 
+    homelab-0-k3s-1 = {
+      iface = "enp0s18";
+      ipv4 = "192.168.1.155";
+    };
+
     homelab-0-home-assistant = {
       iface = "enp0s18";
       ipv4 = "192.168.1.152";
