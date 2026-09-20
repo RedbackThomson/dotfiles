@@ -6,7 +6,7 @@ sessions survive client disconnects via a persistent zellij session.
 
 - Arch: `x86_64-linux`
 - Tailnet tag: `tag:devbox`
-- LAN address: `192.168.1.154` (from `vars/networking.nix`)
+- LAN address: `192.168.3.154` (from `vars/networking.nix`)
 - Disk: a single 128G disk at `/dev/sda` (ESP + root). Work trees live in the
   user's home directory.
 
@@ -76,7 +76,7 @@ port 22 on the tailnet address:
 ssh nicholasthomson@homelab-0-devbox
 ```
 
-Break-glass, if Tailscale is unhealthy: SSH to the LAN address `192.168.1.154`,
+Break-glass, if Tailscale is unhealthy: SSH to the LAN address `192.168.3.154`,
 or use the Proxmox serial console (the VM is configured for `ttyS0`).
 
 ## Attach to the persistent session

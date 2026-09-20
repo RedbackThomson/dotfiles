@@ -1,5 +1,5 @@
 {lib}: rec {
-  mainGateway = "192.168.1.1"; # main router
+  mainGateway = "192.168.3.1"; # main router
   prefixLength = 24;
   nameservers = ["8.8.8.8" "8.8.4.4"];
 
@@ -12,27 +12,27 @@
     # ============================================
     homelab-0-k3s-0 = {
       iface = "enp0s18";
-      ipv4 = "192.168.1.151";
+      ipv4 = "192.168.3.151";
     };
 
     homelab-0-k3s-1 = {
       iface = "enp0s18";
-      ipv4 = "192.168.1.155";
+      ipv4 = "192.168.3.155";
     };
 
     homelab-0-home-assistant = {
       iface = "enp0s18";
-      ipv4 = "192.168.1.152";
+      ipv4 = "192.168.3.152";
     };
 
     homelab-0-ollama = {
       iface = "enp0s18";
-      ipv4 = "192.168.1.153";
+      ipv4 = "192.168.3.153";
     };
 
     homelab-0-devbox = {
       iface = "enp0s18";
-      ipv4 = "192.168.1.154";
+      ipv4 = "192.168.3.154";
     };
   };
 
