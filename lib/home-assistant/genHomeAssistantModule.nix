@@ -2,6 +2,7 @@
   pkgs,
   externalUrl ? "https://hass.homelab.redback.dev",
   internalUrl ? "http://127.0.0.1:8123",
+  trustedProxies ? [ ],
   ...
 }:
 let
@@ -41,10 +42,8 @@ in
           "fe80::/64"
           "fe00::/64"
           "fd00::/64"
-
-          # Homelab-0-k3s-0 VMs
-          "192.168.3.151"
-        ];
+        ]
+        ++ trustedProxies;
       };
 
       frontend.themes = "!include_dir_merge_named themes";

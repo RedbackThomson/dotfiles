@@ -22,6 +22,10 @@ let
     inherit pkgs;
     externalUrl = "https://hass.homelab.redback.dev";
     internalUrl = "http://${ipv4}:8123";
+    trustedProxies = map (n: myvars.networking.hostsAddr.${n}.ipv4) [
+      "homelab-0-k3s-0"
+      "homelab-0-k3s-1"
+    ];
   };
 
   diskoModule = import ./disko.nix;
