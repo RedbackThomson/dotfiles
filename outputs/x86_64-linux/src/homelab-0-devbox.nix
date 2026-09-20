@@ -14,8 +14,6 @@
   tags = [name "devbox"];
   ssh-user = "root";
 
-  inherit (myvars.networking.hostsAddr.${name}) ipv4;
-
   modules = {
     nixos-modules =
       (map mylib.relativeToRoot [
@@ -50,6 +48,6 @@ in {
   colmena.${name} = mylib.colmenaSystem (systemArgs
     // {
       inherit tags ssh-user;
-      targetHost = ipv4;
+      targetHost = myvars.networking.tailnetFqdn name;
     });
 }
