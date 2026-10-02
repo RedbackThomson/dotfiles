@@ -101,6 +101,7 @@ in {
     (lib.mkIf cfg.jujutsu.enable {
       home.packages = with pkgs; [
         lazyjj # A simple TUI for jujutsu
+        jjui # An alternative TUI for jujutsu
       ];
 
       programs.jujutsu = {
