@@ -129,6 +129,9 @@
         "dockdoor" # Better window switcher
         "hyperkey" # Modifier key for macOS
 
+        "macpacker" # Archive package manager for macOS
+        "vorssaint" # Multi-tool in menu bar
+
         # Terminals
         "ghostty"
 
