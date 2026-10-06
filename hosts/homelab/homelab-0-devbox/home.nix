@@ -16,7 +16,6 @@
   };
 
   home.packages = with pkgs; [
-    claude-code
     gh # forge CLI; authenticates via GH_TOKEN from agenix (see initContent)
   ];
 
