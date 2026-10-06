@@ -35,6 +35,9 @@
   # zellij auto-attach makes a long-running process survive a client
   # disconnect: reconnecting over SSH drops straight back into `main`.
   programs.zsh.initContent = lib.mkOrder 2000 ''
+    typeset -U path
+    path=("$HOME/.local/bin" $path)
+
     if [[ -r /run/agenix/gh-token ]]; then
       export GH_TOKEN="$(< /run/agenix/gh-token)"
     fi
