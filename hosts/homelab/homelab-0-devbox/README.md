@@ -77,7 +77,7 @@ ssh nicholasthomson@homelab-0-devbox
 ```
 
 Break-glass, if Tailscale is unhealthy: SSH to the LAN address `192.168.3.154`,
-or use the Proxmox serial console (the VM is configured for `ttyS0`).
+or use the Proxmox console.
 
 ## Attach to the persistent session
 

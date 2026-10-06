@@ -36,22 +36,12 @@ in {
 
   boot.initrd.availableKernelModules = ["ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod"];
 
-  # Serial console so the Proxmox console works as a Tailscale-independent
-  # break-glass path. tty1 stays primary; ttyS0 is the last entry so kernel
-  # oops output lands on the serial line Proxmox exposes.
-  boot.kernelParams = ["console=tty1" "console=ttyS0,115200"];
-
   boot.loader.grub = {
     enable = true;
     device = "nodev";
     useOSProber = true;
     efiSupport = true;
     efiInstallAsRemovable = true;
-    extraConfig = ''
-      serial --unit=0 --speed=115200
-      terminal_input serial console
-      terminal_output serial console
-    '';
   };
 
   services.qemuGuest.enable = true;
