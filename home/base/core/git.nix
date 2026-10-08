@@ -34,7 +34,6 @@ in {
           ".direnv"
           ".envrc"
           "CLAUDE.local.md"
-          ".workspaces" # jj workspaces
         ];
 
         includes = [
@@ -104,6 +103,10 @@ in {
         jjui # An alternative TUI for jujutsu
       ];
 
+      # Central location for jj workspaces created via the `wa` alias,
+      # keyed by repository name underneath.
+      home.sessionVariables.JJ_WORKSPACES = "${config.xdg.dataHome}/jj-workspaces";
+
       programs.jujutsu = {
         enable = true;
 
@@ -161,7 +164,21 @@ in {
             w = ["show" "closest_bookmark(@)"];
 
             # Workspace commands
-            wa = ["util" "exec" "--" "bash" "-c" "root=$(jj workspace root --name default) && mkdir -p \"$root/.workspaces\" && jj workspace add --name $1 \"$root/.workspaces/$1\"" "jj-wa"];
+            wa = [
+              "util"
+              "exec"
+              "--"
+              "bash"
+              "-c"
+              ''
+                root=$(jj workspace root --name default)
+                base="''${JJ_WORKSPACES:-''${XDG_DATA_HOME:-$HOME/.local/share}/jj-workspaces}"
+                dest="$base/$(basename "$root")/$1"
+                mkdir -p "$(dirname "$dest")"
+                jj workspace add --name "$1" "$dest"
+              ''
+              "jj-wa"
+            ];
             wo = ["util" "exec" "--" "bash" "-c" "name=$(jj workspace list | fzf | cut -d':' -f1); [ -z \"$name\" ] && exit 0; jj workspace root --name \"$name\"" "jj-wo"];
             wff = [
               "util"

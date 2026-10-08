@@ -28,6 +28,7 @@
 
       directory = {
         style = "fg:#8caaee bold";
+        disabled = true; # rendered via custom.directory below
       };
 
       kubernetes = {
@@ -100,6 +101,26 @@
         description = "Only show git_branch if we're not in a jj repo";
       };
 
+      custom.directory = {
+        when = true;
+        description = "Custom override directory for different contexts";
+        # Override jj workspace display with a custom command
+        command = ''
+          case "$PWD" in
+            */jj-workspaces/*)
+              rest=''${PWD##*/jj-workspaces/}
+              repo=''${rest%%/*}
+              ws=''${rest#*/}; ws=''${ws%%/*}
+              printf '\033[1;38;2;140;170;238m %s [%s]\033[0m' "$repo" "$ws"
+              ;;
+            *)
+              starship module directory
+              ;;
+          esac
+        '';
+        format = "$output ";
+      };
+
       # Remove versions from all runtimes
       bun.format = "via [$symbol]($style)";
       buf.format = "with [$symbol]($style)";
@@ -161,7 +182,7 @@
         "$shlvl"
         "$singularity"
         "$kubernetes" # moved
-        "$directory"
+        "\${custom.directory}"
         "$vcsh"
         "$git_branch"
         "$git_commit"
