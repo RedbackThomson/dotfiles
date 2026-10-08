@@ -118,6 +118,34 @@ in
               };
             }
           ];
+
+          # The bulb stops working above 70% brightness, so 100% here maps to 70% on the bulb.
+          light = [
+            {
+              name = "Living Room Reading Lamp";
+              unique_id = "living_room_reading_lamp";
+
+              state = "{{ is_state('light.living_room_reading_light', 'on') }}";
+              level = ''
+                {% set b = state_attr('light.living_room_reading_light', 'brightness') | int(0) %}
+                {{ [(b / 0.7) | round | int, 255] | min }}
+              '';
+
+              turn_on = {
+                action = "light.turn_on";
+                target.entity_id = "light.living_room_reading_light";
+              };
+              turn_off = {
+                action = "light.turn_off";
+                target.entity_id = "light.living_room_reading_light";
+              };
+              set_level = {
+                action = "light.turn_on";
+                target.entity_id = "light.living_room_reading_light";
+                data.brightness = "{{ [(brightness * 0.7) | round | int, 1] | max }}";
+              };
+            }
+          ];
         }
       ];
     };
