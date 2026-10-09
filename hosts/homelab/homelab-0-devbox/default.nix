@@ -103,5 +103,42 @@ in {
     MaxRetentionSec=1month
   '';
 
+  modules.monitoring.units = [
+    "docker.service"
+    "prometheus-blackbox-exporter.service"
+  ];
+
+  # Probes tailnet URLs for the homelab dashboard; it runs here because pods in
+  # the cluster have no route onto the tailnet.
+  services.prometheus.exporters.blackbox = {
+    enable = true;
+    port = 9115;
+    configFile = pkgs.writeText "blackbox.yml" (builtins.toJSON {
+      modules = {
+        http_2xx = {
+          prober = "http";
+          timeout = "10s";
+          http.preferred_ip_protocol = "ip4";
+        };
+        # For endpoints that answer unauthenticated probes with 401/403, which
+        # still proves the endpoint is up.
+        http_reachable = {
+          prober = "http";
+          timeout = "10s";
+          http = {
+            preferred_ip_protocol = "ip4";
+            valid_status_codes = [200 401 403];
+          };
+        };
+      };
+    });
+  };
+
+  # The metrics store runs on the k3s nodes and scrapes over the LAN, which is
+  # otherwise closed on this host.
+  networking.firewall.extraCommands = lib.concatMapStringsSep "\n" (addr: ''
+    iptables -A nixos-fw -p tcp -s ${addr} -m multiport --dports 9100,9115 -j nixos-fw-accept
+  '') myvars.networking.k3sNodeAddrs;
+
   system.stateVersion = "25.05";
 }

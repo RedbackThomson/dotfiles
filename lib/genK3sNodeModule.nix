@@ -56,6 +56,11 @@ in
     name = "iqn.2025-12.homelab:${hostName}";
   };
 
+  modules.monitoring.units = [
+    "k3s.service"
+    "iscsid.service"
+  ];
+
   services.k3s = {
     enable = true;
     inherit package tokenFile role;

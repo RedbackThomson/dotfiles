@@ -36,6 +36,10 @@
     };
   };
 
+  # Traffic from cluster pods leaves through these nodes' addresses.
+  k3sNodes = ["homelab-0-k3s-0" "homelab-0-k3s-1"];
+  k3sNodeAddrs = map (name: hostsAddr.${name}.ipv4) k3sNodes;
+
   hostsInterface =
     lib.attrsets.mapAttrs (key: val: {
       interfaces."${val.iface}" = {

@@ -241,4 +241,12 @@ in
   ];
 
   networking.firewall.allowedTCPPorts = [ 3001 11434 18789 ];
+
+  modules.monitoring.units = [
+    "ollama.service"
+    "searx.service"
+    "docker.service"
+    "docker-anythingllm.service"
+    "openclaw-gateway.service"
+  ];
 }
