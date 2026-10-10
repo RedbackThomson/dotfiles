@@ -56,12 +56,10 @@ in
             auto-optimise-store = true;
 
             extra-substituters = [
-              "https://cache.flox.dev"
               "https://colmena.cachix.org"
               "https://nix-community.cachix.org"
             ];
             extra-trusted-public-keys = [
-              "flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="
               "colmena.cachix.org-1:7BzpDnjjH8ki2CT3f6GdOk7QAzPOl+1t3LvTLXqYcSg="
               "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
             ];

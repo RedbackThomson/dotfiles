@@ -3,7 +3,6 @@
   lib,
   pkgs,
   pkgs-unstable,
-  flox,
   ...
 }:
   ##########################################################################
@@ -34,7 +33,6 @@
       git
       gnugrep # replacee macos's grep
       gnutar # replacee macos's tar
-      flox.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
     environment.variables = {
       # Fix https://github.com/LnL7/nix-darwin/wiki/Terminfo-issues

@@ -5,12 +5,10 @@
 
   nixConfig = {
     extra-trusted-substituters = [
-      "https://cache.flox.dev"
       "https://colmena.cachix.org"
       "https://cache.garnix.io"
     ];
     extra-trusted-public-keys = [
-      "flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="
       "colmena.cachix.org-1:7BzpDnjjH8ki2CT3f6GdOk7QAzPOl+1t3LvTLXqYcSg="
       "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
     ];
@@ -40,7 +38,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     darwin-custom-icons.url = "github:ryanccn/nix-darwin-custom-icons";
-    flox.url = "github:flox/flox/latest";
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
