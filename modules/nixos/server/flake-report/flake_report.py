@@ -251,8 +251,19 @@ def input_report(old_lock, new_lock, token):
     return out
 
 
+def announce_start(ingest):
+    """Tell the dashboard a run is under way, so its Flake page shows it as running."""
+    if not ingest:
+        return
+    try:
+        http_json(f"{DASHBOARD_URL}/api/flake/started", ingest, {})
+    except (urllib.error.URLError, TimeoutError) as e:
+        log(f"could not tell the dashboard the run started: {e}")
+
+
 def main():
     STATE.mkdir(parents=True, exist_ok=True)
+    announce_start(credential("ingest-token"))
     gh_token = credential("github-token")
     if gh_token:
         # Nix resolves github: inputs through the API, whose unauthenticated
