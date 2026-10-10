@@ -30,6 +30,7 @@ in {
   };
 
   programs.jujutsu.settings.signing = {
+    behavior = "own";
     backend = "ssh";
     key = myvars.signingkey;
     backends.ssh.program = opSshSign;

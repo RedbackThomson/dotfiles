@@ -116,7 +116,6 @@ in {
 
           git = {
             auto-local-bookmark = true;
-            sign-on-push = true;
 
             fetch = ["origin" "upstream"];
             push = "origin";
