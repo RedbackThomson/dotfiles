@@ -42,7 +42,7 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    agenix.url = "github:ryantm/agenix/db5637d10f797bb251b94ef9040b237f4702cde3";
+    agenix.url = "github:ryantm/agenix/0.18.0";
     mysecrets = {
       url = "github:redbackthomson/dotfiles-secrets";
       flake = false;
