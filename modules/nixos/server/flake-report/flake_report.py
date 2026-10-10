@@ -105,6 +105,7 @@ def updated_checkout(repo, head):
 
 
 def build(flake_ref, host):
+    """Returns (store path, None) or (None, a one-line reason the build failed)."""
     attr = f"{flake_ref}#nixosConfigurations.{host}.config.system.build.toplevel"
     # One derivation at a time keeps the peak low: the Proxmox node has no
     # memory to spare for parallel builds.
@@ -112,8 +113,28 @@ def build(flake_ref, host):
                           text=True, capture_output=True)
     if proc.returncode != 0:
         log(f"build failed: {attr}\n{proc.stderr[-2000:]}")
-        return None
-    return proc.stdout.strip()
+        return None, build_error(proc.stderr)
+    return proc.stdout.strip(), None
+
+
+def build_error(stderr):
+    """The line of a failed build's output that says what to fix, rather than its consequences."""
+    text = ANSI.sub("", stderr)
+    lines = [line.strip() for line in text.splitlines()]
+    for i, line in enumerate(lines):
+        if line.startswith("Failed assertions:") and i + 1 < len(lines):
+            return lines[i + 1].lstrip("- ")
+    if m := re.search(r"error: (attribute '[^']+' missing)", text):
+        return m[1]
+    # The derivation whose builder failed is the cause; the "Cannot build" lines
+    # that follow are the systems depending on it.
+    for pattern in (r"builder for '/nix/store/[a-z0-9]{32}-([^']+)\.drv' failed",
+                    r"nix log /nix/store/[a-z0-9]{32}-(\S+)\.drv",
+                    r"Cannot build '/nix/store/[a-z0-9]{32}-([^']+)\.drv'"):
+        if m := re.search(pattern, text):
+            return f"{m[1]} failed to build"
+    errors = [line for line in lines if line.startswith("error:")]
+    return (errors[-1] if errors else "build failed")[:300]
 
 
 # ---- Diffs ----
@@ -253,11 +274,12 @@ def main():
             ["git", "cat-file", "-e", f"{rev}^{{commit}}"], cwd=repo, capture_output=True).returncode == 0
         base = rev if known else head
         log(f"{host}: deployed {rev[:7] or 'unknown'}, comparing from {base[:7]}")
-        old = build(f"git+file://{repo}?rev={base}", host)
-        new = build(f"git+file://{updated}", host)
+        old, old_err = build(f"git+file://{repo}?rev={base}", host)
+        new, new_err = build(f"git+file://{updated}", host)
         if not old or not new:
             report["buildOk"] = False
-            report["hosts"].append({"name": host, "buildOk": False, "base": base, "packages": [], "total": 0})
+            error = f"current system: {old_err}" if old_err else f"after update: {new_err}"
+            report["hosts"].append({"name": host, "buildOk": False, "base": base, "error": error, "packages": [], "total": 0})
             continue
         entry = diff_host(host, old, new)
         entry["base"] = base
