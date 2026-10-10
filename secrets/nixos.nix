@@ -108,6 +108,14 @@ in {
             file = "${mysecrets}/secrets/devbox/gh-token.age";
           }
           // user_secret;
+
+        # Lets the flake report job post to the homelab dashboard; the cluster
+        # holds the same value as the dashboard's INGEST_TOKEN.
+        "dashboard-ingest-token" =
+          {
+            file = "${mysecrets}/secrets/devbox/dashboard-ingest-token.age";
+          }
+          // root_secret;
       };
     })
 

@@ -23,17 +23,23 @@
 
         "modules/nixos/server/server.nix"
         "modules/nixos/server/tailscale.nix"
+        "modules/nixos/server/flake-report"
       ])
       ++ [
         inputs.disko.nixosModules.disko
-        {
+        ({config, ...}: {
           modules.secrets.devbox.enable = true;
           modules.tailscale = {
             enable = true;
             tags = ["tag:devbox"];
             ssh = true;
           };
-        }
+          modules.flakeReport = {
+            enable = true;
+            ingestTokenFile = config.age.secrets."dashboard-ingest-token".path;
+            githubTokenFile = config.age.secrets."gh-token".path;
+          };
+        })
       ];
     home-modules = map mylib.relativeToRoot [
       "home/linux/tui.nix"
