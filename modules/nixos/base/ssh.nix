@@ -1,4 +1,8 @@
-{ lib, ... }:
+{
+  lib,
+  pkgs,
+  ...
+}:
 {
   # Or disable the firewall altogether.
   networking.firewall.enable = lib.mkDefault false;
@@ -14,7 +18,7 @@
     openFirewall = true;
   };
 
-  # Add terminfo database of all known terminals to the system profile.
-  # https://github.com/NixOS/nixpkgs/blob/nixos-25.11/nixos/modules/config/terminfo.nix
-  environment.enableAllTerminfo = true;
+  # Ghostty is the only terminal used to SSH in. enableAllTerminfo would also
+  # pull in terminals that must be compiled from source just for their terminfo.
+  environment.systemPackages = [pkgs.ghostty.terminfo];
 }

@@ -52,7 +52,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     colmena = {
-      url = "github:zhaofengli/colmena";
+      url = "github:nix-community/colmena";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-openclaw.url = "github:openclaw/nix-openclaw";

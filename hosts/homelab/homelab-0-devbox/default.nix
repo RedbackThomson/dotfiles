@@ -98,10 +98,10 @@ in {
   nix.gc.options = lib.mkForce "--delete-older-than 30d";
 
   # Cap journald so verbose long-running sessions cannot fill the disk.
-  services.journald.extraConfig = ''
-    SystemMaxUse=2G
-    MaxRetentionSec=1month
-  '';
+  services.journald.settings.Journal = {
+    SystemMaxUse = "2G";
+    MaxRetentionSec = "1month";
+  };
 
   modules.monitoring.units = [
     "docker.service"

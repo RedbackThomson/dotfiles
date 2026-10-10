@@ -180,22 +180,16 @@ in {
   # old colmena output to the new way.
   colmenaHive = inputs.colmena.lib.makeHive self.outputs.colmena;
 
-  # Apps
-  apps = forAllSystems (
-    system: {
-      # So we can run `nix run .#colmena` to deploy the cluster
-      colmena = inputs.colmena.apps.${system}.default;
-    }
-  );
-
   # Packages
   packages = forAllSystems (
     system:
       (allSystems.${system}.packages or {})
+      # So we can run `nix run .#colmena` to deploy the cluster
+      // {inherit (inputs.colmena.packages.${system}) colmena;}
       # Re-export darwin-rebuild from our pinned nix-darwin so that
       # `nix run .#darwin-rebuild -- switch --flake .` always uses the same
       # nix-darwin version as the flake (instead of the flake registry's).
-      // lib.optionalAttrs (inputs.nix-darwin.packages ? ${system}) {
+      // lib.optionalAttrs (inputs.nix-darwin.packages.${system} or {} ? darwin-rebuild) {
         inherit (inputs.nix-darwin.packages.${system}) darwin-rebuild;
       }
   );
