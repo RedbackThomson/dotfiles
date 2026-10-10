@@ -1,10 +1,14 @@
 {
   pkgs,
-  nur-ryan4yin,
   ...
 }: {
   # https://github.com/catppuccin/btop/blob/main/themes/catppuccin_mocha.theme
-  xdg.configFile."btop/themes".source = "${nur-ryan4yin.packages.${pkgs.stdenv.hostPlatform.system}.catppuccin-btop}/themes";
+  xdg.configFile."btop/themes".source = "${
+    pkgs.catppuccin.override {
+      themeList = ["btop"];
+      variant = "frappe";
+    }
+  }/btop";
 
   # replacement of htop/nmon
   programs.btop = {

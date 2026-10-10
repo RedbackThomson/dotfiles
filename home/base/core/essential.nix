@@ -4,7 +4,6 @@
   pkgs,
   pkgs-unstable,
   attic,
-  nur-ryan4yin,
   ...
 }: {
   config = lib.mkIf config.myconfig.core.essential.enable {
@@ -65,8 +64,11 @@
         themes = {
           # https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20Frappe.tmTheme
           catppuccin-frappe = {
-            src = nur-ryan4yin.packages.${pkgs.stdenv.hostPlatform.system}.catppuccin-bat;
-            file = "Catppuccin-frappe.tmTheme";
+            src = pkgs.catppuccin.override {
+              themeList = ["bat"];
+              variant = "frappe";
+            };
+            file = "bat/Catppuccin Frappe.tmTheme";
           };
         };
       };
