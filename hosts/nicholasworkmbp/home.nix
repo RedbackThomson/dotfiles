@@ -45,6 +45,12 @@
     nsc
 
     ngrok
+
+    (writeShellApplication {
+      name = "vcluster-shell";
+      runtimeInputs = [ kubectl coreutils gnugrep gnused ];
+      text = builtins.readFile ./vcluster-shell.sh;
+    })
   ];
 
   programs.zsh.initContent = ''
