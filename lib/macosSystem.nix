@@ -6,6 +6,7 @@
   darwin-custom-icons,
   myvars,
   system,
+  genPkgs,
   genSpecialArgs,
   specialArgs ? (genSpecialArgs system),
   ...
@@ -23,7 +24,7 @@ in
       ++ [darwin-custom-icons.darwinModules.default]
       ++ [
         ({lib, ...}: {
-          nixpkgs.pkgs = import nixpkgs {inherit system;};
+          nixpkgs.pkgs = genPkgs system;
           # make `nix run nixpkgs#nixpkgs` use the same nixpkgs as the one used by this flake.
           nix.registry.nixpkgs.flake = nixpkgs;
 

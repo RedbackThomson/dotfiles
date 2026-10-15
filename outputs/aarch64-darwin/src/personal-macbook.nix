@@ -8,6 +8,7 @@
   myvars,
   darwin-custom-icons,
   system,
+  genPkgs,
   genSpecialArgs,
   ...
 } @ args: let

@@ -7,6 +7,7 @@
   mylib,
   myvars,
   system,
+  genPkgs,
   genSpecialArgs,
   ...
 }@args:

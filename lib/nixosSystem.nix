@@ -2,6 +2,7 @@
   inputs,
   lib,
   system,
+  genPkgs,
   genSpecialArgs,
   nixos-modules,
   home-modules ? [ ],
@@ -18,6 +19,7 @@ nixpkgs.lib.nixosSystem {
     nixos-modules
     ++ [
       nixos-generators.nixosModules.all-formats
+      { nixpkgs.pkgs = genPkgs system; }
     ]
     ++ (lib.optionals ((lib.lists.length home-modules) > 0) [
       home-manager.nixosModules.home-manager

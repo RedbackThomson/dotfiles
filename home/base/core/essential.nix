@@ -76,6 +76,7 @@
       # A command-line fuzzy finder
       fzf = {
         enable = true;
+        historyWidget.command = "";
         # https://github.com/catppuccin/fzf
         # catppuccin-frappe
         colors = {
@@ -135,25 +136,6 @@
           filter_mode_shell_up_key_binding = "session";
         };
       };
-
-      yazi = {
-        enable = true;
-
-        package = pkgs-unstable.yazi.override {
-          _7zz = pkgs._7zz-rar;  # Support for RAR extraction
-        };
-      };
-
-      # Alias `y` to `yazi`
-      zsh.initContent = ''
-        function y() {
-          local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-          yazi "$@" --cwd-file="$tmp"
-          IFS= read -r -d ''' cwd < "$tmp"
-          [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
-          rm -f -- "$tmp"
-        }
-      '';
     };
   };
 }

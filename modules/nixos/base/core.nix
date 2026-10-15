@@ -8,4 +8,6 @@
   };
 
   boot.loader.timeout = lib.mkDefault 8; # wait for x seconds to select the boot entry
+
+  documentation.nixos.enable = false;
 }

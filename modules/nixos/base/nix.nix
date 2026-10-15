@@ -11,9 +11,6 @@
   # https://lix.systems/add-to-config/
   # nix.package = pkgs.lix;
 
-  # to install chrome, you need to enable unfree packages
-  nixpkgs.config.allowUnfree = lib.mkForce true;
-
   # do garbage collection weekly to keep disk usage low
   nix.gc = {
     automatic = lib.mkDefault true;

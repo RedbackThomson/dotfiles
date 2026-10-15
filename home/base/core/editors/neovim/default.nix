@@ -17,9 +17,11 @@ in {
       defaultEditor = true;
       viAlias = true;
       vimAlias = true;
+      withRuby = false;
+      withPython3 = false;
 
       extraPackages = with pkgs; [nodejs gopls codelldb ]; # For CoC
-      extraLuaConfig = ''
+      initLua = ''
         -- Set the leader key
         vim.g.mapleader = " "
         vim.g.maplocalleader = " "

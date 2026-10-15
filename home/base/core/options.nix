@@ -28,7 +28,7 @@
       };
 
       # DevOps and utility tools
-      devops.enable = lib.mkEnableOption "DevOps tools (terraform, earthly)";
+      devops.enable = lib.mkEnableOption "DevOps tools (terraform)";
       utilities.enable = lib.mkEnableOption "Utility tools (neofetch, vhs, viddy, cloc, ncdu)";
 
       ai.enable = lib.mkEnableOption "AI tools (chatgpt, claude, grok)";

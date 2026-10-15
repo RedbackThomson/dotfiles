@@ -10,112 +10,117 @@
   mylib = import ../lib {inherit lib;};
   myvars = import ../vars {inherit lib;};
 
-  # Add my custom lib, vars, nixpkgs instance, and all the inputs to specialArgs,
+  # Handed to every system through `nixpkgs.pkgs`, not specialArgs: a `pkgs`
+  # in specialArgs shadows the module system's own and silently drops any
+  # `nixpkgs.overlays` a module sets.
+  genPkgs = system:
+    import inputs.nixpkgs {
+      inherit system;
+      # To use 1Password, we need to allow the installation of non-free software
+      config.allowUnfree = true;
+
+      # plugp100 needs ecdsa for the Tapo handshake. CVE-2024-23342 is a
+      # timing side-channel in ECDSA signing, which that handshake never
+      # performs - it only uses the curve parameters and point arithmetic.
+      # Pinned to the exact version so a nixpkgs bump forces a fresh look.
+      config.permittedInsecurePackages = [ "python3.14-ecdsa-0.19.2" ];
+      overlays = [
+        # The upstream flake compiles a Rust/wasm toolchain for what is a 4MB
+        # plugin, and publishes no binary cache. The release artifact is
+        # architecture-independent, so it serves every host. Bump name, url and
+        # hash together on upgrade. Zellij keys plugin permission grants and
+        # resurrected sessions on the wasm's path, so it stays a bare
+        # fixed-output file whose path does not change with nixpkgs.
+        (final: prev: {
+          zjstatus = prev.fetchurl {
+            name = "zjstatus-0.25.0.wasm";
+            url = "https://github.com/dj95/zjstatus/releases/download/v0.25.0/zjstatus.wasm";
+            hash = "sha256-KCzqshnlbhkIyfrDOQckH+bD4e99hfqrPl9DjO+HuP4=";
+          };
+        })
+
+        # nixpkgs marks typish unsupported on Python 3.14 over a single failing
+        # test, which takes jsons and plugp100 down with it and breaks Home
+        # Assistant's Tapo support. The rest of both suites passes on 3.14, so
+        # re-enable the package and skip only the tests 3.14 broke.
+        (final: prev: {
+          pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+            (pyfinal: pyprev: {
+              typish = pyprev.typish.overridePythonAttrs (old: {
+                disabled = false;
+                disabledTests = (old.disabledTests or [ ]) ++ [ "test_complex_cls_function" ];
+              });
+              jsons = pyprev.jsons.overridePythonAttrs (old: {
+                disabledTests = (old.disabledTests or [ ]) ++ [
+                  "test_dumped_decorator_async"
+                  "test_loaded_decorator_async"
+                ];
+              });
+
+              # moto, used only to test aiobotocore, cannot even be evaluated
+              # on Python 3.14: it reaches aws-sam-translator through cfn-lint.
+              aiobotocore = pyprev.aiobotocore.overridePythonAttrs (_: {
+                doCheck = false;
+              });
+
+              # nixpkgs ships 5.1.5, whose module layout the HACS tapo
+              # component dropped in 3.4.0. Keep this in step with that
+              # component's manifest requirement.
+              plugp100 = pyfinal.buildPythonPackage rec {
+                pname = "plugp100";
+                version = "6.0.1";
+                pyproject = true;
+
+                src = prev.fetchFromGitHub {
+                  owner = "petretiandrea";
+                  repo = "plugp100";
+                  tag = version;
+                  hash = "sha256-LO0ATplDvkOmBU5PgoPjxYm6E4F1nZ1Sf0jdy1D+lzs=";
+                };
+
+                build-system = [ pyfinal.setuptools ];
+
+                dependencies = with pyfinal; [
+                  aiohttp
+                  certifi
+                  cryptography
+                  ecdsa
+                  jsons
+                  passlib
+                  requests
+                  scapy
+                  semantic-version
+                  urllib3
+                ];
+
+                nativeCheckInputs = with pyfinal; [
+                  pytestCheckHook
+                  pytest-asyncio
+                  pyyaml
+                ];
+
+                # Needs credentials for real hardware in ../../.local.devices
+                disabledTestPaths = [ "tests/integration/" ];
+
+                pythonImportsCheck = [
+                  "plugp100"
+                  "plugp100.devices"
+                  "plugp100.components"
+                ];
+              };
+            })
+          ];
+        })
+      ];
+    };
+
+  # Add my custom lib, vars, and all the inputs to specialArgs,
   # so that I can use them in all my nixos/home-manager/darwin modules.
   genSpecialArgs = system:
     inputs
     // {
       inherit mylib myvars;
 
-      pkgs = import inputs.nixpkgs {
-        inherit system;
-        # To use 1Password, we need to allow the installation of non-free software
-        config.allowUnfree = true;
-
-        # plugp100 needs ecdsa for the Tapo handshake. CVE-2024-23342 is a
-        # timing side-channel in ECDSA signing, which that handshake never
-        # performs - it only uses the curve parameters and point arithmetic.
-        # Pinned to the exact version so a nixpkgs bump forces a fresh look.
-        config.permittedInsecurePackages = [ "python3.14-ecdsa-0.19.2" ];
-        overlays = [
-          # The upstream flake compiles a Rust/wasm toolchain for what is a 4MB
-          # plugin, and publishes no binary cache. The release artifact is
-          # architecture-independent, so it serves every host. Bump name, url and
-          # hash together on upgrade. Zellij keys plugin permission grants and
-          # resurrected sessions on the wasm's path, so it stays a bare
-          # fixed-output file whose path does not change with nixpkgs.
-          (final: prev: {
-            zjstatus = prev.fetchurl {
-              name = "zjstatus-0.25.0.wasm";
-              url = "https://github.com/dj95/zjstatus/releases/download/v0.25.0/zjstatus.wasm";
-              hash = "sha256-KCzqshnlbhkIyfrDOQckH+bD4e99hfqrPl9DjO+HuP4=";
-            };
-          })
-
-          # nixpkgs marks typish unsupported on Python 3.14 over a single failing
-          # test, which takes jsons and plugp100 down with it and breaks Home
-          # Assistant's Tapo support. The rest of both suites passes on 3.14, so
-          # re-enable the package and skip only the tests 3.14 broke.
-          (final: prev: {
-            pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
-              (pyfinal: pyprev: {
-                typish = pyprev.typish.overridePythonAttrs (old: {
-                  disabled = false;
-                  disabledTests = (old.disabledTests or [ ]) ++ [ "test_complex_cls_function" ];
-                });
-                jsons = pyprev.jsons.overridePythonAttrs (old: {
-                  disabledTests = (old.disabledTests or [ ]) ++ [
-                    "test_dumped_decorator_async"
-                    "test_loaded_decorator_async"
-                  ];
-                });
-
-                # moto, used only to test aiobotocore, cannot even be evaluated
-                # on Python 3.14: it reaches aws-sam-translator through cfn-lint.
-                aiobotocore = pyprev.aiobotocore.overridePythonAttrs (_: {
-                  doCheck = false;
-                });
-
-                # nixpkgs ships 5.1.5, whose module layout the HACS tapo
-                # component dropped in 3.4.0. Keep this in step with that
-                # component's manifest requirement.
-                plugp100 = pyfinal.buildPythonPackage rec {
-                  pname = "plugp100";
-                  version = "6.0.1";
-                  pyproject = true;
-
-                  src = prev.fetchFromGitHub {
-                    owner = "petretiandrea";
-                    repo = "plugp100";
-                    tag = version;
-                    hash = "sha256-LO0ATplDvkOmBU5PgoPjxYm6E4F1nZ1Sf0jdy1D+lzs=";
-                  };
-
-                  build-system = [ pyfinal.setuptools ];
-
-                  dependencies = with pyfinal; [
-                    aiohttp
-                    certifi
-                    cryptography
-                    ecdsa
-                    jsons
-                    passlib
-                    requests
-                    scapy
-                    semantic-version
-                    urllib3
-                  ];
-
-                  nativeCheckInputs = with pyfinal; [
-                    pytestCheckHook
-                    pytest-asyncio
-                    pyyaml
-                  ];
-
-                  # Needs credentials for real hardware in ../../.local.devices
-                  disabledTestPaths = [ "tests/integration/" ];
-
-                  pythonImportsCheck = [
-                    "plugp100"
-                    "plugp100.devices"
-                    "plugp100.components"
-                  ];
-                };
-              })
-            ];
-          })
-        ];
-      };
       # use unstable branch for some packages to get the latest updates
       pkgs-unstable = import inputs.nixpkgs-unstable {
         inherit system; # refer the `system` parameter form outer scope recursively
@@ -125,7 +130,7 @@
     };
 
   # This is the args for all the haumea modules in this folder.
-  args = {inherit inputs lib mylib myvars darwin-custom-icons genSpecialArgs;};
+  args = {inherit inputs lib mylib myvars darwin-custom-icons genPkgs genSpecialArgs;};
 
   nixosSystems = {
     x86_64-linux = import ./x86_64-linux (args // {system = "x86_64-linux";});
@@ -162,7 +167,7 @@ in {
         in
         {
           # colmena's default nixpkgs & specialArgs
-          nixpkgs = import nixpkgs { inherit system; };
+          nixpkgs = genPkgs system;
           specialArgs = genSpecialArgs system;
         }
       )
