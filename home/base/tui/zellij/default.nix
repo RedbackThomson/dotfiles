@@ -16,7 +16,7 @@ in {
       default_tab_template {
         children
         pane size=1 borderless=true {
-          plugin location="file:${pkgs.zjstatus}/bin/zjstatus.wasm" {
+          plugin location="file:${pkgs.zjstatus}" {
             hide_frame_for_single_pane "false"
 
             format_left  "{mode}#[fg=#8caaee] {session} {tabs}"
@@ -52,7 +52,7 @@ in {
         }
         pane name="K9s"
         pane size=1 borderless=true {
-          plugin location="file:${pkgs.zjstatus}/bin/zjstatus.wasm" {
+          plugin location="file:${pkgs.zjstatus}" {
             hide_frame_for_single_pane "false"
 
             format_left  "{mode}#[fg=#8caaee] {session} {tabs}"

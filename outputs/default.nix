@@ -30,15 +30,16 @@
         overlays = [
           # The upstream flake compiles a Rust/wasm toolchain for what is a 4MB
           # plugin, and publishes no binary cache. The release artifact is
-          # architecture-independent, so it serves every host. Bump url + hash
-          # together on upgrade.
+          # architecture-independent, so it serves every host. Bump name, url and
+          # hash together on upgrade. Zellij keys plugin permission grants and
+          # resurrected sessions on the wasm's path, so it stays a bare
+          # fixed-output file whose path does not change with nixpkgs.
           (final: prev: {
-            zjstatus = prev.runCommandLocal "zjstatus-0.24.0" {} ''
-              install -Dm444 ${prev.fetchurl {
-                url = "https://github.com/dj95/zjstatus/releases/download/v0.24.0/zjstatus.wasm";
-                hash = "sha256-HM7ezh3tYs8+IJvmkM3TnKb7noIo7XGpUfZQf5lWZps=";
-              }} $out/bin/zjstatus.wasm
-            '';
+            zjstatus = prev.fetchurl {
+              name = "zjstatus-0.25.0.wasm";
+              url = "https://github.com/dj95/zjstatus/releases/download/v0.25.0/zjstatus.wasm";
+              hash = "sha256-KCzqshnlbhkIyfrDOQckH+bD4e99hfqrPl9DjO+HuP4=";
+            };
           })
 
           # nixpkgs marks typish unsupported on Python 3.14 over a single failing

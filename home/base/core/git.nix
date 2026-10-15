@@ -170,11 +170,31 @@ in {
               "bash"
               "-c"
               ''
-                root=$(jj workspace root --name default)
+                set -euo pipefail
+                [ "$#" -ge 1 ] || {
+                  printf 'usage: jj wa NAME [workspace-add options...]\n' >&2
+                  exit 2
+                }
+                name=$1
+                shift
+                case "$name" in
+                  ""|default|[!A-Za-z0-9]*|*[!A-Za-z0-9._-]*)
+                    printf 'invalid workspace name: %s\n' "$name" >&2
+                    exit 2
+                    ;;
+                esac
                 base="''${JJ_WORKSPACES:-''${XDG_DATA_HOME:-$HOME/.local/share}/jj-workspaces}"
-                dest="$base/$(basename "$root")/$1"
+                case "$base" in
+                  /*) ;;
+                  *)
+                    printf 'workspace base must be an absolute path: %s\n' "$base" >&2
+                    exit 2
+                    ;;
+                esac
+                root=$(jj workspace root --name default)
+                dest="$base/$(basename "$root")/$name"
                 mkdir -p "$(dirname "$dest")"
-                jj workspace add --name "$1" "$dest"
+                jj workspace add --name "$name" "$@" "$dest"
               ''
               "jj-wa"
             ];

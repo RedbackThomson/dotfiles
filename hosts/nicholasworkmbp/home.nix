@@ -1,4 +1,4 @@
-{ pkgs, ...}: {
+{ config, pkgs, ...}: {
   myconfig = {
     core = {
       containers.basic.enable = true;
@@ -50,6 +50,10 @@
       name = "vcluster-shell";
       runtimeInputs = [ kubectl coreutils gnugrep gnused ];
       text = builtins.readFile ./vcluster-shell.sh;
+    })
+
+    (callPackage ./dev {
+      repoRoot = "${config.home.homeDirectory}/Workspace";
     })
   ];
 
