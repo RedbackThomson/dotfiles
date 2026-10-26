@@ -1,27 +1,76 @@
 layout {
     default_tab_template {
-        children
-        pane size=1 borderless=true {
-            plugin location="file:@zjstatus@" {
-                hide_frame_for_single_pane "false"
+        pane split_direction="vertical" {
+            pane size=32 borderless=true {
+                plugin location="file:@zj_radar@" {
+                    density "comfortable"
+                    glyphs "nerd"
+                }
+            }
+            pane split_direction="horizontal" {
+                children
+                pane size=1 borderless=true {
+                    plugin location="file:@zjstatus@" {
+                        hide_frame_for_single_pane "false"
 
-                format_left  "{mode}#[fg=#8caaee] {session} {tabs}"
-                format_right "{datetime}"
-                format_space ""
+                        format_left  "{mode}#[fg=#8caaee] {session} {tabs}"
+                        format_right "{datetime}"
+                        format_space ""
 
-                mode_normal          "#[bg=#8caaee] "
-                mode_tmux            "#[bg=#e5c890] "
-                mode_default_to_mode "tmux"
+                        mode_normal          "#[bg=#8caaee] "
+                        mode_tmux            "#[bg=#e5c890] "
+                        mode_default_to_mode "tmux"
 
-                tab_normal               "#[fg=#838ba7] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
-                tab_active               "#[fg=#a6d189,bold] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
-                tab_fullscreen_indicator "□ "
-                tab_sync_indicator       "  "
-                tab_floating_indicator   "󰉈 "
+                        tab_normal               "#[fg=#838ba7] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
+                        tab_active               "#[fg=#a6d189,bold] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
+                        tab_fullscreen_indicator "□ "
+                        tab_sync_indicator       "  "
+                        tab_floating_indicator   "󰉈 "
 
-                datetime          "#[fg=#949cbb] {format} "
-                datetime_format   "%A, %d %b %Y %H:%M"
-                datetime_timezone "America/Los_Angeles"
+                        datetime          "#[fg=#949cbb] {format} "
+                        datetime_format   "%A, %d %b %Y %H:%M"
+                        datetime_timezone "America/Los_Angeles"
+                    }
+                }
+            }
+        }
+    }
+
+    // Zellij drops a `children` nested inside a split when deriving this from
+    // default_tab_template, which would leave runtime tabs with no terminal.
+    new_tab_template {
+        pane split_direction="vertical" {
+            pane size=32 borderless=true {
+                plugin location="file:@zj_radar@" {
+                    density "comfortable"
+                    glyphs "nerd"
+                }
+            }
+            pane split_direction="horizontal" {
+                pane focus=true
+                pane size=1 borderless=true {
+                    plugin location="file:@zjstatus@" {
+                        hide_frame_for_single_pane "false"
+
+                        format_left  "{mode}#[fg=#8caaee] {session} {tabs}"
+                        format_right "{datetime}"
+                        format_space ""
+
+                        mode_normal          "#[bg=#8caaee] "
+                        mode_tmux            "#[bg=#e5c890] "
+                        mode_default_to_mode "tmux"
+
+                        tab_normal               "#[fg=#838ba7] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
+                        tab_active               "#[fg=#a6d189,bold] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
+                        tab_fullscreen_indicator "□ "
+                        tab_sync_indicator       "  "
+                        tab_floating_indicator   "󰉈 "
+
+                        datetime          "#[fg=#949cbb] {format} "
+                        datetime_format   "%A, %d %b %Y %H:%M"
+                        datetime_timezone "America/Los_Angeles"
+                    }
+                }
             }
         }
     }

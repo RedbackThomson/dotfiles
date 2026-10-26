@@ -37,6 +37,11 @@
             url = "https://github.com/dj95/zjstatus/releases/download/v0.25.0/zjstatus.wasm";
             hash = "sha256-KCzqshnlbhkIyfrDOQckH+bD4e99hfqrPl9DjO+HuP4=";
           };
+          zj-radar = prev.fetchurl {
+            name = "zj-radar-0.11.0.wasm";
+            url = "https://github.com/marktoda/zj-radar/releases/download/v0.11.0/zj_radar.wasm";
+            hash = "sha256-NhkrdCqEBDLVisHh6u1HB2oZt5rcgZHSKESZRw+q8OE=";
+          };
         })
 
         # nixpkgs marks typish unsupported on Python 3.14 over a single failing

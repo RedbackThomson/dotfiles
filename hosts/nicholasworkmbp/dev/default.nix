@@ -8,9 +8,13 @@
   jujutsu,
   zellij,
   zjstatus,
+  zj-radar,
   repoRoot ? "",
 }: let
-  layout = replaceVars ./dev.kdl {inherit zjstatus;};
+  layout = replaceVars ./dev.kdl {
+    inherit zjstatus;
+    zj_radar = zj-radar;
+  };
   runtimeInputs = [
     coreutils
     findutils
