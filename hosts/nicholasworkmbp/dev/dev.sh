@@ -32,7 +32,7 @@ Usage:
   dev start [--from REVISION] [--dry-run] [REPOSITORY] [WORKSPACE]
   dev resume [REPOSITORY/WORKSPACE]
   dev finish [--yes] [--dry-run] [REPOSITORY/WORKSPACE]
-  dev list
+  dev list [--json]
 
 Defaults:
   REPOSITORY   selected with fzf from the repository root
@@ -598,10 +598,26 @@ resume_command() {
 }
 
 list_command() {
-  local i
-  [ "$#" -eq 0 ] || usage_error 'list does not accept arguments'
+  local i json=false
+  while [ "$#" -gt 0 ]; do
+    case $1 in
+      --json) json=true; shift ;;
+      -h | --help) usage; return 0 ;;
+      -*) usage_error "unknown list option: $1" ;;
+      *) usage_error 'list does not accept arguments' ;;
+    esac
+  done
+
   require_command jj
   scan_workspaces
+
+  if [ "$json" = true ]; then
+    require_command jq
+    load_sessions
+    list_json
+    return 0
+  fi
+
   if [ "${#REC_PATHS[@]}" -eq 0 ]; then
     printf 'No workspaces found under %s\n' "$WORKSPACES_BASE"
     return 0
@@ -613,6 +629,43 @@ list_command() {
     printf '%-32s %-24s %-8s %s\n' "${REC_LABELS[$i]}" "$SESSION" \
       "${SESSION_STATES[$SESSION]:-none}" "${REC_PATHS[$i]}"
   done
+}
+
+# Emits one JSON object per verified workspace on stdout. `created` is the
+# workspace directory's birth time (epoch seconds), falling back to mtime, so
+# the plugin can order youngest-first. Uses macOS stat for birth time, which
+# GNU coreutils stat does not report on APFS.
+list_json() {
+  local i session state created repo
+  local -a objs=()
+  for i in "${!REC_PATHS[@]}"; do
+    session_name_for "${REC_DEFAULTS[$i]}" "${REC_NAMES[$i]}"
+    session=$SESSION
+    state=${SESSION_STATES[$session]:-none}
+
+    created=$(/usr/bin/stat -f %B "${REC_PATHS[$i]}" 2>/dev/null)
+    if ! [[ $created =~ ^[0-9]+$ ]] || [ "$created" -le 0 ]; then
+      created=$(/usr/bin/stat -f %m "${REC_PATHS[$i]}" 2>/dev/null)
+    fi
+    [[ $created =~ ^[0-9]+$ ]] || created=0
+
+    repo=${REC_LABELS[$i]%%/*}
+    objs+=("$(jq -n \
+      --arg label "${REC_LABELS[$i]}" \
+      --arg repo "$repo" \
+      --arg workspace "${REC_NAMES[$i]}" \
+      --arg session "$session" \
+      --arg state "$state" \
+      --arg path "${REC_PATHS[$i]}" \
+      --argjson created "$created" \
+      '{label: $label, repo: $repo, workspace: $workspace, session: $session, state: $state, path: $path, created: $created}')")
+  done
+
+  if [ "${#objs[@]}" -eq 0 ]; then
+    printf '[]\n'
+    return 0
+  fi
+  printf '%s\n' "${objs[@]}" | jq -s '.'
 }
 
 finish_command() {

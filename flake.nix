@@ -60,5 +60,9 @@
       url = "github:modem-dev/hunk";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zj-redback-dev-status = {
+      url = "github:RedbackThomson/zj-redback-dev-status";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }

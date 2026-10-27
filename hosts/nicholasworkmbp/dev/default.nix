@@ -5,6 +5,7 @@
   coreutils,
   findutils,
   fzf,
+  jq,
   jujutsu,
   zellij,
   zjstatus,
@@ -19,6 +20,7 @@
     coreutils
     findutils
     fzf
+    jq
     jujutsu
     zellij
   ];

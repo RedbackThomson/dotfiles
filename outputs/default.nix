@@ -42,6 +42,12 @@
             url = "https://github.com/marktoda/zj-radar/releases/download/v0.11.0/zj_radar.wasm";
             hash = "sha256-NhkrdCqEBDLVisHh6u1HB2oZt5rcgZHSKESZRw+q8OE=";
           };
+
+          # Built from source (no release artifact). home-manager links it to a
+          # fixed path that the dev layout loads from, so Zellij's per-path
+          # plugin permission grant survives the store path changing on every
+          # source edit (the other plugins pin a fixed-output URL instead).
+          zj-redback-dev-status = inputs.zj-redback-dev-status.packages.${system}.default;
         })
 
         # nixpkgs marks typish unsupported on Python 3.14 over a single failing

@@ -37,6 +37,13 @@
   home.file.".kube/switch-config.yaml".source = ./kubeswitch/switch-config.yaml;
   home.file."scripts".source = ./scripts;
 
+  # Stable path for the dev-status plugin. Zellij keys its plugin permission
+  # grant on the layout's literal location string (it shell-expands but never
+  # canonicalizes), so loading from this fixed path keeps the grant across
+  # rebuilds even though the wasm's store path changes with every source edit.
+  home.file.".local/share/zellij/plugins/zj-redback-dev-status.wasm".source =
+    "${pkgs.zj-redback-dev-status}/zj-redback-dev-status.wasm";
+
   home.packages = with pkgs; [
     stripe-cli
 

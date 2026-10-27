@@ -1,11 +1,16 @@
 layout {
     default_tab_template {
         pane split_direction="vertical" {
-            pane size=32 borderless=true {
-                plugin location="file:@zj_radar@" {
-                    density "comfortable"
-                    glyphs "nerd"
-                    notify false
+            pane size=32 split_direction="horizontal" {
+                pane size="67%" borderless=true {
+                    plugin location="file:@zj_radar@" {
+                        density "comfortable"
+                        glyphs "nerd"
+                        notify false
+                    }
+                }
+                pane size="33%" borderless=true {
+                    plugin location="file:~/.local/share/zellij/plugins/zj-redback-dev-status.wasm"
                 }
             }
             pane split_direction="horizontal" {
@@ -41,10 +46,15 @@ layout {
     // default_tab_template, which would leave runtime tabs with no terminal.
     new_tab_template {
         pane split_direction="vertical" {
-            pane size=32 borderless=true {
-                plugin location="file:@zj_radar@" {
-                    density "comfortable"
-                    glyphs "nerd"
+            pane size=32 split_direction="horizontal" {
+                pane size="67%" borderless=true {
+                    plugin location="file:@zj_radar@" {
+                        density "comfortable"
+                        glyphs "nerd"
+                    }
+                }
+                pane size="33%" borderless=true {
+                    plugin location="file:~/.local/share/zellij/plugins/zj-redback-dev-status.wasm"
                 }
             }
             pane split_direction="horizontal" {
