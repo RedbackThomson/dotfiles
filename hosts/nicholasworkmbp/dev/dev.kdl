@@ -5,6 +5,7 @@ layout {
                 plugin location="file:@zj_radar@" {
                     density "comfortable"
                     glyphs "nerd"
+                    notify false
                 }
             }
             pane split_direction="horizontal" {
