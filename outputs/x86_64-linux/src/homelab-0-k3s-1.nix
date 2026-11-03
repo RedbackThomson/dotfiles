@@ -13,7 +13,7 @@
 }@args:
 let
   name = "homelab-0-k3s-1";
-  tags = [ name ];
+  tags = [ name "k3s" ];
   ssh-user = "root";
 
   inherit (myvars.networking.hostsAddr.${name}) ipv4;
