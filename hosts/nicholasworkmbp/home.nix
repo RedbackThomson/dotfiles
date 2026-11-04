@@ -37,6 +37,13 @@
   home.file.".kube/switch-config.yaml".source = ./kubeswitch/switch-config.yaml;
   home.file."scripts".source = ./scripts;
 
+  # Pull from upstream, push to the fork: feature branches stay untracked until
+  # their first push, which then tracks origin/<branch> via push.autoSetupRemote.
+  programs.git.settings = {
+    remote.pushDefault = "origin";
+    branch.autoSetupMerge = "simple";
+  };
+
   # Stable path for the dev-status plugin. Zellij keys its plugin permission
   # grant on the layout's literal location string (it shell-expands but never
   # canonicalizes), so loading from this fixed path keeps the grant across
