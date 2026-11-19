@@ -66,6 +66,12 @@
       text = builtins.readFile ./vcluster-shell.sh;
     })
 
+    (writeShellApplication {
+      name = "linear-orca";
+      runtimeInputs = [ coreutils jq ];
+      text = builtins.readFile ./linear-orca.sh;
+    })
+
     (callPackage ./dev {
       repoRoot = "${config.home.homeDirectory}/Workspace";
     })
